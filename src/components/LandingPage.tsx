@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 const LandingPage = () => {
   return (
-    <div className='w-full h-screen bg-gradient-to-b from-[#C77DFF] to-[#3C096C] '>
+    <div className='w-full h-screen'>
       <h1>LandingPage</h1>
     </div>
   )
