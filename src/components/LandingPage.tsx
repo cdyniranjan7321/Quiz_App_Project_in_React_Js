@@ -1,10 +1,16 @@
-'use client'
-import React, { useState } from 'react'
+"use client"
+import React, { useState } from "react"
+import Navbar from "./Navbar"
+import Sidebar from "./Sidebar"
+import Footer from "./Footer"
 
 const LandingPage = () => {
   return (
-    <div className='w-full h-screen bg-gradient-to-b from-[#C77DFF] to-[#3C096C] '>
-      <h1>LandingPage</h1>
+    <div className=' bg-gradient-to-b from-[#C77DFF] to-[#3C096C] h-[100%] w-full absolute '>
+     <Navbar />
+     <Sidebar />
+     {/* <Footer /> */}
+       
     </div>
   )
 }
