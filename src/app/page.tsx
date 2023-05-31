@@ -1,13 +1,11 @@
-import Footer from "@/components/Footer"
-import LandingPage from "../components/SelectionPage"
-import SelectionPage from "../components/SelectionPage"
+import Footer from "@/components/Footer";
+import LandingPage from "@/components/LandingPage";
 
 export default function Home() {
   return (
-    <main>
-      <SelectionPage />
+    <main className=" ">
       <LandingPage />
-      <Footer />
+      
     </main>
   )
 }
