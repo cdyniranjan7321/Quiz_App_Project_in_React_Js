@@ -4,8 +4,8 @@ import React from 'react'
 
 const Settings = () => {
   return (
-    <div>
-      <Navbar />
+    <div className=' bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E] h-screen w-full'>
+      <Navbar title='Settings' />
       <Sidebar />
       <h1>Settings</h1>
     </div>
