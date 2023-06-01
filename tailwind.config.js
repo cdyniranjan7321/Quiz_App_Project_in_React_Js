@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         italiana: ["Italiana", "serif"],
+        work: ["Work"],
       },
     },
   },
