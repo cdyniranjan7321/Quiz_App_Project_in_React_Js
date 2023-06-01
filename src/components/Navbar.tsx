@@ -1,10 +1,15 @@
 import React from 'react'
 
-const Navbar = () => {
+type NavProps = {
+  title: String
+}
+
+const Navbar = (props: NavProps) => {
+  const { title } = props
   return (
-    <div className='bg-gradient-to-b from-[#C77DFF] to-[#3C096C]  text-center  w-full h-[12%] '>
-        <h1 className='text-4xl font-bold pt-2 pb-1 text-white'> Quiz App</h1>
-      </div>
+    <div className='bg-gradient-to-r from-[#C77DFF] to-[#000000]  flex items-center justify-center text-center  w-full h-[12%] '>
+      <h1 className=' text-4xl font-bold text-white'> {title}</h1>
+    </div>
   )
 }
 
