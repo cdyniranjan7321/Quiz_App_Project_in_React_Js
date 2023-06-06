@@ -8,10 +8,10 @@ import {
 
 const Footer = () => {
   return (
-    <div className='fixed bottom-0 w-full py-16 px-4 gap-8 text-[#E3DCE8]' style={{ backgroundColor: '#16083B' }}>
+    <div className=' bottom-0 w-full py-16 px-4 gap-8 text-[#E3DCE8]' style={{ backgroundColor: '#16083B' }}>
       <div className='flex flex-col sm:flex-row px-5 gap-5'>
         <div className='w-full sm:w-1/4'>
-          <h1 className='w-full text-3xl font-bold text-[#E3DCE8]' style={{fontFamily:'Italiana'}}>Quiz app</h1>
+          <h1 className='w-full text-3xl font-bold text-[#E3DCE8] font-italiana'>Quiz app</h1>
         </div>
         <div className='w-full sm:w-1/4'>
           <ul>
