@@ -1,72 +1,48 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-
+import Footer from "./Footer";
+import Link from "next/link";
 const LandingPage = () => {
   return (
-    <div
-      className="relative bg-gray-900 w-screen flex flex-col items-stretch"
-      style={{
-        background: "linear-gradient(180deg, #D9D9D9 -3.9%, #3C096C 79.98%)",
-      }}
+    <div //  i will place this color in the code later
+      className="relative  w-screen flex flex-col bg-gray-900 items-stretch bg-gradient-to-b from-gray-300 to-purple-900  overflow-visible overflow-x-hidden"
     >
       {/* this line css is for the whole page */}
-
-      <header className="header flex flex-row items-center justify-between px-20 py-6">
+      <header className="header flex flex-row items-center justify-between px-8 py-4">
         <div className="branding">
-          <h1
-            className="text-5xl font-sans text-black font-thin"
-            style={{ fontFamily: "Italiana" }}
-          >
+          <h1 className="text-3xl md:text-4xl lg:text-6xl text-blue-800 md:text-black font-italiana font-thin ">
             Quiz
           </h1>
         </div>
         <nav className="navigation flex items-center">
-          <div
-            className="ml-8 font-sans font-medium text-2xl text-white bg-black px-2 pb-1 rounded-lg"
-            style={{ fontFamily: "Work sans" }}
-          >
+          <div className="hidden md:block font-work font-medium text-2xl text-white bg-black px-2 pb-1 rounded-lg mr-12">
             Quiz App
           </div>
-          <div className="bg-white ml-12 px-4 py-1 font-sans font-medium text-2xl text-blue-800 rounded-lg">
-            Login
+          <div className="px-4 py-1 font-medium text-2xl font-work md:font-sans text-blue-800 md:text-custom-Purple2 rounded-lg bg-transparent md:bg-white relative">
+            <span className="pb-2">Login</span>
+            <span className="absolute left-0 bottom-0 w-full  h-1 bg-custom-Purplee md:hidden"></span>
           </div>
-          <div className="bg-white ml-4 px-4 py-1 font-sans font-medium text-2xl text-blue-800 rounded-lg">
-            Register
+          <div className="  px-4 py-1 ml-4  font-work md:font-sans font-medium text-2xl  text-blue-800 md:text-custom-Purple2 rounded-lg bg-transparent md:bg-white relative">
+            <span className="pb-2">Register</span>
+            <span className="absolute left-0 bottom-0 w-full  h-1 bg-custom-Purplee md:hidden"></span>
           </div>
         </nav>
       </header>
       {/* header part ends */}
-      <section className="secondsection flex items-center justify-between gap-4 flex-grow h-auto">
+      <section className="secondsection flex items-center justify-between gap-4 flex-grow h-auto mt-10 lg:gap-16">
         {/* this line css is for the whole second section  */}
-        
-        <div
-          className=" w-[40%] bg-gray-700 bg-opacity-60 shadow-md rounded-lg "
-          style={{ backdropFilter: "blur(24px)" }}
-        >
+        <div className=" w-[50%] lg:w-[40%] bg-gray-700 bg-opacity-50 shadow-md rounded-3xl rounded-l-none backdrop-blur-xl">
           {/* this div is for the second section first part of ractangle that is stretched to outside of viewport and at 80 or 90 % of the left side rectangle is included   */}
-          
-          <div
-            className="absolute bg-purple-400 bg-opacity-60 w-[30%] z-10"
-            style={{ filter: "blur(150px)" }}
-          >
-            {/* this div will be near left edge which will have some shadow  */}
-          </div>
-            {/* this div closes the div with shadow */}
-          
-          <div
-            className="flex bg-purple-700 bg-opacity-20 shadow-md rounded-2xl ml-12 z-30"
-            style={{ backdropFilter: "blur(24px)" }}
-          >
+          <div className="flex bg-custom-Blackis bg-opacity-20 shadow-md rounded-3xl  z-30 backdrop-blur-xl ml-3 lg:ml-10">
             {/* this div is for the rectangle that encases left and right side two boxes left box is empty right box is words which will be made after this css */}
-            <div className="w-2/5 ">
-              {/* this css is for the first left side which is blank  */}
-            </div>
             {/* this div finish is blank and at left side which is from line 14 */}
-            <div className="text-justify left-7 w-3/5 mr-4 pb-6 pt-3">
+            <div className="text-center md:text-left bg-opacity-20 mr-2 lg:ml-20 lg:mr-1 pb-4 pt-3 px-6 lg:px-4">
               {/* this css will encase the word which is in right side */}
-              <h2 className="text-3xl font-bold  mb-4 text-white">Quiz App</h2>
-              <p className=" text-white text-left ">
+              <h2 className="text-xl lg:text-2xl font-bold  mb-4 text-white">
+                Quiz App
+              </h2>
+              <p className=" text-white text-center md:text-left text-xs lg:text-lg">
                 Embark on the Ultimate Quiz Experience. <br />
                 Test your knowledge, challenge your intellect, and become a hero
                 of trivia. <br />
@@ -76,9 +52,12 @@ const LandingPage = () => {
                 Join us now and redefine what it means to be a knowledge hero!
               </p>
               <div className="mt-6">
-                <button className="button bg-indigo-900 text-white rounded-lg px-2 py-1 mb-2">
+                <Link
+                  href="/round"
+                  className="button bg-indigo-900 text-white rounded-lg px-2 py-1 mb-2 text-sm md:text-base lg:text-lg"
+                >
                   Get Started
-                </button>
+                </Link>
               </div>
             </div>
             {/* this div finishes the line word is there*/}
@@ -86,23 +65,9 @@ const LandingPage = () => {
           {/* this div encloses two div inside one is blank one is words */}
         </div>
         {/* this div is for the part of left side which has shadow and which stretches out of viewport */}
-
-        <div className="w-[60%] relative flex items-center">
+        <div className="w-[55%] lg:w-[70%] h-auto relative flex items-center">
           {/* Wrapper div for the parent container */}
-          <div
-            className="z-20"
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "60%", // Adjust the width of the middle part as desired
-              height: "60%", // Adjust the height of the middle part as desired
-              background: "rgba(200, 107, 250, 0.69)",
-              filter: "blur(100px)",
-              borderRadius: "50%",
-            }}
-          ></div>
+          <div className="z-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100%] lg:w-[70%]  h-[80%] lg:h-[100%] bg-custom-Indigo lg:bg-opacity-[45%] blur-2xl rounded-full "></div>
           <div className="w-full">
             {/* Encasing div for the light bulb */}
             <div className="middle-part relative">
@@ -112,7 +77,7 @@ const LandingPage = () => {
                   alt="Light Bulb"
                   width={400}
                   height={400}
-                  className="mx-auto max-h-96"
+                  className="mx-0 w-full max-h-96 left-4"
                 />
               </div>
             </div>
@@ -120,24 +85,12 @@ const LandingPage = () => {
         </div>
       </section>
       {/* this line closes the whole second section */}
-
       <section className="thirdsection flex items-center justify-between gap-4 flex-grow mt-20 mb-14">
         {/* this line css is for the whole third section  */}
-        <div className="w-[60%] relative flex items-center">
+        <div className="w-[50%] lg:[70%] relative flex items-center">
           {/* Wrapper div for the parent container */}
           <div
-            className="z-20"
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "70%", // Adjust the width of the middle part as desired
-              height: "60%", // Adjust the height of the middle part as desired
-              background: "#6E6BFA",
-              filter: "blur(100px)",
-              borderRadius: "50%",
-            }}
+            className="z-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[70%] h-[60%] bg-custom-Blue bg-opacity-69 blur-4xl rounded-full"
             // use this for styling background shadow part of bulb or connect
           ></div>
           <div className="w-full">
@@ -155,30 +108,25 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-        {/* this has become thirdsection first part  now next will be second part*/}
-        <div
-          className=" w-[30%] bg-gray-700 bg-opacity-60 shadow-md rounded-lg "
-          style={{ backdropFilter: "blur(24px)" }}
-        >
-          {/* this div is 40% which is the word side full part of w-screen */}
-
-          <div
-            className="flex bg-purple-700 bg-opacity-20 shadow-md rounded-2xl mr-12 w-[80%] py-16 px-20 items-center "
-            style={{ backdropFilter: "blur(24px)" }}
-          >
-            {/* this div is for the rectangle that encases  box is words which will be made after this css */}
-
-            <div className="  right-10 mx-12">
+        {/* this closes thirdsection first part  now next will be second part*/}
+        <div className=" w-[50%] md:w-[40%] lg:w-[30%] bg-gray-700 bg-opacity-20 shadow-md rounded-3xl rounded-r-none backdrop-blur-xl">
+          {/* this div is 50% which is the word side full part of w-screen */}
+          <div className="flex bg-custom-Blackis bg-opacity-30 shadow-md rounded-3xl mr-4 md:mr-4 lg:mr-14 py-4 px-4 items-center backdrop-blur-xl">
+            {/* this div is for the rectangle that encases  box with words which will be made after this css */}
+            <div className=" text-xs ">
               {/* this css will encase the word which is in right side */}
-              <h2 className="text-center mb-4 font-normal leading-35 text-green-100">
-                Know About Us
+              <h2 className=" text-center gap-3 mb-4 font-normal text-xl lg:text-2xl leading-35 text-green-100">
+                <span className="hidden md:inline-block lg:inline-block">
+                  Know
+                </span>
+                <span className="md:ml-2">About Us</span>
               </h2>
-              <p className=" text-white text-left ">
+              <p className=" text-white text-left px-2 lg:text-lg">
                 this section shows the general information about the web page we
                 are concerned with
               </p>
               <div className="mt-6">
-                <button className="button bg-indigo-900  text-white rounded-lg px-3 py-1 mb-2">
+                <button className="button bg-indigo-900 bg-opacity-80 text-xl lg:text-lg  text-white rounded-lg px-3 py-1 mb-2">
                   About us
                 </button>
               </div>
@@ -186,20 +134,12 @@ const LandingPage = () => {
             {/* this div finishes the line word is there*/}
           </div>
           {/* this div encloses two div inside one is blank one is words */}
-          {/* this div is for the third section first part of ractangle that is stretched to outside of viewport and at 80 or 90 % of the left side rectangle is included   */}
-
-          <div
-            className="absolute bg-purple-400 bg-opacity-60 w-[30%]"
-            style={{ filter: "blur(150px)" }}
-          >
-            {/* this div will be near right edge which will have some shadow  */}
-          </div>
           {/* closing of edge toucher */}
-
           {/* this div is for the part of right side which stretches out of viewport */}
         </div>
       </section>
       {/* this line closes the whole third section */}
+      <Footer />
     </div>
   );
 };
