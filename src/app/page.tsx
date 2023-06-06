@@ -1,13 +1,9 @@
-import Footer from "@/components/Footer";
-import LandingPage from "@/components/LandingPage";
-import Round from "./round/page";
+import LandingPage from '@/components/LandingPage'
 
 export default function Home() {
   return (
-    <main className=" ">
-      <LandingPage/>
-      <Round/>
-      
+    <main className=' '>
+      <LandingPage />
     </main>
   )
 }
