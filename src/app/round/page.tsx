@@ -2,16 +2,31 @@
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect, useRef } from "react";
 const Round = () => {
-  
-  
-  const [isSidebarShown,setIsSidebarShown]=useState(true);
-  // this is used to have boolean value true for issidebarshown 
+  const [isSidebarShown, setIsSidebarShown] = useState(true);
+  // this is used to have boolean value true for issidebarshown when false the sidebar gets hidden when true the sidebar is shown
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
   const toggleMenu = () => {
-    setIsSidebarShown(!isSidebarShown);  
+    setIsSidebarShown(!isSidebarShown);
     // this function changes the value of issidebarshown
   };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const screenWidth=window.innerWidth;
+      if (screenWidth<768 &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        setIsSidebarShown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   useEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth;
@@ -31,16 +46,18 @@ const Round = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  
   return (
-    
     <div className="h-screen w-screen z-0 ">
       {/* this is to make the div have full screen as the page */}
       <div className="absolute left-0 top-0 z-20 w-full">
-         {/* this makes from left side 0 and from top side 0 with absolute */}
-        <Navbar title="Select Round" toggleMenu={toggleMenu} isSidebarShown={isSidebarShown}/>
+        {/* this makes from left side 0 and from top side 0 with absolute */}
+        <Navbar
+          title="Select Round"
+          toggleMenu={toggleMenu}
+          isSidebarShown={isSidebarShown}
+        />
       </div>
-      <div className="absolute left-0 top-0 z-30 h-full">
+      <div ref={sidebarRef} className="absolute left-0 top-0 z-30 h-full">
         <Sidebar isSidebarShown={isSidebarShown} />
       </div>
       <div className="absolute top-0 left-0 z-10 w-full h-full bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E]">
@@ -73,5 +90,4 @@ const Round = () => {
     </div>
   );
 };
-
 export default Round;
