@@ -10,6 +10,7 @@ module.exports = {
       fontFamily: {
         italiana: ["Italiana", "serif"],
         work: ["Work"],
+        sansi:["Sansita"],
       },
       blur: {
         '150': '150px',
