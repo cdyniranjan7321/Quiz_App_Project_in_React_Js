@@ -12,7 +12,6 @@ type NavProps = {
 };
 const Navbar = (props: NavProps) => {
   const { title, toggleMenu, isSidebarShown } = props;
-
   return (
     <div className="bg-gradient-to-r from-[#C77DFF] to-[#000000] rounded-lg rounded-t-none">
       <div className="flex justify-center items-center gap-4">
@@ -21,7 +20,6 @@ const Navbar = (props: NavProps) => {
             <FaBars onClick={toggleMenu} />
           </div>
         )}
-
         <div className="">
           <h1 className="text-3xl lg:text-5xl p-3 font-bold text-white ">
             {title}
@@ -31,5 +29,4 @@ const Navbar = (props: NavProps) => {
     </div>
   );
 };
-
 export default Navbar;
