@@ -13,21 +13,6 @@ const Round = () => {
     // this function changes the value of issidebarshown
   };
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const screenWidth=window.innerWidth;
-      if (screenWidth<768 &&
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target as Node)
-      ) {
-        setIsSidebarShown(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-  useEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth;
       if (screenWidth < 768) {
@@ -37,13 +22,22 @@ const Round = () => {
         setIsSidebarShown(true);
       }
     };
-
+    const handleClickOutside = (event: MouseEvent) => {
+      const screenWidth=window.innerWidth;
+      if (screenWidth<768 &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        setIsSidebarShown(false);
+      }
+    };
+    
     // Attach the event listener on component mount
     window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener on component unmount
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
   return (
