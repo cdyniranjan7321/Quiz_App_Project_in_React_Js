@@ -1,12 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { FaBars, FaBeer } from "react-icons/fa";
-import { BiArrowBack as BackArrow } from "react-icons/bi";
-import { AiFillSetting as Setting } from "react-icons/ai";
-import { AiOutlineHome as Home } from "react-icons/ai";
-import Link from "next/link";
+import React from "react";
+import { FaBars } from "react-icons/fa";
 import BackArrowButton from "./BackArrowButton";
-import CloseIconButton from "./CloseIconButton";
 type NavProps = {
   title: string;
   toggleMenu?: () => void;
@@ -28,15 +23,11 @@ const Navbar = (props: NavProps) => {
           <BackArrowButton />
         </div>
         )}
-
         <div className="flex-grow">
           <h1 className="text-center text-3xl lg:text-5xl p-3 font-bold text-white ">
             {title}
           </h1>
         </div>
-          <div className="mr-7"><CloseIconButton/></div>
-        
-      
       </div>
     </div>
   );
