@@ -1,18 +1,19 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-type AvailableProps={
-  
+import CloseIconButton from "./CloseIconButton";
+type AvailableProps = {
   isMultipleQuestionsPage?: boolean;
 };
-const AvailableQuestions = (props:AvailableProps) => {
+const AvailableQuestions = (props: AvailableProps) => {
   const { isMultipleQuestionsPage } = props;
-  
+
   const totalQuestions = 40; //Total number of questions
   const [numRows, setNumRows] = useState(5);
   //this number determines how many rows are shown
   const [numCols, setNumCols] = useState(10);
   //this number determines how many columns are shown
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -28,6 +29,7 @@ const AvailableQuestions = (props:AvailableProps) => {
     // Clean up the event listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   // Generate the grid of numbers
   const grid = [];
   let count = 1;
@@ -66,7 +68,7 @@ const AvailableQuestions = (props:AvailableProps) => {
       {/* starting second part  */}
       <div className="flex flex-col w-[30%] gap-12  ">
         {/* top part of right side */}
-        <div className="flex flex-col items-center bg-gray-900 bg-gradient-to-t from-gray-400 to-purple-900 text-white mt-4 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto">
+        <div className="flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-4 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto">
           <span className="font-italiana text-xl">Next question for:</span>
           <span>
             Blue house{" "}
@@ -91,6 +93,10 @@ type NumberGridProps = {
   grid: number[][];
 };
 const NumberGrid = ({ grid }: NumberGridProps) => {
+  const [clickedButtons, setClickedButtons] = useState<number[]>([]);
+  const handleClick = (number: number) => {
+    setClickedButtons((prevButtons: number[]) => [...prevButtons, number]);
+  };
   return (
     <div className="flex flex-col gap-4 lg:gap-8 ml-0 mt-4 w-full mb-4 lg:mb-10">
       {grid.map((row, rowIndex) => (
@@ -101,10 +107,15 @@ const NumberGrid = ({ grid }: NumberGridProps) => {
           {row.map((number) => (
             <button
               key={number}
-              className="bg-blue-600 px-2 mr-2 rounded-2xl rounded-bl-none w-18 md:w-28 text-6xl font-sansi font-semibold italic text-white border-2 border-black"
+              className={`px-2 mr-2 rounded-2xl rounded-bl-none w-18 md:w-28 text-6xl font-sansi font-semibold italic border-2 border-black ${
+                clickedButtons.includes(number)
+                  ? " bg-gray-500 text-black"
+                  : "bg-blue-600  text-white"
+              }`}
+              onClick={() => handleClick(number)}
             >
-              {number}
-            </button>
+              <span>{number}</span>
+              </button>
           ))}
         </div>
       ))}
