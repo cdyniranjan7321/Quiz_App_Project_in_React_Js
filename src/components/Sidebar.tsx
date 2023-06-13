@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { BiArrowBack as BackArrow } from "react-icons/bi";
 import { AiFillSetting as Setting } from "react-icons/ai";
 import { AiOutlineHome as Home } from "react-icons/ai";
 import Link from "next/link";
+import BackArrowButton from "./BackArrowButton";
 interface SidebarProps {
   isSidebarShown: boolean;
 }
@@ -14,11 +14,7 @@ const Sidebar = ({ isSidebarShown }: SidebarProps) => {
   return (
     <div className="bg-gradient-to-r from-[#10002B] to-[#300559] rounded-lg rounded-l-none rounded-b-none h-full ">
       <div className="flex flex-col justify-center items-center gap-5 p-4 ">
-        <div className="font-white-300 text-gray-200 text-bold text-4xl  ">
-          <button>
-            <BackArrow />
-          </button>
-        </div>
+       <BackArrowButton/>
         <Link href="/" className=" text-white text-bold text-4xl">
           <div className="">
             <Home />
