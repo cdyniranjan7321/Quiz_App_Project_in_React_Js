@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar"
 import Sidebar from "@/components/Sidebar"
 import Image from "next/image"
 import React, { useState, useEffect } from "react"
+import Link from "next/link";
 
 const Round = () => {
   const [showModel, setModel] = useState(false)
@@ -60,7 +61,7 @@ const Round = () => {
         <div className='flex flex-row justify-around align-items-center pt-[12%] md:pl-[12%]'>
           <div className='flex-col justify-content:center align-items:center pt-11'>
             <div className='bg-white rounded-md mt-6 pl-2 text-bold text-2xl h-9 w-[80%]'>
-              <button>General Round</button>
+              <Link href="/general">General Round</Link>
             </div>
             <div className='bg-white rounded-md pl-2 mt-6 text-2xl pt- h-15 w-[60%]'>
               <button onClick={() => setModel(true)}>Rapid Fire</button>
