@@ -26,9 +26,9 @@ module.exports = {
         Purple2:'#3A00E5',
         Blue: '#6E6BFA',
         Green:'#081C15',
-        White:'#FFFAFA', 
+        White:'#FFFAFA',
+        brown:'#AD9090' 
         },
-        
       },
     },
     screens: {
