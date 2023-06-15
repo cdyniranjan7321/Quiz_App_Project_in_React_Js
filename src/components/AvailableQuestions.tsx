@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import CloseIconButton from './CloseIconButton'
-import Link from 'next/link'
 type AvailableProps = {
   isMultipleQuestionsPage?: boolean
 }
@@ -106,28 +105,23 @@ const NumberGrid = ({ grid }: NumberGridProps) => {
           className='flex flex-row justify-between md:justify-start gap-3 md:gap-4'
         >
           {row.map((number) => (
-            <div className='relative flex items-center'>
+            <div key={number} className='relative flex items-center'>
               {clickedButtons.includes(number) && (
                 <div className=' absolute z-50 pt-3'>
                   <CloseIconButton />
                 </div>
               )}
               <div className='relative z-20 pl-2'>
-                
-                  <Link href='/generala'>
-                  <button
-                    key={number}
-                    className={`px-2 mr-2 rounded-2xl rounded-bl-none w-18 md:w-20 text-6xl font-sansi font-semibold italic border-2 border-black ${
-                      clickedButtons.includes(number)
-                        ? ' bg-gray-500 text-black'
-                        : 'bg-blue-600  text-white'
-                    }`}
-                    onClick={() => handleClick(number)}
-                  >
-                    {number}
-                    </button>
-                  </Link>
-                
+                <button
+                  className={`px-2 mr-2 rounded-2xl rounded-bl-none w-18 md:w-20 text-6xl font-sansi font-semibold italic border-2 border-black ${
+                    clickedButtons.includes(number)
+                      ? ' bg-gray-500 text-black'
+                      : 'bg-blue-600  text-white'
+                  }`}
+                  onClick={() => handleClick(number)}
+                >
+                  {number}
+                </button>
               </div>
             </div>
           ))}

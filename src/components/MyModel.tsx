@@ -1,13 +1,15 @@
-"use client"
-import React, { useState, useEffect } from "react"
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai"
+'use client'
+import React, { useState, useEffect } from 'react'
+import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
+import { Round } from '../../types'
 
 type MyModelProps = {
   setModel: Function
+  rounds: Round[]
 }
 
 const MyModel = (props: MyModelProps) => {
-  const { setModel } = props
+  const { setModel, rounds } = props
   return (
     <div className='absolute w-full h-screen flex justify-center items-center z-50 '>
       <div className=' absolute backdrop-blur-md  w-[78%] h-[65%] border-2 border-purple-500 rounded-md'>
@@ -22,18 +24,18 @@ const MyModel = (props: MyModelProps) => {
             Set Selection
           </button>
           <div className='  flex flex-col text-black font-bold text-2xl pt-5 '>
-            <button className=' bg-white w-[18%] h-16 ml-[40%]  rounded-md '>
-              Set A
-            </button>
-            <button className=' bg-white w-[18%] h-16 font-bold  rounded-md ml-[40%] mt-5 '>
-              Set B
-            </button>
-            <button className='  bg-white w-[18%] font-bold h-16 ml-[40%]  rounded-md mt-5'>
-              Set C
-            </button>
-            <button className=' bg-white w-[18%]  font-bold h-16 ml-[40%]  rounded-md mt-5 mb-7'>
-              Set D
-            </button>
+            {rounds.map((round) => {
+              return (
+                round.issubcategory && (
+                  <button
+                    key={round.id}
+                    className=' bg-white w-[18%] h-16 font-bold  rounded-md ml-[40%] mt-5 '
+                  >
+                    {round.roundname}
+                  </button>
+                )
+              )
+            })}
           </div>
         </div>
       </div>

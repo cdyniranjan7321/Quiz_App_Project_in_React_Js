@@ -1,11 +1,25 @@
-"use client"
-import MyModel from "@/components/MyModel"
-import Navbar from "@/components/Navbar"
-import Sidebar from "@/components/Sidebar"
-import Image from "next/image"
-import React, { useState, useEffect } from "react"
+'use client'
+import MyModel from '@/components/MyModel'
+import Navbar from '@/components/Navbar'
+import Sidebar from '@/components/Sidebar'
+import { Round } from '@prisma/client'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+// import Router, { useRouter } from 'next/router'
+import React, { useState, useEffect } from 'react'
 
-const Round = () => {
+async function getRound() {
+  const res = await fetch(`http://localhost:3000/api/getRound`)
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
+
+  return res.json()
+}
+
+const Round = async () => {
+  const router = useRouter()
   const [showModel, setModel] = useState(false)
 
   const [isSidebarShown, setIsSidebarShown] = useState(true)
@@ -26,12 +40,29 @@ const Round = () => {
     }
 
     // Attach the event listener on component mount
-    window.addEventListener("resize", handleResize)
+    window.addEventListener('resize', handleResize)
 
     // Clean up the event listener on component unmount
     return () => {
-      window.removeEventListener("resize", handleResize)
+      window.removeEventListener('resize', handleResize)
     }
+  }, [])
+
+  const handleRapidFireModel = (roundName: String, round: Round) => {
+    if (roundName === 'Rapid-fire') {
+      setModel(true)
+    } else {
+      router.push(`/${roundName.toLocaleLowerCase()}?round=${round}`)
+    }
+  }
+  const [rounds, setRounds] = useState([])
+  useEffect(() => {
+    const myRound = async () => {
+      const availableRounds = await getRound()
+      console.log('round : ', availableRounds)
+      setRounds(availableRounds)
+    }
+    myRound()
   }, [])
 
   return (
@@ -51,26 +82,24 @@ const Round = () => {
       </div>
       <div className='absolute top-0 left-0 z-10 w-full h-full bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E]'>
         {/* this makes the item have full width and height as its container */}
-        {/* <div className='flex justify-center items-center'> */}
-        {/* <div className='absolute z-50 pt-40 '> */}
-        {showModel && <MyModel setModel={setModel} />}
-        {/* </div> */}
-        {/* </div> */}
+
+        {showModel && <MyModel setModel={setModel} rounds={rounds} />}
 
         <div className='flex flex-row justify-around align-items-center pt-[12%] md:pl-[12%]'>
           <div className='flex-col justify-content:center align-items:center pt-11'>
-            <div className='bg-white rounded-md mt-6 pl-2 text-bold text-2xl h-9 w-[80%]'>
-              <button>General Round</button>
-            </div>
-            <div className='bg-white rounded-md pl-2 mt-6 text-2xl pt- h-15 w-[60%]'>
-              <button onClick={() => setModel(true)}>Rapid Fire</button>
-            </div>
-            <div className='bg-white rounded-md pl-1 mt-7 pt-1 text-2xl h-10 w-[90%]'>
-              <button>Multiple Question</button>
-            </div>
-            <div className='bg-white rounded-md pl-2 mt-5 text-2xl h-9 w-[100%] pr-2'>
-              <button>General Knowledge</button>
-            </div>
+            {rounds.map((round: Round) => {
+              return (
+                !round.issubcategory && (
+                  <button
+                    className='bg-white rounded-md p-2 mt-6 text-2xl h-15 w-[60%]'
+                    key={round.id}
+                    onClick={() => handleRapidFireModel(round.roundname, round)}
+                  >
+                    {round.roundname} Round
+                  </button>
+                )
+              )
+            })}
           </div>
 
           <div className=' hidden md:block z-40'>
