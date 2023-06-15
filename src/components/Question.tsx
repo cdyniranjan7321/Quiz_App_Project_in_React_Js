@@ -8,6 +8,7 @@ type AvailableProps = {
 }
 const Question = (props: AvailableProps) => {
   const { isGeneralAPage } = props
+  const {questionNum}=props
   return (
     <div className='flex flex-col justify-center'>
       <div className='flex flex-row h-full'>
