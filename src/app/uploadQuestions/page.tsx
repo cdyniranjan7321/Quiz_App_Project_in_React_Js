@@ -6,7 +6,28 @@ import axios from 'axios'
 import classNames from 'classnames'
 import QuestionUploadPopup from '@/components/QuestionUploadPopup'
 
-const UploadQuestions = () => {
+async function getPosts() {
+  const res = await fetch(`${process.env.BASE_URL}/api/getPosts`)
+
+  if (!res.ok) {
+    console.log(res)
+  }
+  return res.json()
+
+  // await axios
+  //   .get(`${process.env.BASE_URL}/api/getPosts`)
+  //   .then((response) => {
+  //     console.log(response)
+  //   })
+  //   .catch((err) => {
+  //     console.log(err)
+  //   })
+}
+
+const UploadQuestions = async () => {
+  const posts = await getPosts()
+  console.log('posts : ', posts)
+
   const [round, setRound] = useState('')
   const [modalIsOpen, setIsOpen] = useState(true)
 
@@ -20,12 +41,12 @@ const UploadQuestions = () => {
   } = useForm()
 
   const onSubmit = async (data: any) => {
-    console.log('data : ', data)
+    // console.log('data : ', data)
     const datas = {
       ...data,
       round,
     }
-    console.log('datas : ', datas)
+    // console.log('datas : ', datas)
 
     await axios
       .post('/api/uploadQuestions', datas)
