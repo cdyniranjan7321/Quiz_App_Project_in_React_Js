@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean @default(false)
+}
+
+model Round {
+  id                    Int              @id @default(autoincrement())
+  roundname             String
+  totalquestions        Int
+  scorefirst            Int              @default(10)
+  scoresecond           Int              @default(5)
+  scorethird            Int              @default(3)
+  scoreother            Int              @default(3)
+  scorenegative         Int              @default(0)
+  tomass                Boolean          @default(false)
+  tonextteam            Boolean          @default(false)
+  timefirst             Int              @default(30)
+  timesecond            Int              @default(20)
+  timethird             Int              @default(15)
+  hassubcategory        Boolean          @default(false)
+  issubcategory         Boolean          @default(false)
+  parentroundid         Int?
+  ischoosen             Boolean          @default(false)
+  issubcategoryonlyonce Boolean          @default(false)
+  israpidfire           Boolean          @default(false)
+  isestimation          Boolean          @default(false)
+  isbuzzer              Boolean          @default(false)
+  isgambling            Boolean          @default(false)
+  istiebreaker          Boolean          @default(false)
+  isoption              Boolean          @default(false)
+  isfiftyfifty          Boolean          @default(false)
+  question              QuestionAnswer[]
+}
+
+model QuestionAnswer {
+  id           Int     @id @default(autoincrement())
+  Question     String
+  Answer       String
+  IsAsked      Boolean @default(false)
+  ResourceType String?
+  Resource     String?
+  Font         String  @default("English")
+  Option1      String?
+  Option2      String?
+  Option3      String?
+  Option4      String?
+  FiftyOption1 String?
+  FiftyOption2 String?
+  round        Round   @relation(fields: [roundId], references: [id])
+  roundId      Int
+}
