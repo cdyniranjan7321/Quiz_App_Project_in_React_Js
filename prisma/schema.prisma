@@ -45,18 +45,18 @@ model Round {
 
 model QuestionAnswer {
   id           Int     @id @default(autoincrement())
-  Question     String
-  Answer       String
-  IsAsked      Boolean @default(false)
-  ResourceType String?
-  Resource     String?
-  Font         String  @default("English")
-  Option1      String?
-  Option2      String?
-  Option3      String?
-  Option4      String?
-  FiftyOption1 String?
-  FiftyOption2 String?
+  question     String
+  answer       String
+  isAsked      Boolean @default(false)
+  resourceType String?
+  resource     String?
+  font         String  @default("English")
+  option1      String?
+  option2      String?
+  option3      String?
+  option4      String?
+  fiftyOption1 String?
+  fiftyOption2 String?
   round        Round   @relation(fields: [roundId], references: [id])
   roundId      Int
 }
