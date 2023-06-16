@@ -16,7 +16,7 @@ const GeneralQuestionsPass = () => {
         {/* start navbar  and main page*/}
         <Navbar title='General round' isGeneralQuestionsPage={true} />
         {/* end navbar */}
-        <Question isGeneralQuestionsPassPage={true} questionNum={questionNum} />
+        <Question questionNum={questionNum} />
       </div>
       {/* ending navbar and main page  */}
     </div>

@@ -1,14 +1,15 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
+import React, {useState} from 'react'
 type AvailableProps = {
-  isGeneralAPage?: boolean
+  isGeneralAPage?: boolean  
   questionNum?: number
 }
 const Question = (props: AvailableProps) => {
-  const { isGeneralAPage } = props
-  const {questionNum}=props
+  const { isGeneralAPage,questionNum } = props
+  const [showText, setShowText] = useState(false);
+  const handlePassButtonClick = () => {
+    setShowText(true);
+  }
   return (
     <div className='flex flex-col justify-center'>
       <div className='flex flex-row h-full'>
@@ -17,7 +18,10 @@ const Question = (props: AvailableProps) => {
             <div className='flex flex-col'>
               {isGeneralAPage && (
                 <span className='text-3xl lg:text-5xl p-4 font-italiana'>
-                  General round
+                  General round 
+                  {showText && (
+                  <span className='pl-2'>pass question</span>
+                  )}
                 </span>
               )}
               <div className='flex'>
@@ -56,11 +60,13 @@ const Question = (props: AvailableProps) => {
         <button className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'>
           Incorrect
         </button>
-        <button className='bg-custom-brown rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'>
+        <button
+          className='bg-custom-brown rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl' onClick={handlePassButtonClick}
+        >
           Pass
         </button>
       </div>
     </div>
   )
 }
-export default Question
+export default Question;
