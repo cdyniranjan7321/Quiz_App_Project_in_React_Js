@@ -1,19 +1,12 @@
 'use client'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
-import { AiFillSetting as Setting } from 'react-icons/ai'
 import React, { useState, useEffect } from 'react'
-import Settings from '../settings/page'
 
-const Round = () => {
-  const [showModel, setModel] = useState(false)
-
+const AdditionalSettings = () => {
   const [isSidebarShown, setIsSidebarShown] = useState(true)
   // this is used to have boolean value true for issidebarshown
-  const toggleMenu = () => {
-    setIsSidebarShown(!isSidebarShown)
-    // this function changes the value of issidebarshown
-  }
+ 
   useEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth
@@ -43,8 +36,6 @@ const Round = () => {
         <div className=''>
           <Navbar
             title='AdditionalSettings'
-            // toggleMenu={toggleMenu}
-            // isSidebarShown={isSidebarShown}
           />{' '}
         </div>
       </div>
@@ -52,12 +43,6 @@ const Round = () => {
         <Sidebar isSidebarShown={isSidebarShown} />
       </div>
       <div className='absolute top-0 left-0 z-10 w-full h-full bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E]'>
-        {/* this makes the item have full width and height as its container */}
-        {/* <div className='flex justify-center items-center'> */}
-        {/* <div className='absolute z-50 pt-40 '> */}
-
-        {/* </div> */}
-        {/* </div> */}
         <div className='  mt-[8%]   absolute backdrop-blur-4xl  border-2 border-purple-500 rounded-3xl w-[80%] h-[80%] ml-[15%]   '>
           <div className='flex flex-col justify-center '>
             <h1 className='text-3xl font-medium text-custom-White pl-[18%] pt-5 pb-5'>
@@ -125,8 +110,6 @@ const Round = () => {
                   </h5>
                 </div>
                 <div>sc</div>
-
-                
               </div>
             </div>
             <button className='text-black text-3xl bg-[#57CC99] rounded-full w-20 flex items-center justify-center  ml-[50%]  pb-2 mt-[7%]'>
@@ -139,4 +122,4 @@ const Round = () => {
   )
 }
 
-export default Round
+export default AdditionalSettings
