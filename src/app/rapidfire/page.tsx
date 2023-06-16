@@ -9,7 +9,7 @@ const RapidFireRound = () => {
       {/* starting navbar and main page  */}
       <div className='flex flex-col w-full'>
         {/* start navbar  and main page*/}
-        <Navbar title='Rapid Fire Round'/>
+        <Navbar title='Rapid Fire Round' isRapidFirePage={true}/>
         {/* end navbar */}
         <Question isRapidFirePage={true}/>
       </div>
