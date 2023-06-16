@@ -19,7 +19,7 @@ const Settings = () => {
             placeholder='Enter number of teams'
           />
         </div>
-        <div className='flex flex-row h-[9vh] w-[38%] bg-[#3C096C] flex justify-center items-center mt-8 rounded-full'>
+        <div className=' flex-row h-[9vh] w-[38%] bg-[#3C096C] flex justify-center items-center mt-8 rounded-full'>
           <button className='text-white text-3xl'> Additional settings</button>
           <div className='text-white pl-4 text-3xl '>
             <Setting />
