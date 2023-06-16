@@ -7,13 +7,11 @@ type AvailableProps = {
 }
 const AvailableQuestions = (props: AvailableProps) => {
   const { isMultipleQuestionsPage } = props
-
   const totalQuestions = 40 //Total number of questions
   const [numRows, setNumRows] = useState(5)
   //this number determines how many rows are shown
   const [numCols, setNumCols] = useState(10)
   //this number determines how many columns are shown
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -89,5 +87,4 @@ const AvailableQuestions = (props: AvailableProps) => {
     </div>
   )
 }
-
 export default AvailableQuestions
