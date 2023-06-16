@@ -53,7 +53,7 @@ const Question = (props: AvailableProps) => {
           </div>
         </div>
       </div>
-      <div className=' flex justify-center mt-72 mb-4'>
+      <div className=' flex justify-center mt-64 mb-4'>
         <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'>
           Correct
         </button>
