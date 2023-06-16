@@ -1,7 +1,7 @@
 'use client'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
-import React, { useState, useEffect,ChangeEvent } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 const AdditionalSettings = () => {
   const [isSidebarShown, setIsSidebarShown] = useState(true)
   // this is used to have boolean value true for issidebarshown
@@ -33,10 +33,11 @@ const AdditionalSettings = () => {
     (_, index) => `Team ${index + 1}`
   )
 
-  const [houseNames, setHouseNames] = useState([]) // State to store the house names
-
-  const handleHouseNameChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
-    const [houseNames, setHouseNames] = useState<string[]>([]);
+  const [houseNames, setHouseNames] = useState<string[]>([])
+  const handleHouseNameChange = (
+    index: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     const updatedHouseNames = [...houseNames]
     updatedHouseNames[index] = event.target.value
     setHouseNames(updatedHouseNames)
@@ -46,7 +47,7 @@ const AdditionalSettings = () => {
     return Array.from({ length: numberOfTeams }, (_, index) => (
       <div
         key={index}
-        className='bg-white pb-2 flex justify-center rounded-md mt-6'
+        className='bg-white pb-2 pt-0 flex justify-center text-center rounded-md mt-6'
       >
         <input
           type='text'
@@ -56,16 +57,16 @@ const AdditionalSettings = () => {
       </div>
     ))
   }
-const generateOrderNumbers = () => {
+  const generateOrderNumbers = () => {
     return Array.from({ length: numberOfTeams }, (_, index) => (
       <h2
         key={index}
-        className='bg-white flex justify-center rounded-md pb-3 w-50 mt-6'
+        className='bg-white flex justify-center rounded-md pb-3 pt-0 w-50 mt-6'
       >
-        {numberOfTeams - index}
+        {index+1}
       </h2>
-    ));
-  };
+    ))
+  }
   return (
     <div className=' h-screen w-screen z-0 '>
       {/* this is to make the div have full screen as the page */}
@@ -81,9 +82,10 @@ const generateOrderNumbers = () => {
       </div>
       <div className='absolute top-0 left-0 z-10 w-full h-full bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E]'>
         <div className='  mt-[8%]   absolute backdrop-blur-4xl  border-2 border-purple-500 rounded-3xl w-[80%] h-[80%] ml-[10%]'>
-          <div className='flex flex-col justify-center'>
+          <div className='flex flex-col justify-center '>
             {/* the above line is the one that holds the team division page */}
-            <div className='  flex justify-center gap-3 items-center pt-2'>
+
+            <div className='  flex justify-center gap-3 items-center pt-2 pb-2'>
               <span className='text-2xl text-white  '> Number of Teams:</span>
               <input
                 type='number'
@@ -96,32 +98,32 @@ const generateOrderNumbers = () => {
                 onChange={handleTeamNumber}
               />
             </div>
-            <div className=' flex flex-row  '>
-              <div className=' text-white text-3xl font-medium ml-[10%]'>
-                <h1 className='pl-[8%] backdrop-blur-md  w-[130%] mb-2'>
-                  SN
+            <div className='overflow-y-scroll max-h-[calc(80vh-200px)]'>
+              <div className=' flex flex-row  '>
+                <div className=' text-white text-3xl font-medium ml-[10%]'>
+                  <h1 className='pl-[8%] backdrop-blur-md  w-[130%] mb-2'>
+                    SN
                   </h1>
-                {teams.map((team, index) => (
-                  <div key={index} className='flex flex-row h-10 w-30 mt-7 '>
-                    <h2>{team}:</h2>
-                    <div className='bg-red-500 h-10 w-14 ml-4 rounded-md'></div>
-                  </div>
-                ))}
-              </div>
-              <div className=' text-3xl pl-[8%]'>
-                <h1 className='text-white mb-2  flex justify-center font-medium '>
-                  Team Name
-                </h1>
-                <div className='text-black'>
-                  {generateHouseInputs()}
+                  {teams.map((team, index) => (
+                    <div key={index} className='flex flex-row h-10 w-30 mt-7 '>
+                      <h2>{team}:</h2>
+                      <div className='bg-red-500 h-10 w-14 ml-4 rounded-md'></div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-              <div className='pl-[8%] '>
-                <h1 className='text-white text-3xl  font-medium mb-2'>
-                  Game Order
-                </h1>
-                <div className=' text-black text-2xl text-center pl-3'>
-                  {generateOrderNumbers()}
+                <div className=' text-3xl pl-[8%]'>
+                  <h1 className='text-white mb-2  flex justify-center font-medium '>
+                    Team Name
+                  </h1>
+                  <div className='text-black'>{generateHouseInputs()}</div>
+                </div>
+                <div className='pl-[8%] '>
+                  <h1 className='text-white text-3xl  font-medium mb-2'>
+                    Game Order
+                  </h1>
+                  <div className=' text-black text-2xl text-center pl-3'>
+                    {generateOrderNumbers()}
+                  </div>
                 </div>
               </div>
             </div>
