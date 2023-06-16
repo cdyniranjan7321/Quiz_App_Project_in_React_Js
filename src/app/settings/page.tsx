@@ -1,9 +1,14 @@
+"use client"
 import Navbar from "@/components/Navbar"
-import Sidebar from "@/components/Sidebar"
 import { AiFillSetting as Setting } from "react-icons/ai"
 import React from "react"
+import { useRouter } from "next/navigation"
 
 const Settings = () => {
+const router=useRouter()
+const handleadditionalsettingsClick = () => {
+  router.push(`/additionalsettings`)
+}
   return (
     <div className=' bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E] h-screen w-full'>
       <Navbar title='Settings' />
@@ -20,7 +25,7 @@ const Settings = () => {
           />
         </div>
         <div className=' flex-row h-[9vh] w-[38%] bg-[#3C096C] flex justify-center items-center mt-8 rounded-full'>
-          <button className='text-white text-3xl'> Additional settings</button>
+          <button className='text-white text-3xl' onClick={()=>handleadditionalsettingsClick()}> Additional settings</button>
           <div className='text-white pl-4 text-3xl '>
             <Setting />
           </div>

@@ -2,7 +2,6 @@
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 import React, { useState, useEffect } from 'react'
-
 const AdditionalSettings = () => {
   const [isSidebarShown, setIsSidebarShown] = useState(true)
   // this is used to have boolean value true for issidebarshown
