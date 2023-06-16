@@ -1,15 +1,17 @@
 'use client'
 import Navbar from '@/components/Navbar'
-import React, {useState, ChangeEvent} from 'react'
+import React, { useState, ChangeEvent } from 'react'
 import AdditionalSettings from '../additionalsettings/page'
 const Settings = () => {
-
   return (
-    
-    <div className=' bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E] h-screen w-full'>
-      <Navbar title='Settings' />
-      <div className=' flex flex-col   items-center justify-center pt-4 w-full'>
-        
+    <div className='overflow-hidden flex bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E] h-screen w-screen'>
+      {/* starting navbar and main page  */}
+      <div className=' flex flex-col w-full'>
+        {/* start navbar  and main page*/}
+        <div className='z-20'>
+          <Navbar title='Settings' isGeneralQuestionsPage={true} />
+        </div>
+        {/* end navbar */}
         <AdditionalSettings />
       </div>
     </div>

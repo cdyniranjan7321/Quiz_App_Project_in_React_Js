@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import CloseIconButton from './CloseIconButton'
 import NumberGrid from './NumberGrid'
 type AvailableProps = {
   isMultipleQuestionsPage?: boolean

@@ -70,13 +70,6 @@ const AdditionalSettings = () => {
   return (
     <div className=' h-screen w-screen z-0 '>
       {/* this is to make the div have full screen as the page */}
-
-      <div className='absolute left-0 top-0 z-20 w-full '>
-        {/* this makes from left side 0 and from top side 0 with absolute */}
-        <div className=''>
-          <Navbar title='Additional Settings' />{' '}
-        </div>
-      </div>
       <div className='absolute left-0 top-0 z-30 h-full'>
         <Sidebar isSidebarShown={isSidebarShown} />
       </div>
@@ -107,7 +100,6 @@ const AdditionalSettings = () => {
                   {teams.map((team, index) => (
                     <div key={index} className='flex flex-row h-10 w-30 mt-7 '>
                       <h2>{team}:</h2>
-                      <div className='bg-red-500 h-10 w-14 ml-4 rounded-md'></div>
                     </div>
                   ))}
                 </div>
