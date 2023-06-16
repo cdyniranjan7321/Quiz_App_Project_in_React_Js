@@ -1,11 +1,14 @@
 'use client'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
+import { useSearchParams } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
 const AdditionalSettings = () => {
   const [isSidebarShown, setIsSidebarShown] = useState(true)
   // this is used to have boolean value true for issidebarshown
- 
+  const searchParams = useSearchParams()
+  const numberOfTeams = searchParams.get('numberOfTeams')
+  const numOfTeams = numberOfTeams !== null ? parseInt(numberOfTeams) : 0
   useEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth
@@ -33,9 +36,7 @@ const AdditionalSettings = () => {
       <div className='absolute left-0 top-0 z-20 w-full '>
         {/* this makes from left side 0 and from top side 0 with absolute */}
         <div className=''>
-          <Navbar
-            title='AdditionalSettings'
-          />{' '}
+          <Navbar title='AdditionalSettings' />{' '}
         </div>
       </div>
       <div className='absolute left-0 top-0 z-30 h-full'>
@@ -45,7 +46,7 @@ const AdditionalSettings = () => {
         <div className='  mt-[8%]   absolute backdrop-blur-4xl  border-2 border-purple-500 rounded-3xl w-[80%] h-[80%] ml-[15%]   '>
           <div className='flex flex-col justify-center '>
             <h1 className='text-3xl font-medium text-custom-White pl-[18%] pt-5 pb-5'>
-              There are 4 teams:
+              There are ({numOfTeams}) teams:
             </h1>
             <div className=' flex flex-row  '>
               <div className=' text-white text-3xl font-medium ml-[10%]'>

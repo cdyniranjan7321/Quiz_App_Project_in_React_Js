@@ -1,14 +1,20 @@
 "use client"
 import Navbar from "@/components/Navbar"
 import { AiFillSetting as Setting } from "react-icons/ai"
-import React from "react"
+import React, {ChangeEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 
 const Settings = () => {
 const router=useRouter()
-const handleadditionalsettingsClick = () => {
-  router.push(`/additionalsettings`)
+const [numberOfTeams, setNumberOfTeams] = useState("")
+
+const handleadditionalsettingsClick = (numberOfTeams:number) => {
+  router.push(`/additionalsettings?numberOfTeams=${numberOfTeams}`)
 }
+const handleNumberOfTeamsChange = (event: ChangeEvent<HTMLInputElement>) => {
+  setNumberOfTeams(event.target.value);
+};
+
   return (
     <div className=' bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E] h-screen w-full'>
       <Navbar title='Settings' />
@@ -18,14 +24,14 @@ const handleadditionalsettingsClick = () => {
           <span className='text-2xl text-white  '> Number of Teams:</span>
          
           <input
-            type='text'
+            type='number'
             className='rounded-md px-2 py-1  text-xl  h-[100%] w-[50%]  outline-none '
             id=''
-            placeholder='Enter number of teams'
+            placeholder='Enter number of teams'max={10} value={numberOfTeams} onChange={handleNumberOfTeamsChange}
           />
         </div>
-        <div className=' flex-row h-[9vh] w-[38%] bg-[#3C096C] flex justify-center items-center mt-8 rounded-full'>
-          <button className='text-white text-3xl' onClick={()=>handleadditionalsettingsClick()}> Additional settings</button>
+        <div className='flex-row h-[9vh] w-[38%] bg-[#3C096C] flex justify-center items-center mt-8 rounded-full'>
+          <button className='text-white text-3xl' onClick={()=>handleadditionalsettingsClick(parseInt(numberOfTeams))}> Additional settings</button>
           <div className='text-white pl-4 text-3xl '>
             <Setting />
           </div>
