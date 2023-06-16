@@ -58,17 +58,17 @@ const Round = () => {
 
         {/* </div> */}
         {/* </div> */}
-        <div className='  mt-[8%]   absolute backdrop-blur-4xl  border-2 border-purple-500 rounded-3xl w-[70%] h-[60%] ml-[15%]   '>
+        <div className='  mt-[8%]   absolute backdrop-blur-4xl  border-2 border-purple-500 rounded-3xl w-[80%] h-[80%] ml-[15%]   '>
           <div className='flex flex-col justify-center '>
             <h1 className='text-3xl font-medium text-custom-White pl-[18%] pt-5 pb-5'>
               There are 4 teams:
             </h1>
             <div className=' flex flex-row  '>
-              <div className=' text-white text-3xl font-medium ml-[15%]'>
-                <h1 className='pl-[19%] backdrop-blur-md  w-[130%]'>SN</h1>
+              <div className=' text-white text-3xl font-medium ml-[10%]'>
+                <h1 className='pl-[10%] backdrop-blur-md  w-[130%]'>SN</h1>
                 <div className='flex flex-row    h-14 w-30'>
                   <h2>Team 1:</h2>
-                  <div className='bg-[#FF0000] h-10 w-14 ml-4 mt-2  rounded-md'></div>
+                  <div className='bg-red-500 h-10 w-14 ml-4 mt-2  rounded-md'></div>
                 </div>
                 <div className=' flex flex-row mt-3'>
                   <h3>Team 2:</h3>
@@ -109,7 +109,7 @@ const Round = () => {
                   Game Order
                 </h1>
                 <div className=' text-black text-2xl items-center pl-3'>
-                  <h2 className='bg-white flex justify-center rounded-md pb-2 w-50 mt-2'>
+                  <h2 className='bg-white flex justify-center rounded-md pb-2 w-50'>
                     {' '}
                     3
                   </h2>
@@ -117,13 +117,16 @@ const Round = () => {
                     {' '}
                     4{' '}
                   </h3>
-                  <h4 className='bg-white flex justify-center rounded-md  pb-2  w-50 mt-6'>
+                  <h4 className='bg-white flex justify-center rounded-md  pb-2  w-50 mt-7'>
                     2
                   </h4>
-                  <h5 className='bg-white flex justify-center rounded-md pb-2 w-50 mt-7'>
+                  <h5 className='bg-white flex justify-center rounded-md pb-2 w-50 mt-6'>
                     1
                   </h5>
                 </div>
+                <div>sc</div>
+
+                
               </div>
             </div>
             <button className='text-black text-3xl bg-[#57CC99] rounded-full w-20 flex items-center justify-center  ml-[50%]  pb-2 mt-[7%]'>
