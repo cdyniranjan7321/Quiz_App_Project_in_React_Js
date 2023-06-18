@@ -80,8 +80,8 @@ const LandingPage = () => {
           <div className="z-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[100%] lg:w-[70%]  h-[80%] lg:h-[100%] bg-custom-Indigo lg:bg-opacity-[45%] blur-2xl rounded-full "></div>
           <div className="w-full">
             {/* Encasing div for the light bulb */}
-            <div className="middle-part relative">
-              <div className="lightbulbside relative z-30">
+            <div className="middle-part">
+              <div className="lightbulbside relative z-30 h-[50%] w-[70%]">
                 <Image
                   src="/images/lightbulb.svg"
                   alt="Light Bulb"
