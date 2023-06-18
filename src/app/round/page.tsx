@@ -52,7 +52,11 @@ const Round = async () => {
     if (roundName === 'Rapid-fire') {
       setModel(true)
     } else {
-      router.push(`/${roundName.toLocaleLowerCase()}?round=${round}`)
+      router.push(
+        `/${roundName.toLocaleLowerCase()}?totalquestions=${
+          round.totalquestions
+        }`
+      )
     }
   }
   const [rounds, setRounds] = useState([])

@@ -4,10 +4,12 @@ import Image from 'next/image'
 import NumberGrid from './NumberGrid'
 type AvailableProps = {
   isMultipleQuestionsPage?: boolean
+  totalQuestions: string | null
 }
+
 const AvailableQuestions = (props: AvailableProps) => {
-  const { isMultipleQuestionsPage } = props
-  const totalQuestions = 40 //Total number of questions
+  const { isMultipleQuestionsPage, totalQuestions } = props
+
   const [numRows, setNumRows] = useState(5)
   //this number determines how many rows are shown
   const [numCols, setNumCols] = useState(10)
@@ -34,10 +36,12 @@ const AvailableQuestions = (props: AvailableProps) => {
   for (let i = 0; i < numRows; i++) {
     const row = []
     for (let j = 0; j < numCols; j++) {
-      if (count <= totalQuestions) {
-        row.push(count++)
-      } else {
-        break
+      if (totalQuestions !== null) {
+        if (count <= parseInt(totalQuestions)) {
+          row.push(count++)
+        } else {
+          break
+        }
       }
     }
     grid.push(row)
