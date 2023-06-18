@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import CloseIconButton from './CloseIconButton'
 import NumberGrid from './NumberGrid'
 type AvailableProps = {
   isMultipleQuestionsPage?: boolean
@@ -15,7 +14,6 @@ const AvailableQuestions = (props: AvailableProps) => {
   //this number determines how many rows are shown
   const [numCols, setNumCols] = useState(10)
   //this number determines how many columns are shown
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -93,5 +91,4 @@ const AvailableQuestions = (props: AvailableProps) => {
     </div>
   )
 }
-
 export default AvailableQuestions
