@@ -1,18 +1,13 @@
 'use client'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
-import { AiFillSetting as Setting } from 'react-icons/ai'
-import React, { useState, useEffect } from 'react'
-import Settings from '../settings/page'
-
-const Round = () => {
-  const [showModel, setModel] = useState(false)
-
+import React, { useState, useEffect, ChangeEvent } from 'react'
+const AdditionalSettings = () => {
   const [isSidebarShown, setIsSidebarShown] = useState(true)
   // this is used to have boolean value true for issidebarshown
-  const toggleMenu = () => {
-    setIsSidebarShown(!isSidebarShown)
-    // this function changes the value of issidebarshown
+  const [numberOfTeams, setNumberOfTeams] = useState(2) // State to store the number of teams
+  const handleTeamNumber = (event: ChangeEvent<HTMLInputElement>) => {
+    setNumberOfTeams(Number(event.target.value)) // Update the state with the new number of teams
   }
   useEffect(() => {
     const handleResize = () => {
@@ -33,100 +28,95 @@ const Round = () => {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
+  const teams = Array.from(
+    { length: numberOfTeams },
+    (_, index) => `Team ${index + 1}`
+  )
 
+  const [houseNames, setHouseNames] = useState<string[]>([])
+  const handleHouseNameChange = (
+    index: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const updatedHouseNames = [...houseNames]
+    updatedHouseNames[index] = event.target.value
+    setHouseNames(updatedHouseNames)
+  }
+
+  const generateHouseInputs = () => {
+    return Array.from({ length: numberOfTeams }, (_, index) => (
+      <div
+        key={index}
+        className='bg-white pb-2 pt-0 flex justify-center text-center rounded-md mt-6'
+      >
+        <input
+          type='text'
+          value={houseNames[index] || ''}
+          onChange={(event) => handleHouseNameChange(index, event)}
+        />
+      </div>
+    ))
+  }
+  const generateOrderNumbers = () => {
+    return Array.from({ length: numberOfTeams }, (_, index) => (
+      <h2
+        key={index}
+        className='bg-white flex justify-center rounded-md pb-3 pt-0 w-50 mt-6'
+      >
+        {index+1}
+      </h2>
+    ))
+  }
   return (
     <div className=' h-screen w-screen z-0 '>
       {/* this is to make the div have full screen as the page */}
-
-      <div className='absolute left-0 top-0 z-20 w-full '>
-        {/* this makes from left side 0 and from top side 0 with absolute */}
-        <div className=''>
-          <Navbar
-            title='AdditionalSettings'
-            // toggleMenu={toggleMenu}
-            // isSidebarShown={isSidebarShown}
-          />{' '}
-        </div>
-      </div>
       <div className='absolute left-0 top-0 z-30 h-full'>
         <Sidebar isSidebarShown={isSidebarShown} />
       </div>
       <div className='absolute top-0 left-0 z-10 w-full h-full bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E]'>
-        {/* this makes the item have full width and height as its container */}
-        {/* <div className='flex justify-center items-center'> */}
-        {/* <div className='absolute z-50 pt-40 '> */}
-
-        {/* </div> */}
-        {/* </div> */}
-        <div className='  mt-[8%]   absolute backdrop-blur-4xl  border-2 border-purple-500 rounded-3xl w-[80%] h-[80%] ml-[15%]   '>
+        <div className='  mt-[8%]   absolute backdrop-blur-4xl  border-2 border-purple-500 rounded-3xl w-[80%] h-[80%] ml-[10%]'>
           <div className='flex flex-col justify-center '>
-            <h1 className='text-3xl font-medium text-custom-White pl-[18%] pt-5 pb-5'>
-              There are 4 teams:
-            </h1>
-            <div className=' flex flex-row  '>
-              <div className=' text-white text-3xl font-medium ml-[10%]'>
-                <h1 className='pl-[10%] backdrop-blur-md  w-[130%]'>SN</h1>
-                <div className='flex flex-row    h-14 w-30'>
-                  <h2>Team 1:</h2>
-                  <div className='bg-red-500 h-10 w-14 ml-4 mt-2  rounded-md'></div>
-                </div>
-                <div className=' flex flex-row mt-3'>
-                  <h3>Team 2:</h3>
-                  <div className='bg-[#57CC99] h-10 w-14  ml-3 mt-2  rounded-md'></div>
-                </div>
-                <div className=' flex flex-row mt-3'>
-                  <h4>Team 3:</h4>
-                  <div className='bg-[#23A6F0] h-10 w-14  ml-3 mt-2  rounded-md'></div>
-                </div>
-                <div className='  flex flex-row mt-5'>
-                  <h5 className=''>Team 4:</h5>
-                  <div className='bg-[#FFDD1F] h-10 w-14  ml-3 mt- rounded-md'></div>
-                </div>
-              </div>
-              <div className=' text-3xl pl-[8%]'>
-                <h1 className='text-white mb-2  flex justify-center font-medium '>
-                  Team Name
-                </h1>
-                <div className='text-black'>
-                  <h2 className='bg-white w-[100%] pb-2 flex justify-center rounded-md '>
-                    {' '}
-                    Red House
-                  </h2>
-                  <h3 className='bg-white w-80  pb-2 flex justify-center rounded-md mt-5 '>
-                    Green House
-                  </h3>
-                  <h4 className='bg-white w-80 pb-2 flex justify-center rounded-md mt-5'>
-                    Blue House
-                  </h4>
-                  <h5 className='bg-white w-80 pb-2 flex justify-center rounded-md mt-5'>
-                    {' '}
-                    Yellow House
-                  </h5>
-                </div>
-              </div>
-              <div className='pl-[8%] '>
-                <h1 className='text-white text-3xl  font-medium mb-2'>
-                  Game Order
-                </h1>
-                <div className=' text-black text-2xl items-center pl-3'>
-                  <h2 className='bg-white flex justify-center rounded-md pb-2 w-50'>
-                    {' '}
-                    3
-                  </h2>
-                  <h3 className='bg-white flex justify-center rounded-md  pb-2 w-50 mt-6'>
-                    {' '}
-                    4{' '}
-                  </h3>
-                  <h4 className='bg-white flex justify-center rounded-md  pb-2  w-50 mt-7'>
-                    2
-                  </h4>
-                  <h5 className='bg-white flex justify-center rounded-md pb-2 w-50 mt-6'>
-                    1
-                  </h5>
-                </div>
-                <div>sc</div>
+            {/* the above line is the one that holds the team division page */}
 
-                
+            <div className='  flex justify-center gap-3 items-center pt-2 pb-2'>
+              <span className='text-2xl text-white  '> Number of Teams:</span>
+              <input
+                type='number'
+                className='rounded-md px-2 py-1  text-xl w-[5%]  outline-none '
+                id=''
+                placeholder=''
+                max={20}
+                min={2}
+                value={numberOfTeams}
+                onChange={handleTeamNumber}
+              />
+            </div>
+            <div className='overflow-y-scroll max-h-[calc(80vh-200px)]'>
+              <div className=' flex flex-row  '>
+                <div className=' text-white text-3xl font-medium ml-[10%]'>
+                  <h1 className='pl-[8%] backdrop-blur-md  w-[130%] mb-2'>
+                    SN
+                  </h1>
+                  {teams.map((team, index) => (
+                    <div key={index} className='flex flex-row h-10 w-30 mt-7 '>
+                      <h2>{team}:</h2>
+                    </div>
+                  ))}
+                </div>
+                <div className=' text-3xl pl-[8%]'>
+                  <h1 className='text-white mb-2  flex justify-center font-medium '>
+                    Team Name
+                  </h1>
+                  <div className='text-black'>{generateHouseInputs()}</div>
+                </div>
+                <div className='pl-[8%] '>
+                  <h1 className='text-white text-3xl  font-medium mb-2'>
+                    Game Order
+                  </h1>
+                  <div className=' text-black text-2xl text-center pl-3'>
+                    {generateOrderNumbers()}
+                  </div>
+                </div>
               </div>
             </div>
             <button className='text-black text-3xl bg-[#57CC99] rounded-full w-20 flex items-center justify-center  ml-[50%]  pb-2 mt-[7%]'>
@@ -139,4 +129,4 @@ const Round = () => {
   )
 }
 
-export default Round
+export default AdditionalSettings

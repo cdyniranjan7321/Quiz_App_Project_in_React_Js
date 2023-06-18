@@ -1,19 +1,19 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import CloseIconButton from './CloseIconButton'
+import NumberGrid from './NumberGrid'
 type AvailableProps = {
   isMultipleQuestionsPage?: boolean
+  totalQuestions: string | null
 }
-const AvailableQuestions = (props: AvailableProps) => {
-  const { isMultipleQuestionsPage } = props
 
-  const totalQuestions = 40 //Total number of questions
+const AvailableQuestions = (props: AvailableProps) => {
+  const { isMultipleQuestionsPage, totalQuestions } = props
+
   const [numRows, setNumRows] = useState(5)
   //this number determines how many rows are shown
   const [numCols, setNumCols] = useState(10)
   //this number determines how many columns are shown
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -36,10 +36,12 @@ const AvailableQuestions = (props: AvailableProps) => {
   for (let i = 0; i < numRows; i++) {
     const row = []
     for (let j = 0; j < numCols; j++) {
-      if (count <= totalQuestions) {
-        row.push(count++)
-      } else {
-        break
+      if (totalQuestions !== null) {
+        if (count <= parseInt(totalQuestions)) {
+          row.push(count++)
+        } else {
+          break
+        }
       }
     }
     grid.push(row)
@@ -86,47 +88,6 @@ const AvailableQuestions = (props: AvailableProps) => {
           />
         </div>
       </div>
-    </div>
-  )
-}
-type NumberGridProps = {
-  grid: number[][]
-}
-const NumberGrid = ({ grid }: NumberGridProps) => {
-  const [clickedButtons, setClickedButtons] = useState<number[]>([])
-  const handleClick = (number: number) => {
-    setClickedButtons((prevButtons: number[]) => [...prevButtons, number])
-  }
-  return (
-    <div className='flex flex-col gap-4 lg:gap-6 ml-0 mt-4 w-full mb-4 lg:mb-10'>
-      {grid.map((row, rowIndex) => (
-        <div
-          key={rowIndex}
-          className='flex flex-row justify-between md:justify-start gap-3 md:gap-4'
-        >
-          {row.map((number) => (
-            <div key={number} className='relative flex items-center'>
-              {clickedButtons.includes(number) && (
-                <div className=' absolute z-50 pt-3'>
-                  <CloseIconButton />
-                </div>
-              )}
-              <div className='relative z-20 pl-2'>
-                <button
-                  className={`px-2 mr-2 rounded-2xl rounded-bl-none w-18 md:w-20 text-6xl font-sansi font-semibold italic border-2 border-black ${
-                    clickedButtons.includes(number)
-                      ? ' bg-gray-500 text-black'
-                      : 'bg-blue-600  text-white'
-                  }`}
-                  onClick={() => handleClick(number)}
-                >
-                  {number}
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      ))}
     </div>
   )
 }
