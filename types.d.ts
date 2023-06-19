@@ -1,4 +1,4 @@
-export interface Round {
+export interface RoundType {
     id: number
     roundname: String
     totalquestions: Number
