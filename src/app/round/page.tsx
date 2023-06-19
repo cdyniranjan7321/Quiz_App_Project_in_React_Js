@@ -2,21 +2,13 @@
 import MyModel from '@/components/MyModel'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
-import { Round } from '@prisma/client'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 // import Router, { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
-
-async function getRound() {
-  const res = await fetch(`http://localhost:3000/api/getRound`)
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-
-  return res.json()
-}
+import Loading from '../loading'
+import useSWR from 'swr'
+import { RoundType } from '../../../types'
 
 const Round = async () => {
   const router = useRouter()
@@ -48,7 +40,7 @@ const Round = async () => {
     }
   }, [])
 
-  const handleRapidFireModel = (roundName: String, round: Round) => {
+  const handleRapidFireModel = (roundName: String, round: RoundType) => {
     if (roundName === 'Rapid-fire') {
       setModel(true)
     } else {
@@ -59,15 +51,15 @@ const Round = async () => {
       )
     }
   }
-  const [rounds, setRounds] = useState([])
-  useEffect(() => {
-    const myRound = async () => {
-      const availableRounds = await getRound()
-      console.log('round : ', availableRounds)
-      setRounds(availableRounds)
-    }
-    myRound()
-  }, [])
+
+  const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
+  const url = `http://localhost:3000/api/getRound`
+  const { data: rounds, error, isLoading } = useSWR<RoundType[]>(url, fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (isLoading) return <Loading />
+  console.log('data from round fetcher : ', rounds)
 
   return (
     <div className=' h-screen w-screen z-0 '>
@@ -84,14 +76,14 @@ const Round = async () => {
       <div className='absolute left-0 top-0 z-30 h-full'>
         <Sidebar isSidebarShown={isSidebarShown} />
       </div>
-      <div className='absolute top-0 left-0 z-10 w-full h-full bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E]'>
+      <div className='absolute over top-0 left-0 z-10 w-full h-full bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E]'>
         {/* this makes the item have full width and height as its container */}
 
-        {showModel && <MyModel setModel={setModel} rounds={rounds} />}
+        {rounds && showModel && <MyModel setModel={setModel} rounds={rounds} />}
 
         <div className='flex flex-row justify-around align-items-center pt-[12%] md:pl-[12%]'>
           <div className='flex-col justify-content:center align-items:center pt-11'>
-            {rounds.map((round: Round) => {
+            {rounds?.map((round: RoundType) => {
               return (
                 !round.issubcategory && (
                   <button
