@@ -1,11 +1,11 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
-import { Round } from '../../types'
+import { RoundType } from '../../types'
 
 type MyModelProps = {
   setModel: Function
-  rounds: Round[]
+  rounds: RoundType[]
 }
 
 const MyModel = (props: MyModelProps) => {
