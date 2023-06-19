@@ -1,12 +1,15 @@
 'use client'
 import React, { useState } from 'react'
+import { QuestionI } from '../../types'
+
 type AvailableProps = {
   isGeneralAPage?: boolean
   isRapidFirePage?: boolean
   questionNum?: number
+  qn: QuestionI | undefined
 }
 const Question = (props: AvailableProps) => {
-  const { isGeneralAPage, isRapidFirePage, questionNum } = props
+  const { isGeneralAPage, isRapidFirePage, questionNum, qn } = props
   const [showText, setShowText] = useState(false)
   const handlePassButtonClick = () => {
     setShowText(true)
@@ -33,24 +36,26 @@ const Question = (props: AvailableProps) => {
           </div>
           <div className='text-2xl lg:text-4xl p-3 font-italiana'>
             {' '}
-            Question {questionNum} : question
+            Question {questionNum} : {qn?.question}
           </div>
           <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
             {' '}
-            Answer : ans
+            Answer : {qn?.answer}
           </div>
         </div>
         {/* starting second part  */}
-        {!isRapidFirePage && (<div className='flex flex-col w-[30%] gap-12  '>
-          {/* top part of right side */}
-          <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-4 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto'>
-            <span className='font-italiana text-xl'>Next question for:</span>
-            <span>
-              Blue house{' '}
-              <button className='ml-2 bg-blue-500 w-12 h-6 rounded-xl py-2'></button>
-            </span>
+        {!isRapidFirePage && (
+          <div className='flex flex-col w-[30%] gap-12  '>
+            {/* top part of right side */}
+            <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-4 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto'>
+              <span className='font-italiana text-xl'>Next question for:</span>
+              <span>
+                Blue house{' '}
+                <button className='ml-2 bg-blue-500 w-12 h-6 rounded-xl py-2'></button>
+              </span>
+            </div>
           </div>
-        </div>)}
+        )}
         {isRapidFirePage && (
           <div className=' bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 w-22 h-12 mr-6 '>
             Set : A
