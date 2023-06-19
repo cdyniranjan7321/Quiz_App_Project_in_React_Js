@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
 import Loading from '../loading'
 import useSWR from 'swr'
-import { RoundType } from '../../../types'
+import { RoundI } from '../../../types'
 
 const Round = async () => {
   const router = useRouter()
@@ -40,7 +40,7 @@ const Round = async () => {
     }
   }, [])
 
-  const handleRapidFireModel = (roundName: String, round: RoundType) => {
+  const handleRapidFireModel = (roundName: String, round: RoundI) => {
     if (roundName === 'Rapid-fire') {
       setModel(true)
     } else {
@@ -55,7 +55,7 @@ const Round = async () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
   const url = `http://localhost:3000/api/getRound`
-  const { data: rounds, error, isLoading } = useSWR<RoundType[]>(url, fetcher)
+  const { data: rounds, error, isLoading } = useSWR<RoundI[]>(url, fetcher)
 
   if (error) return <div>failed to load</div>
   if (isLoading) return <Loading />
@@ -83,7 +83,7 @@ const Round = async () => {
 
         <div className='flex flex-row justify-around align-items-center pt-[12%] md:pl-[12%]'>
           <div className='flex-col justify-content:center align-items:center pt-11'>
-            {rounds?.map((round: RoundType) => {
+            {rounds?.map((round: RoundI) => {
               return (
                 !round.issubcategory && (
                   <button
