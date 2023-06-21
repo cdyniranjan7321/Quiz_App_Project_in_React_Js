@@ -1,11 +1,10 @@
 'use client'
+import useSWR from 'swr'
 import React from 'react'
+import Loading from '../loading'
 import Navbar from '@/components/Navbar'
 import Question from '@/components/Question'
-import { useRouter, useSearchParams } from 'next/navigation'
-import useSWR from 'swr'
-import { QuestionI } from '../../../types'
-import Loading from '../loading'
+import { useSearchParams } from 'next/navigation'
 
 const GeneralQuestionsA = () => {
   const searchParams = useSearchParams()
@@ -28,7 +27,7 @@ const GeneralQuestionsA = () => {
       {/* starting navbar and main page  */}
       <div className='flex flex-col w-full'>
         {/* start navbar  and main page*/}
-        <Navbar title='General round' isGeneralQuestionsPage={true} />
+        <Navbar title='General round' isBackArrow={true} />
         {/* end navbar */}
         <Question
           isGeneralAPage={true}

@@ -1,7 +1,7 @@
 'use client'
-import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 import React, { useState, useEffect, ChangeEvent } from 'react'
+
 const AdditionalSettings = () => {
   const [isSidebarShown, setIsSidebarShown] = useState(true)
   // this is used to have boolean value true for issidebarshown
@@ -63,7 +63,7 @@ const AdditionalSettings = () => {
         key={index}
         className='bg-white flex justify-center rounded-md pb-3 pt-0 w-50 mt-6'
       >
-        {index+1}
+        {index + 1}
       </h2>
     ))
   }

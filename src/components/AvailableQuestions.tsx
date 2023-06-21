@@ -1,7 +1,8 @@
 'use client'
-import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import NumberGrid from './NumberGrid'
+import React, { useState, useEffect } from 'react'
+
 type AvailableProps = {
   isMultipleQuestionsPage?: boolean
   totalQuestions: string | null
@@ -51,11 +52,11 @@ const AvailableQuestions = (props: AvailableProps) => {
       <div className='w-[70%] ml-24 mt-8 '>
         <div className='flex flex-row justify-between'>
           <div className='flex flex-col'>
-            {isMultipleQuestionsPage && (
+            {/* {isMultipleQuestionsPage && (
               <span className='text-3xl lg:text-5xl p-4'>
                 Multiple Choice question
               </span>
-            )}
+            )} */}
             <div className='flex'>
               <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 ml-5'>
                 Round for: Red house{' '}
@@ -64,7 +65,9 @@ const AvailableQuestions = (props: AvailableProps) => {
             </div>
           </div>
         </div>
-        <div className='text-3xl lg:text-5xl p-4 '>Available Questions:</div>
+        <div className='text-2xl lg:text-4xl p-4 '>
+          Select Question Number :
+        </div>
         <NumberGrid grid={grid} />
       </div>
       {/* starting second part  */}

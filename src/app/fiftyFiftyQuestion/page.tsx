@@ -1,10 +1,9 @@
 'use client'
-import React, { useState } from 'react' //The 'useState' hook is used to manage the state of the selected option.
-import { BiArrowBack as BackArrow } from 'react-icons/bi'
-import { AiOutlineClose } from 'react-icons/ai'
+import Navbar from '@/components/Navbar'
+import React, { useState } from 'react'
 
-const MultipleChoice = () => {
-  const [selectedOption, setSelectedOption] = useState(null)
+const FiftyFifty = () => {
+  const [selectedOption, setSelectedOption] = useState(0)
 
   const handleOptionClick = (optionIndex: any) => {
     //The 'handleOptionClick' function is call when an option is clicked and updates the selected option state.
@@ -23,28 +22,7 @@ const MultipleChoice = () => {
       {/* The component starts with a div that covers the entire screen and has a gradient background. */}
       {/* starting navbar and main page where main component is wrapped in a flex container with a vertical column layout.*/}
       <div className='flex flex-col w-full'>
-        {/* start navbar where navbar section is defined with a gradient background and contains a back arrow button, a tittle, and a close button. */}
-        <div className='bg-gradient-to-br from-[#C77DFF] to-[#000000] h-14 w-full flex justify-between items-center'>
-          <div className='text-white-300 text-gray-200 text-bold text-4xl'>
-            <button className='self-start'>
-              <BackArrow size={30} color='#FFFFFF' />
-            </button>
-          </div>
-
-          <div className='flex justify-center items-center'>
-            <span className='text-white font-bold text-4xl'>
-              {' '}
-              Multiple choice Round{' '}
-            </span>
-          </div>
-
-          <div>
-            <button>
-              <AiOutlineClose size={30} color='#FFFFFF' />
-            </button>
-          </div>
-        </div>
-        {/* end navbar */}
+        <Navbar title='Fifty-fifty Round' isBackArrow={true} />
 
         {/* starting main page */}
         <div className='flex flex-col md:flex-row h-full'>
@@ -52,19 +30,22 @@ const MultipleChoice = () => {
           <div className='md:w-[70%] md:ml-24 mt-8'>
             <div className='flex flex-row justify-between'>
               <div className='flex flex-col'>
-                <span className='text-4xl p-4'>Multiple choice question</span>
                 <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-3'>
                   Round for: Red house
                   <button className='ml-2 bg-red-500 w-10 h-6 rounded-xl py-2'></button>
                 </span>
               </div>
             </div>
-            <div className='text-5xl p-4'>Questions(1):</div>
-            <div className='ml- flex justify-center'>
-              <div className='text-5xl pt-11 left-0 pb-2 mr-16'>Answer:</div>
+            <div className='text-2xl lg:text-4xl p-3 font-italiana'>
+              {' '}
+              Question 1 :
+            </div>
+            <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
+              {' '}
+              Answer :
             </div>
             {/* Add the four options here  and Four buttons are displayed for the answer options. The button appearance depends on the selected option and */}
-            <div className='ml-20 flex justify-center'>
+            <div className='mt-10 ml-20 flex justify-center'>
               <div className='flex flex-col gap-4'>
                 {/*Four buttons are display for the answer options. */}
                 <div className='flex justify-center'>
@@ -145,4 +126,4 @@ const MultipleChoice = () => {
   )
 }
 
-export default MultipleChoice
+export default FiftyFifty

@@ -6,7 +6,7 @@ type AvailableProps = {
   isGeneralAPage?: boolean
   isRapidFirePage?: boolean
   questionNum?: number
-  qn: QuestionI | undefined
+  qn?: QuestionI | undefined
 }
 const Question = (props: AvailableProps) => {
   const { isGeneralAPage, isRapidFirePage, questionNum, qn } = props
@@ -22,7 +22,6 @@ const Question = (props: AvailableProps) => {
             <div className='flex flex-col'>
               {isGeneralAPage && (
                 <span className='text-3xl lg:text-5xl p-4 font-italiana'>
-                  General round
                   {showText && <span className='pl-2'>pass question</span>}
                 </span>
               )}
