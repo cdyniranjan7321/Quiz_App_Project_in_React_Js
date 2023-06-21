@@ -9,7 +9,7 @@ const Settings = () => {
       <div className=' flex flex-col w-full'>
         {/* start navbar  and main page*/}
         <div className='z-20'>
-          <Navbar title='Settings' isGeneralQuestionsPage={true} />
+          <Navbar title='Settings' isBackArrow={true} />
         </div>
         {/* end navbar */}
         <AdditionalSettings />
