@@ -44,7 +44,7 @@ model Round {
 }
 
 model QuestionAnswer {
-  id           Int     @id @default(autoincrement())
+  id           Int
   question     String
   answer       String
   isAsked      Boolean @default(false)
@@ -59,4 +59,6 @@ model QuestionAnswer {
   fiftyOption2 String?
   round        Round   @relation(fields: [roundId], references: [id])
   roundId      Int
+
+  @@id([id, roundId])
 }
