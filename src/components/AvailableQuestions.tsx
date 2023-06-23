@@ -5,11 +5,14 @@ import React, { useState, useEffect } from 'react'
 
 type AvailableProps = {
   isMultipleQuestionsPage?: boolean
-  totalQuestions: string | null
+  totalQuestions: number
+  roundId: number
+  roundName: string | null
 }
 
 const AvailableQuestions = (props: AvailableProps) => {
-  const { isMultipleQuestionsPage, totalQuestions } = props
+  const { isMultipleQuestionsPage, totalQuestions, roundId, roundName } = props
+  console.log(' roundName : ', roundName)
 
   const [numRows, setNumRows] = useState(5)
   //this number determines how many rows are shown
@@ -38,7 +41,7 @@ const AvailableQuestions = (props: AvailableProps) => {
     const row = []
     for (let j = 0; j < numCols; j++) {
       if (totalQuestions !== null) {
-        if (count <= parseInt(totalQuestions)) {
+        if (count <= totalQuestions) {
           row.push(count++)
         } else {
           break
@@ -68,7 +71,7 @@ const AvailableQuestions = (props: AvailableProps) => {
         <div className='text-2xl lg:text-4xl p-4 '>
           Select Question Number :
         </div>
-        <NumberGrid grid={grid} />
+        <NumberGrid grid={grid} roundId={roundId} roundName={roundName} />
       </div>
       {/* starting second part  */}
       <div className='flex flex-col w-[30%] gap-12  '>

@@ -5,11 +5,10 @@ import { QuestionI } from '../../types'
 type AvailableProps = {
   isGeneralAPage?: boolean
   isRapidFirePage?: boolean
-  questionNum?: number
   qn?: QuestionI | undefined
 }
 const Question = (props: AvailableProps) => {
-  const { isGeneralAPage, isRapidFirePage, questionNum, qn } = props
+  const { isGeneralAPage, isRapidFirePage, qn } = props
   const [showText, setShowText] = useState(false)
   const handlePassButtonClick = () => {
     setShowText(true)
@@ -35,7 +34,7 @@ const Question = (props: AvailableProps) => {
           </div>
           <div className='text-2xl lg:text-4xl p-3 font-italiana'>
             {' '}
-            Question {questionNum} : {qn?.question}
+            Question {qn?.id} : {qn?.question}
           </div>
           <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
             {' '}

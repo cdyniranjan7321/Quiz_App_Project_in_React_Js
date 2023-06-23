@@ -4,14 +4,22 @@ import CloseIconButton from './CloseIconButton'
 
 type NumberGridProps = {
   grid: number[][]
+  roundId: number
+  roundName: string | null
 }
-const NumberGrid = ({ grid }: NumberGridProps) => {
+const NumberGrid = (props: NumberGridProps) => {
+  const { grid, roundId, roundName } = props
   const [clickedButtons, setClickedButtons] = useState<number[]>([])
+  console.log(' roundId : ', roundId)
 
   const router = useRouter()
 
   const handleQuestionNumberClick = (number: number) => {
-    router.push(`/generalQuestion?questionNumber=${number}`)
+    if (roundId !== null && roundName !== null) {
+      router.push(
+        `/${roundName}Question?questionNumber=${number}&roundId=${roundId}`
+      )
+    }
   }
   return (
     <div className='flex flex-col gap-4 lg:gap-6 ml-0 mt-4 w-full mb-4 lg:mb-10'>

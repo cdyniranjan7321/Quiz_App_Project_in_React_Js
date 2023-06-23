@@ -4,9 +4,12 @@ import Navbar from '@/components/Navbar'
 import { useSearchParams } from 'next/navigation'
 import AvailableQuestions from '@/components/AvailableQuestions'
 
-const MultipleChoiceQuestions = () => {
+const FiftyFifty = () => {
   const searchParams = useSearchParams()
   const totalQuestions = searchParams.get('totalquestions')
+  const roundId = searchParams.get('roundId')
+  const round_id = roundId !== null ? parseInt(roundId) : 0
+  const total_questions = totalQuestions !== null ? parseInt(totalQuestions) : 0
 
   return (
     // starting whole page
@@ -19,11 +22,13 @@ const MultipleChoiceQuestions = () => {
 
         <AvailableQuestions
           isMultipleQuestionsPage={true}
-          totalQuestions={totalQuestions}
+          totalQuestions={total_questions}
+          roundId={round_id}
+          roundName='fiftyFifty'
         />
       </div>
       {/* ending navbar and main page  */}
     </div>
   )
 }
-export default MultipleChoiceQuestions
+export default FiftyFifty

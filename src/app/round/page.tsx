@@ -45,9 +45,9 @@ const Round = async () => {
       setModel(true)
     } else {
       router.push(
-        `/${roundName.toLocaleLowerCase()}?totalquestions=${
-          round.totalquestions
-        }`
+        `/${
+          roundName.charAt(0).toLowerCase() + roundName.slice(1)
+        }?totalquestions=${round.totalquestions}&roundId=${round.id}`
       )
     }
   }

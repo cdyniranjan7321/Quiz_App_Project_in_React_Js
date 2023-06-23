@@ -1,8 +1,19 @@
 'use client'
 import Navbar from '@/components/Navbar'
 import React, { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import useRequest from '../../../utils/useRequest'
 
-const FiftyFifty = () => {
+const FiftyFiftyQuestion = () => {
+  const searchParams = useSearchParams()
+  const roundId = searchParams.get('roundId')
+  const questionNumber = searchParams.get('questionNumber')
+  const round_id = roundId !== null ? parseInt(roundId) : 0
+  const questionNum = questionNumber !== null ? parseInt(questionNumber) : 0
+
+  const { question } = useRequest(questionNum, round_id)
+  console.log('data from fiftyfifty fetcher : ', question)
+
   const [selectedOption, setSelectedOption] = useState(0)
 
   const handleOptionClick = (optionIndex: any) => {
@@ -38,16 +49,14 @@ const FiftyFifty = () => {
             </div>
             <div className='text-2xl lg:text-4xl p-3 font-italiana'>
               {' '}
-              Question 1 :
+              Question {question?.id} : {question?.question}
             </div>
             <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
               {' '}
-              Answer :
+              Answer : {question?.answer}
             </div>
-            {/* Add the four options here  and Four buttons are displayed for the answer options. The button appearance depends on the selected option and */}
             <div className='mt-10 ml-20 flex justify-center'>
               <div className='flex flex-col gap-4'>
-                {/*Four buttons are display for the answer options. */}
                 <div className='flex justify-center'>
                   <button
                     className={`option rounded-lg p-2 text-xl w-[10rem] h-16 ${
@@ -57,9 +66,9 @@ const FiftyFifty = () => {
                           : 'bg-[#FF0000]'
                         : 'bg-gray-200'
                     }`}
-                    onClick={() => handleOptionClick(0)} //The 'handleOptionClick' function is called when an option button is clicked.
+                    onClick={() => handleOptionClick(0)}
                   >
-                    option 1
+                    A. {question?.option1}
                   </button>
                   <div style={{ marginLeft: '2rem' }}></div>
                   <button
@@ -72,7 +81,7 @@ const FiftyFifty = () => {
                     }`}
                     onClick={() => handleOptionClick(1)}
                   >
-                    option 2
+                    B. {question?.option2}
                   </button>
                 </div>
                 <div className='flex justify-center'>
@@ -86,7 +95,7 @@ const FiftyFifty = () => {
                     }`}
                     onClick={() => handleOptionClick(2)}
                   >
-                    option 3
+                    C. {question?.option3}
                   </button>
                   <div style={{ marginLeft: '2rem' }}></div>
                   <button
@@ -99,7 +108,7 @@ const FiftyFifty = () => {
                     }`}
                     onClick={() => handleOptionClick(3)}
                   >
-                    option 4
+                    D. {question?.option4}
                   </button>
                 </div>
               </div>
@@ -126,4 +135,4 @@ const FiftyFifty = () => {
   )
 }
 
-export default FiftyFifty
+export default FiftyFiftyQuestion

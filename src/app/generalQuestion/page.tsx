@@ -1,25 +1,19 @@
 'use client'
-import useSWR from 'swr'
 import React from 'react'
-import Loading from '../loading'
 import Navbar from '@/components/Navbar'
 import Question from '@/components/Question'
 import { useSearchParams } from 'next/navigation'
+import useRequest from '../../../utils/useRequest'
 
-const GeneralQuestionsA = () => {
+const GeneralQuestion = () => {
   const searchParams = useSearchParams()
+  const roundId = searchParams.get('roundId')
   const questionNumber = searchParams.get('questionNumber')
+  const round_id = roundId !== null ? parseInt(roundId) : 0
   const questionNum = questionNumber !== null ? parseInt(questionNumber) : 0
-  //to conditionally check if the number is null since it came from somewhere
 
-  const fetcher = (url: string) => fetch(url).then((res) => res.json())
-
-  const url = `http://localhost:3000/api/getQuestion?questionNumber=${questionNum}`
-  const { data: question, error, isLoading } = useSWR(url, fetcher)
-
-  if (error) return <div>failed to load</div>
-  if (isLoading) return <Loading />
-  console.log('data from generalquestion fetcher : ', question?.question)
+  const { question } = useRequest(questionNum, round_id)
+  console.log('data from generalquestion fetcher : ', question)
 
   return (
     // starting whole page
@@ -31,12 +25,12 @@ const GeneralQuestionsA = () => {
         {/* end navbar */}
         <Question
           isGeneralAPage={true}
-          questionNum={questionNum}
-          qn={question?.question}
+          // questionNum={questionNum}
+          qn={question}
         />
       </div>
       {/* ending navbar and main page  */}
     </div>
   )
 }
-export default GeneralQuestionsA
+export default GeneralQuestion
