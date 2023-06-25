@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { QuestionI } from '../../types'
+import Timer from './Timer'
 
 type AvailableProps = {
   isGeneralAPage?: boolean
@@ -63,7 +64,11 @@ const Question = (props: AvailableProps) => {
           </div>
         )}
       </div>
-      <div className=' flex justify-center mt-64 mb-4'>
+
+      <div className=' flex justify-center mt-60 mb-2 rounded-2xl mr-10 px-7 py-4 text-xl'>
+        <Timer/>
+      </div>
+      <div className=' flex justify-center mt-2 mb-4'>
         <button
           className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
           onClick={() => setShowAnswer(!showAnswer)}
