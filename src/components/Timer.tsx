@@ -7,7 +7,6 @@ const Timer: React.FC = () => {
 
   useEffect(() => {
     let interval: NodeJS.Timeout
-
     if (isRunning) {
       interval = setInterval(() => {
         if (time > 0) {
@@ -17,7 +16,6 @@ const Timer: React.FC = () => {
         }
       }, 1000)
     }
-
     return () => {
       clearInterval(interval)
     }
