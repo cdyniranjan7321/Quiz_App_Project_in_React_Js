@@ -65,7 +65,7 @@ const Question = (props: AvailableProps) => {
         )}
       </div>
 
-      <div className=' flex justify-center mt-60 mb-2 rounded-2xl mr-10 px-7 py-4 text-xl'>
+      <div className={`flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl ${showText ? ' mt-48':'mt-60'}`}>
         <Timer />
       </div>
       <div className=' flex justify-center mt-2 mb-4'>
