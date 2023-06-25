@@ -19,7 +19,7 @@ const FiftyFiftyQuestion = () => {
   const [isOption2Active, setIsOption2Active] = useState(false)
   const [isOption3Active, setIsOption3Active] = useState(false)
   const [isOption4Active, setIsOption4Active] = useState(false)
-  const [fiftyFifty, setFiftyFifty] = useState(false)
+  const [isFiftyFifty, setIsFiftyFifty] = useState(false)
 
   return (
     <div className='h-screen w-screen overflow-hidden flex bg-gray-900 bg-gradient-to-b from-gray-100 to-purple-800'>
@@ -52,70 +52,104 @@ const FiftyFiftyQuestion = () => {
             )}
             <div className='mt-10 ml-20 flex justify-center'>
               <div className='flex flex-col gap-4'>
-                <div className='flex justify-center'>
-                  <button
-                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
-                      !isOption1Active
-                        ? 'bg-gray-200'
-                        : isOption1Active &&
-                          question?.option1 === question?.answer
-                        ? 'bg-[#B1DE76]'
-                        : 'bg-[#FF0000]'
-                    }`}
-                    onClick={() => setIsOption1Active(true)}
-                  >
-                    A. {question?.option1}
-                  </button>
-                  <div style={{ marginLeft: '2rem' }}></div>
-                  <button
-                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
-                      !isOption2Active
-                        ? 'bg-gray-200'
-                        : isOption2Active &&
-                          question?.option2 === question?.answer
-                        ? 'bg-[#B1DE76]'
-                        : 'bg-[#FF0000]'
-                    }`}
-                    onClick={() => setIsOption2Active(true)}
-                  >
-                    B. {question?.option2}
-                  </button>
-                </div>
-                <div className='flex justify-center'>
-                  <button
-                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
-                      !isOption3Active
-                        ? 'bg-gray-200'
-                        : isOption3Active &&
-                          question?.option3 === question?.answer
-                        ? 'bg-[#B1DE76]'
-                        : 'bg-[#FF0000]'
-                    }`}
-                    onClick={() => setIsOption3Active(true)}
-                  >
-                    C. {question?.option3}
-                  </button>
-                  <div style={{ marginLeft: '2rem' }}></div>
-                  <button
-                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
-                      !isOption4Active
-                        ? 'bg-gray-200'
-                        : isOption4Active &&
-                          question?.option4 === question?.answer
-                        ? 'bg-[#B1DE76]'
-                        : 'bg-[#FF0000]'
-                    }`}
-                    onClick={() => setIsOption4Active(true)}
-                  >
-                    D. {question?.option4}
-                  </button>
-                </div>
+                {!isFiftyFifty ? (
+                  <>
+                    <div className='flex justify-center'>
+                      <button
+                        className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
+                          !isOption1Active
+                            ? 'bg-gray-200'
+                            : isOption1Active &&
+                              question?.option1 === question?.answer
+                            ? 'bg-[#B1DE76]'
+                            : 'bg-[#FF0000]'
+                        }`}
+                        onClick={() => setIsOption1Active(true)}
+                      >
+                        A. {question?.option1}
+                      </button>
+                      <div style={{ marginLeft: '2rem' }}></div>
+                      <button
+                        className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
+                          !isOption2Active
+                            ? 'bg-gray-200'
+                            : isOption2Active &&
+                              question?.option2 === question?.answer
+                            ? 'bg-[#B1DE76]'
+                            : 'bg-[#FF0000]'
+                        }`}
+                        onClick={() => setIsOption2Active(true)}
+                      >
+                        B. {question?.option2}
+                      </button>
+                    </div>
+                    <div className='flex justify-center'>
+                      <button
+                        className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
+                          !isOption3Active
+                            ? 'bg-gray-200'
+                            : isOption3Active &&
+                              question?.option3 === question?.answer
+                            ? 'bg-[#B1DE76]'
+                            : 'bg-[#FF0000]'
+                        }`}
+                        onClick={() => setIsOption3Active(true)}
+                      >
+                        C. {question?.option3}
+                      </button>
+                      <div style={{ marginLeft: '2rem' }}></div>
+                      <button
+                        className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
+                          !isOption4Active
+                            ? 'bg-gray-200'
+                            : isOption4Active &&
+                              question?.option4 === question?.answer
+                            ? 'bg-[#B1DE76]'
+                            : 'bg-[#FF0000]'
+                        }`}
+                        onClick={() => setIsOption4Active(true)}
+                      >
+                        D. {question?.option4}
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className='flex justify-center'>
+                    <button
+                      className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
+                        !isOption1Active
+                          ? 'bg-gray-200'
+                          : isOption1Active &&
+                            question?.fiftyOption1 === question?.answer
+                          ? 'bg-[#B1DE76]'
+                          : 'bg-[#FF0000]'
+                      }`}
+                      onClick={() => setIsOption1Active(true)}
+                    >
+                      A. {question?.fiftyOption1}
+                    </button>
+                    <div style={{ marginLeft: '2rem' }}></div>
+                    <button
+                      className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
+                        !isOption2Active
+                          ? 'bg-gray-200'
+                          : isOption2Active &&
+                            question?.fiftyOption2 === question?.answer
+                          ? 'bg-[#B1DE76]'
+                          : 'bg-[#FF0000]'
+                      }`}
+                      onClick={() => setIsOption2Active(true)}
+                    >
+                      B. {question?.fiftyOption2}
+                    </button>
+                  </div>
+                )}
               </div>
               <div className=' flex justify-center mt-64 mb-4'>
                 <button
                   className=' bg-green-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
                   onClick={() => {
-                    setFiftyFifty(true)
+                    setIsFiftyFifty(true)
                   }}
                 >
                   Use fifty-fifty
