@@ -1,6 +1,6 @@
 'use client'
-import Navbar from '@/components/Navbar'
 import React, { useState } from 'react'
+import Navbar from '@/components/Navbar'
 import { useSearchParams } from 'next/navigation'
 import useRequest from '../../../utils/useRequest'
 
@@ -14,18 +14,12 @@ const FiftyFiftyQuestion = () => {
   const { question } = useRequest(questionNum, round_id)
   console.log('data from fiftyfifty fetcher : ', question)
 
-  const [selectedOption, setSelectedOption] = useState(0)
-
-  const handleOptionClick = (optionIndex: any) => {
-    //The 'handleOptionClick' function is call when an option is clicked and updates the selected option state.
-    setSelectedOption(optionIndex)
-  }
-
-  const isAnswerCorrect = (optionIndex: Number) => {
-    //The 'isAnswerCorrect' function determines whether the selected option is coorect.You may need to replace this with your own logic.
-    // Replace this with your answer correctness logic
-    return optionIndex === 1 // Assuming option 1 is the correct answer
-  }
+  const [showAnswer, setShowAnswer] = useState(false)
+  const [isOption1Active, setIsOption1Active] = useState(false)
+  const [isOption2Active, setIsOption2Active] = useState(false)
+  const [isOption3Active, setIsOption3Active] = useState(false)
+  const [isOption4Active, setIsOption4Active] = useState(false)
+  const [fiftyFifty, setFiftyFifty] = useState(false)
 
   return (
     <div className='h-screen w-screen overflow-hidden flex bg-gray-900 bg-gradient-to-b from-gray-100 to-purple-800'>
@@ -51,66 +45,91 @@ const FiftyFiftyQuestion = () => {
               {' '}
               Question {question?.id} : {question?.question}
             </div>
-            <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
-              {' '}
-              Answer : {question?.answer}
-            </div>
+            {showAnswer && (
+              <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
+                Answer : {question?.answer}
+              </div>
+            )}
             <div className='mt-10 ml-20 flex justify-center'>
               <div className='flex flex-col gap-4'>
                 <div className='flex justify-center'>
                   <button
-                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16 ${
-                      selectedOption === 0
-                        ? isAnswerCorrect(selectedOption)
-                          ? 'bg-[#B1DE76]'
-                          : 'bg-[#FF0000]'
-                        : 'bg-gray-200'
+                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
+                      !isOption1Active
+                        ? 'bg-gray-200'
+                        : isOption1Active &&
+                          question?.option1 === question?.answer
+                        ? 'bg-[#B1DE76]'
+                        : 'bg-[#FF0000]'
                     }`}
-                    onClick={() => handleOptionClick(0)}
+                    onClick={() => setIsOption1Active(true)}
                   >
                     A. {question?.option1}
                   </button>
                   <div style={{ marginLeft: '2rem' }}></div>
                   <button
-                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16 ${
-                      selectedOption === 1
-                        ? isAnswerCorrect(selectedOption)
-                          ? 'bg-[#B1DE76]'
-                          : 'bg-[#FF0000]'
-                        : 'bg-gray-200'
+                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
+                      !isOption2Active
+                        ? 'bg-gray-200'
+                        : isOption2Active &&
+                          question?.option2 === question?.answer
+                        ? 'bg-[#B1DE76]'
+                        : 'bg-[#FF0000]'
                     }`}
-                    onClick={() => handleOptionClick(1)}
+                    onClick={() => setIsOption2Active(true)}
                   >
                     B. {question?.option2}
                   </button>
                 </div>
                 <div className='flex justify-center'>
                   <button
-                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16 ${
-                      selectedOption === 2
-                        ? isAnswerCorrect(selectedOption)
-                          ? 'bg-[#B1DE76]'
-                          : 'bg-[#FF0000]'
-                        : 'bg-gray-200'
+                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
+                      !isOption3Active
+                        ? 'bg-gray-200'
+                        : isOption3Active &&
+                          question?.option3 === question?.answer
+                        ? 'bg-[#B1DE76]'
+                        : 'bg-[#FF0000]'
                     }`}
-                    onClick={() => handleOptionClick(2)}
+                    onClick={() => setIsOption3Active(true)}
                   >
                     C. {question?.option3}
                   </button>
                   <div style={{ marginLeft: '2rem' }}></div>
                   <button
-                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16 ${
-                      selectedOption === 3
-                        ? isAnswerCorrect(selectedOption)
-                          ? 'bg-[#B1DE76]'
-                          : 'bg-[#FF0000]'
-                        : 'bg-gray-200'
+                    className={`option rounded-lg p-2 text-xl w-[10rem] h-16  ${
+                      !isOption4Active
+                        ? 'bg-gray-200'
+                        : isOption4Active &&
+                          question?.option4 === question?.answer
+                        ? 'bg-[#B1DE76]'
+                        : 'bg-[#FF0000]'
                     }`}
-                    onClick={() => handleOptionClick(3)}
+                    onClick={() => setIsOption4Active(true)}
                   >
                     D. {question?.option4}
                   </button>
                 </div>
+              </div>
+              <div className=' flex justify-center mt-64 mb-4'>
+                <button
+                  className=' bg-green-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
+                  onClick={() => {
+                    setFiftyFifty(true)
+                  }}
+                >
+                  Use fifty-fifty
+                </button>
+                <button
+                  className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
+                  onClick={() => setShowAnswer(!showAnswer)}
+                >
+                  {showAnswer ? (
+                    <span>Hide Answer</span>
+                  ) : (
+                    <span>Show Answer</span>
+                  )}
+                </button>
               </div>
             </div>
           </div>

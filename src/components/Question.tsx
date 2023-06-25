@@ -10,6 +10,8 @@ type AvailableProps = {
 const Question = (props: AvailableProps) => {
   const { isGeneralAPage, isRapidFirePage, qn } = props
   const [showText, setShowText] = useState(false)
+  const [showAnswer, setShowAnswer] = useState(false)
+
   const handlePassButtonClick = () => {
     setShowText(true)
   }
@@ -36,10 +38,11 @@ const Question = (props: AvailableProps) => {
             {' '}
             Question {qn?.id} : {qn?.question}
           </div>
-          <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
-            {' '}
-            Answer : {qn?.answer}
-          </div>
+          {showAnswer && (
+            <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
+              Answer : {qn?.answer}
+            </div>
+          )}
         </div>
         {/* starting second part  */}
         {!isRapidFirePage && (
@@ -61,6 +64,12 @@ const Question = (props: AvailableProps) => {
         )}
       </div>
       <div className=' flex justify-center mt-64 mb-4'>
+        <button
+          className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
+          onClick={() => setShowAnswer(!showAnswer)}
+        >
+          {showAnswer ? <span>Hide Answer</span> : <span>Show Answer</span>}
+        </button>
         <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'>
           Correct
         </button>
