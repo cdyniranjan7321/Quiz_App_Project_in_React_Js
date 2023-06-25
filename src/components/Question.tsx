@@ -12,9 +12,16 @@ const Question = (props: AvailableProps) => {
   const { isGeneralAPage, isRapidFirePage, qn } = props
   const [showText, setShowText] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
-
+  const [passCount,setPassCount]=useState(0)
   const handlePassButtonClick = () => {
     setShowText(true)
+    setPassCount((prevCount)=>prevCount+1)
+  }
+  let timerStartFrom = 30;
+  if (passCount === 1) {
+    timerStartFrom = 20;
+  } else if (passCount > 1) {
+    timerStartFrom = 15;
   }
   return (
     <div className='flex flex-col justify-center'>
@@ -66,7 +73,7 @@ const Question = (props: AvailableProps) => {
       </div>
 
       <div className={`flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl ${showText ? ' mt-48':'mt-60'}`}>
-        <Timer />
+        <Timer startFrom={timerStartFrom}/>
       </div>
       <div className=' flex justify-center mt-2 mb-4'>
         <button
