@@ -14,9 +14,6 @@ const NumberGrid = (props: NumberGridProps) => {
   const { grid, roundId, roundName, totalQuestions } = props
   const [clickedButtons, setClickedButtons] = useState<number[]>([])
   const router = useRouter()
-  // const [questionNum, setQuestionNum] = useState(1)
-
-  // const { question } = useRequest(1, roundId)
 
   /* ------------- useSWRInfinite ------------ */
   const initialSize = totalQuestions
