@@ -41,7 +41,7 @@ const Round = async () => {
   }, [])
 
   const handleRapidFireModel = (roundName: String, round: RoundI) => {
-    if (roundName === 'Rapid-fire') {
+    if (roundName === 'RapidFire') {
       setModel(true)
     } else {
       router.push(
