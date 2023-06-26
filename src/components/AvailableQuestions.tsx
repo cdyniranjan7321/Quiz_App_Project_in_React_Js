@@ -71,7 +71,12 @@ const AvailableQuestions = (props: AvailableProps) => {
         <div className='text-2xl lg:text-4xl p-4 '>
           Select Question Number :
         </div>
-        <NumberGrid grid={grid} roundId={roundId} roundName={roundName} />
+        <NumberGrid
+          grid={grid}
+          roundId={roundId}
+          roundName={roundName}
+          totalQuestions={totalQuestions}
+        />
       </div>
       {/* starting second part  */}
       <div className='flex flex-col w-[30%] gap-12  '>

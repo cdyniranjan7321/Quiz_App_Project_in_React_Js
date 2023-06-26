@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import { useSearchParams } from 'next/navigation'
-import useRequest from '../../../utils/useRequest'
+import useRequest from '../../../utils/useQuestionRequest'
 
 const FiftyFiftyQuestion = () => {
   const searchParams = useSearchParams()
