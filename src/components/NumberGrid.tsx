@@ -68,7 +68,7 @@ const NumberGrid = (props: NumberGridProps) => {
     return () => {
       clearInterval(refreshInterval)
     }
-  }, [])
+  })
 
   if (error) {
     return <div>Error: {error.message}</div>
