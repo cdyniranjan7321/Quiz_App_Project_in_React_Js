@@ -1,9 +1,9 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Navbar from '@/components/Navbar'
 import Question from '@/components/Question'
 import { useSearchParams } from 'next/navigation'
-import useRequest from '../../../utils/useRequest'
+import useRequest from '../../../utils/useQuestionRequest'
 
 const GeneralQuestion = () => {
   const searchParams = useSearchParams()
