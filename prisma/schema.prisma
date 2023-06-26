@@ -44,21 +44,22 @@ model Round {
 }
 
 model QuestionAnswer {
-  id           Int
-  question     String
-  answer       String
-  isAsked      Boolean @default(false)
-  resourceType String?
-  resource     String?
-  font         String  @default("English")
-  option1      String?
-  option2      String?
-  option3      String?
-  option4      String?
-  fiftyOption1 String?
-  fiftyOption2 String?
-  round        Round   @relation(fields: [roundId], references: [id])
-  roundId      Int
+  id            Int
+  roundId       Int
+  answer        String
+  fiftyOption1  String?
+  font          String  @default("English")
+  isAsked       Boolean @default(false)
+  option1       String?
+  option2       String?
+  option3       String?
+  option4       String?
+  question      String
+  resource      String?
+  resourceType  String?
+  fiftyOption2  String?
+  correctOption Int?
+  round         Round   @relation(fields: [roundId], references: [id])
 
   @@id([id, roundId])
 }
