@@ -25,7 +25,7 @@ const Question = (props: AvailableProps) => {
   }
   return (
     <div className='flex flex-col justify-center'>
-      <div className='flex flex-row h-full justify-between'>
+      <div className='flex flex-row h-full justify-between mb-28'>
         <div className='w-[70%] ml-24 mt-8 '>
           <div className='flex flex-row justify-between'>
             <div className='flex flex-col'>
@@ -72,7 +72,7 @@ const Question = (props: AvailableProps) => {
         )}
       </div>
 
-      <div className={`flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl ${showText ? ' mt-48':'mt-60'}`}>
+      <div className='flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl'>
         <Timer startFrom={timerStartFrom}/>
       </div>
       <div className=' flex justify-center mt-2 mb-4'>
