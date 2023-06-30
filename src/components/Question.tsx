@@ -46,7 +46,7 @@ const Question = (props: AvailableProps) => {
     }
     if (answerCheck === 'correct') {
       setCorrectAnswerCount(correctAnswerCount + 1)
-      if (questionNumber === 6 && answerCheck === 'incorrect') {
+      if (questionNumber === 6) {
         toast.success(
           `Congratulations your total correct answer is : ${
             correctAnswerCount + 1
@@ -125,24 +125,32 @@ const Question = (props: AvailableProps) => {
           <Timer startFrom={timerStartFrom} />
         </div>
         <div className=' flex justify-center'>
-          <button
-            className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
-            onClick={() => setShowAnswer(!showAnswer)}
-          >
-            {showAnswer ? <span>Hide Answer</span> : <span>Show Answer</span>}
-          </button>
-          <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'>
-            Correct
-          </button>
-          <button className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'>
-            Incorrect
-          </button>
-          <button
-            className='bg-custom-brown rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-            onClick={handlePassButtonClick}
-          >
-            Pass
-          </button>
+          {!isRapidFirePage && (
+            <>
+              <button
+                className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
+                onClick={() => setShowAnswer(!showAnswer)}
+              >
+                {showAnswer ? (
+                  <span>Hide Answer</span>
+                ) : (
+                  <span>Show Answer</span>
+                )}
+              </button>
+              <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'>
+                Correct
+              </button>
+              <button className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'>
+                Incorrect
+              </button>
+              <button
+                className='bg-custom-brown rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+                onClick={handlePassButtonClick}
+              >
+                Pass
+              </button>
+            </>
+          )}
           {isRapidFirePage && (
             <>
               <button
