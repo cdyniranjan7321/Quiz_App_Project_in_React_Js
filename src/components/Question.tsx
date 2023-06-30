@@ -12,6 +12,7 @@ type AvailableProps = {
   set?: string | null
   questionNumber?: number
   setQuestionNumber?: (value: number) => void
+  timeFirst?: number
 }
 
 const Question = (props: AvailableProps) => {
@@ -22,6 +23,7 @@ const Question = (props: AvailableProps) => {
     set,
     questionNumber,
     setQuestionNumber,
+    timeFirst,
   } = props
 
   const router = useRouter()
@@ -66,11 +68,14 @@ const Question = (props: AvailableProps) => {
     }
   }
 
-  let timerStartFrom = 30
-  if (passCount === 1) {
-    timerStartFrom = 20
-  } else if (passCount > 1) {
-    timerStartFrom = 15
+  let timerStartFrom = 0
+  if (timeFirst !== undefined) {
+    timerStartFrom = timeFirst
+    if (passCount === 1) {
+      timerStartFrom = 20
+    } else if (passCount > 1) {
+      timerStartFrom = 15
+    }
   }
   return (
     <div className='flex flex-col justify-center'>
