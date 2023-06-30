@@ -120,55 +120,46 @@ const Question = (props: AvailableProps) => {
           </div>
         )}
       </div>
-
-      <div className='flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl'>
-        <Timer startFrom={timerStartFrom} />
-      </div>
-      <div className=' flex justify-center mt-2 mb-4'>
-        {!isRapidFirePage && (
-          <>
-            <button
-              className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
-              onClick={() => setShowAnswer(!showAnswer)}
-            >
-              {showAnswer ? <span>Hide Answer</span> : <span>Show Answer</span>}
-            </button>
-            <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'>
-              Correct
-            </button>
-            <button className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'>
-              Incorrect
-            </button>
-            <button
-              className='bg-custom-brown rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-              onClick={handlePassButtonClick}
-            >
-              Pass
-            </button>
-          </>
-        )}
-        {isRapidFirePage && (
-          <>
-            {/* <button
-          className=' bg-blue-700 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-          onClick={handleNextButtonClick}
-        >
-          Next
-        </button> */}
-            <button
-              className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
-              onClick={() => handleNextButtonClick('correct')}
-            >
-              Correct
-            </button>
-            <button
-              className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-              onClick={() => handleNextButtonClick('incorrect')}
-            >
-              Incorrect
-            </button>
-          </>
-        )}
+      <div className='fixed bottom-6 left-0 right-0 '>
+        <div className='flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl'>
+          <Timer startFrom={timerStartFrom} />
+        </div>
+        <div className=' flex justify-center'>
+          <button
+            className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
+            onClick={() => setShowAnswer(!showAnswer)}
+          >
+            {showAnswer ? <span>Hide Answer</span> : <span>Show Answer</span>}
+          </button>
+          <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'>
+            Correct
+          </button>
+          <button className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'>
+            Incorrect
+          </button>
+          <button
+            className='bg-custom-brown rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+            onClick={handlePassButtonClick}
+          >
+            Pass
+          </button>
+          {isRapidFirePage && (
+            <>
+              <button
+                className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
+                onClick={() => handleNextButtonClick('correct')}
+              >
+                Correct
+              </button>
+              <button
+                className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+                onClick={() => handleNextButtonClick('incorrect')}
+              >
+                Incorrect
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   )
