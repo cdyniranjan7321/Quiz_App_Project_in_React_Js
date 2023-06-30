@@ -15,7 +15,7 @@ const MyModel = (props: MyModelProps) => {
 
   const handleClick = (roundName: String, round: RoundI) => {
     router.push(
-      `/rapidFire?totalquestions=${round.totalquestions}&roundId=${round.id}&set=${roundName}&timeFirst=${round.timefirst}`
+      `/rapidFire?totalquestions=${round.totalquestions}&roundId=${round.id}&set=${roundName}&timefirst=${round.timefirst}`
     )
   }
 

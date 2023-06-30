@@ -12,7 +12,7 @@ type AvailableProps = {
   set?: string | null
   questionNumber?: number
   setQuestionNumber?: (value: number) => void
-  timeFirst?: number
+  timefirst?: number
 }
 
 const Question = (props: AvailableProps) => {
@@ -23,7 +23,7 @@ const Question = (props: AvailableProps) => {
     set,
     questionNumber,
     setQuestionNumber,
-    timeFirst,
+    timefirst,
   } = props
 
   const router = useRouter()
@@ -69,8 +69,8 @@ const Question = (props: AvailableProps) => {
   }
 
   let timerStartFrom = 0
-  if (timeFirst !== undefined) {
-    timerStartFrom = timeFirst
+  if (timefirst !== undefined) {
+    timerStartFrom = timefirst
     if (passCount === 1) {
       timerStartFrom = 20
     } else if (passCount > 1) {

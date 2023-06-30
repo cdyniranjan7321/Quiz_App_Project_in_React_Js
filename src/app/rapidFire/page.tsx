@@ -14,8 +14,8 @@ const RapidFireRound = () => {
   const set = searchParams.get('set')
   const round_id = searchParams.get('roundId')
   const roundId = round_id ? parseInt(round_id) : 0
-  const time_first = searchParams.get('timeFirst')
-  const timeFirst = time_first ? parseInt(time_first) : 0
+  const time_first = searchParams.get('timefirst')
+  const timefirst = time_first ? parseInt(time_first) : 0
 
   const { question } = useRequest(questionNumber, roundId)
 
@@ -37,7 +37,7 @@ const RapidFireRound = () => {
           qn={question}
           questionNumber={questionNumber}
           setQuestionNumber={setQuestionNumber}
-          timeFirst={timeFirst}
+          timefirst={timefirst}
         />
       </div>
       {/* ending navbar and main page  */}
