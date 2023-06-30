@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai'
 import { RoundI } from '../../types'
@@ -10,6 +11,14 @@ type MyModelProps = {
 
 const MyModel = (props: MyModelProps) => {
   const { setModel, rounds } = props
+  const router = useRouter()
+
+  const handleClick = (roundName: String, round: RoundI) => {
+    router.push(
+      `/rapidFire?totalquestions=${round.totalquestions}&roundId=${round.id}&set=${roundName}`
+    )
+  }
+
   return (
     <div className='absolute w-full h-screen flex justify-center items-center z-50 '>
       <div className=' absolute backdrop-blur-md  w-[78%] h-[65%] border-2 border-purple-500 rounded-md'>
@@ -30,6 +39,9 @@ const MyModel = (props: MyModelProps) => {
                   <button
                     key={round.id}
                     className=' bg-white w-[18%] h-16 font-bold  rounded-md ml-[40%] mt-5 '
+                    onClick={() => {
+                      handleClick(round.roundname, round)
+                    }}
                   >
                     {round.roundname}
                   </button>

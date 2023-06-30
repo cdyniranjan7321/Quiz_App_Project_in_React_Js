@@ -1,5 +1,7 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { QuestionI } from '../../types'
 import Timer from './Timer'
 
@@ -7,21 +9,68 @@ type AvailableProps = {
   isGeneralAPage?: boolean
   isRapidFirePage?: boolean
   qn?: QuestionI | undefined
+  set?: string | null
+  questionNumber?: number
+  setQuestionNumber?: (value: number) => void
 }
+
 const Question = (props: AvailableProps) => {
-  const { isGeneralAPage, isRapidFirePage, qn } = props
+  const {
+    isGeneralAPage,
+    isRapidFirePage,
+    qn,
+    set,
+    questionNumber,
+    setQuestionNumber,
+  } = props
+
+  const router = useRouter()
+
   const [showText, setShowText] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
-  const [passCount,setPassCount]=useState(0)
+  const [passCount, setPassCount] = useState(0)
+  const [correctAnswerCount, setCorrectAnswerCount] = useState(0)
+
   const handlePassButtonClick = () => {
     setShowText(true)
-    setPassCount((prevCount)=>prevCount+1)
+    setPassCount((prevCount) => prevCount + 1)
   }
-  let timerStartFrom = 30;
+
+  const handleNextButtonClick = (answerCheck: String) => {
+    if (
+      setQuestionNumber !== undefined &&
+      questionNumber !== undefined &&
+      questionNumber < 6
+    ) {
+      setQuestionNumber(questionNumber + 1)
+    }
+    if (answerCheck === 'correct') {
+      setCorrectAnswerCount(correctAnswerCount + 1)
+      if (questionNumber === 6 && answerCheck === 'incorrect') {
+        toast.success(
+          `Congratulations your total correct answer is : ${
+            correctAnswerCount + 1
+          }`
+        )
+        router.push('/round')
+      }
+    }
+    if (questionNumber === 6 && answerCheck === 'incorrect') {
+      if (correctAnswerCount === 0) {
+        toast.error('Oops! 0 score recorded!')
+      } else
+        toast.success(
+          `Congratulations your total correct answer is : ${correctAnswerCount}`
+        )
+      router.push('/round')
+    }
+  }
+
+  let timerStartFrom = 30
   if (passCount === 1) {
-    timerStartFrom = 20;
+    timerStartFrom = 20
   } else if (passCount > 1) {
-    timerStartFrom = 15;
+    timerStartFrom = 15
   }
   return (
     <div className='flex flex-col justify-center'>
@@ -67,40 +116,58 @@ const Question = (props: AvailableProps) => {
         )}
         {isRapidFirePage && (
           <div className=' bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 w-22 h-12 mr-6 '>
-            Set : A
+            {set}
           </div>
         )}
       </div>
 
       <div className='flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl'>
-        <Timer startFrom={timerStartFrom}/>
+        <Timer startFrom={timerStartFrom} />
       </div>
       <div className=' flex justify-center mt-2 mb-4'>
-        <button
-          className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
-          onClick={() => setShowAnswer(!showAnswer)}
-        >
-          {showAnswer ? <span>Hide Answer</span> : <span>Show Answer</span>}
-        </button>
-        <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'>
-          Correct
-        </button>
-        <button className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'>
-          Incorrect
-        </button>
-        <button
-          className='bg-custom-brown rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-          onClick={handlePassButtonClick}
-        >
-          Pass
-        </button>
+        {!isRapidFirePage && (
+          <>
+            <button
+              className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
+              onClick={() => setShowAnswer(!showAnswer)}
+            >
+              {showAnswer ? <span>Hide Answer</span> : <span>Show Answer</span>}
+            </button>
+            <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'>
+              Correct
+            </button>
+            <button className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'>
+              Incorrect
+            </button>
+            <button
+              className='bg-custom-brown rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+              onClick={handlePassButtonClick}
+            >
+              Pass
+            </button>
+          </>
+        )}
         {isRapidFirePage && (
-          <button
-            className=' bg-blue-700 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-            onClick={handlePassButtonClick}
-          >
-            Next
-          </button>
+          <>
+            {/* <button
+          className=' bg-blue-700 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+          onClick={handleNextButtonClick}
+        >
+          Next
+        </button> */}
+            <button
+              className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
+              onClick={() => handleNextButtonClick('correct')}
+            >
+              Correct
+            </button>
+            <button
+              className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+              onClick={() => handleNextButtonClick('incorrect')}
+            >
+              Incorrect
+            </button>
+          </>
         )}
       </div>
     </div>
