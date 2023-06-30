@@ -1,5 +1,7 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import { QuestionI } from '../../types'
 import Timer from './Timer'
 
@@ -7,16 +9,63 @@ type AvailableProps = {
   isGeneralAPage?: boolean
   isRapidFirePage?: boolean
   qn?: QuestionI | undefined
+  set?: string | null
+  questionNumber?: number
+  setQuestionNumber?: (value: number) => void
 }
+
 const Question = (props: AvailableProps) => {
-  const { isGeneralAPage, isRapidFirePage, qn } = props
+  const {
+    isGeneralAPage,
+    isRapidFirePage,
+    qn,
+    set,
+    questionNumber,
+    setQuestionNumber,
+  } = props
+
+  const router = useRouter()
+
   const [showText, setShowText] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
   const [passCount, setPassCount] = useState(0)
+  const [correctAnswerCount, setCorrectAnswerCount] = useState(0)
+
   const handlePassButtonClick = () => {
     setShowText(true)
     setPassCount((prevCount) => prevCount + 1)
   }
+
+  const handleNextButtonClick = (answerCheck: String) => {
+    if (
+      setQuestionNumber !== undefined &&
+      questionNumber !== undefined &&
+      questionNumber < 6
+    ) {
+      setQuestionNumber(questionNumber + 1)
+    }
+    if (answerCheck === 'correct') {
+      setCorrectAnswerCount(correctAnswerCount + 1)
+      if (questionNumber === 6 && answerCheck === 'incorrect') {
+        toast.success(
+          `Congratulations your total correct answer is : ${
+            correctAnswerCount + 1
+          }`
+        )
+        router.push('/round')
+      }
+    }
+    if (questionNumber === 6 && answerCheck === 'incorrect') {
+      if (correctAnswerCount === 0) {
+        toast.error('Oops! 0 score recorded!')
+      } else
+        toast.success(
+          `Congratulations your total correct answer is : ${correctAnswerCount}`
+        )
+      router.push('/round')
+    }
+  }
+
   let timerStartFrom = 30
   if (passCount === 1) {
     timerStartFrom = 20
@@ -67,7 +116,7 @@ const Question = (props: AvailableProps) => {
         )}
         {isRapidFirePage && (
           <div className=' bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 w-22 h-12 mr-6 '>
-            Set : A
+            {set}
           </div>
         )}
       </div>
@@ -95,12 +144,20 @@ const Question = (props: AvailableProps) => {
             Pass
           </button>
           {isRapidFirePage && (
-            <button
-              className=' bg-blue-700 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-              onClick={handlePassButtonClick}
-            >
-              Next
-            </button>
+            <>
+              <button
+                className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
+                onClick={() => handleNextButtonClick('correct')}
+              >
+                Correct
+              </button>
+              <button
+                className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+                onClick={() => handleNextButtonClick('incorrect')}
+              >
+                Incorrect
+              </button>
+            </>
           )}
         </div>
       </div>
