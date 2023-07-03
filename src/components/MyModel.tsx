@@ -1,6 +1,7 @@
 'use client'
+import { TimerContext } from '@/app/providers'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useContext } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { RoundI } from '../../types'
 
@@ -10,12 +11,14 @@ type MyModelProps = {
 }
 
 const MyModel = (props: MyModelProps) => {
+  const { setTimefirst } = useContext(TimerContext)
   const { setModel, rounds } = props
   const router = useRouter()
 
   const handleClick = (roundName: String, round: RoundI) => {
+    setTimefirst(round.timefirst)
     router.push(
-      `/rapidFire?totalquestions=${round.totalquestions}&roundId=${round.id}&set=${roundName}&timeFirst=${round.timefirst}`
+      `/rapidFire?totalquestions=${round.totalquestions}&roundId=${round.id}&set=${roundName}`
     )
   }
 

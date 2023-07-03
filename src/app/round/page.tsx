@@ -4,15 +4,17 @@ import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-// import Router, { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import Loading from '../loading'
 import useSWR from 'swr'
 import { RoundI } from '../../../types'
+import { useContext } from 'react'
+import { TimerContext } from '../providers'
 
 const Round = async () => {
   const router = useRouter()
   const [showModel, setModel] = useState(false)
+  const { setTimefirst, setTimesecond, setTimethird } = useContext(TimerContext)
 
   const [isSidebarShown, setIsSidebarShown] = useState(true)
   // this is used to have boolean value true for issidebarshown
@@ -44,6 +46,9 @@ const Round = async () => {
     if (roundName === 'RapidFire') {
       setModel(true)
     } else {
+      setTimefirst(round.timefirst)
+      setTimesecond(round.timesecond)
+      setTimethird(round.timethird)
       router.push(
         `/${
           roundName.charAt(0).toLowerCase() + roundName.slice(1)

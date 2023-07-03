@@ -102,7 +102,6 @@ const NumberGrid = (props: NumberGridProps) => {
               {allData.map((item) => (
                 <div key={item.id} className=' absolute z-50 pt-3'>
                   {' '}
-                  {console.log('item : ', item)}
                   {item.question?.isAsked && item.question?.id === number && (
                     <CloseIconButton />
                   )}

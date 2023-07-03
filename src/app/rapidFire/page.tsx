@@ -1,11 +1,9 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Question from '@/components/Question'
 import { useSearchParams } from 'next/navigation'
 import useRequest from '../../../utils/useQuestionRequest'
-import { useState } from 'react'
-import { useEffect } from 'react'
 
 const RapidFireRound = () => {
   const [questionNumber, setQuestionNumber] = useState(1)
@@ -14,14 +12,8 @@ const RapidFireRound = () => {
   const set = searchParams.get('set')
   const round_id = searchParams.get('roundId')
   const roundId = round_id ? parseInt(round_id) : 0
-  const time_first = searchParams.get('timeFirst')
-  const timeFirst = time_first ? parseInt(time_first) : 0
 
   const { question } = useRequest(questionNumber, roundId)
-
-  useEffect(() => {
-    console.log('questionNumber : ', questionNumber)
-  }, [questionNumber])
 
   return (
     // starting whole page
@@ -37,7 +29,6 @@ const RapidFireRound = () => {
           qn={question}
           questionNumber={questionNumber}
           setQuestionNumber={setQuestionNumber}
-          timeFirst={timeFirst}
         />
       </div>
       {/* ending navbar and main page  */}
