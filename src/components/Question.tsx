@@ -1,9 +1,10 @@
 'use client'
-import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import Timer from './Timer'
 import { toast } from 'react-toastify'
 import { QuestionI } from '../../types'
-import Timer from './Timer'
+import { useRouter } from 'next/navigation'
+import { TimerContext } from '@/app/providers'
+import React, { useState, useContext } from 'react'
 
 type AvailableProps = {
   isGeneralAPage?: boolean
@@ -12,7 +13,6 @@ type AvailableProps = {
   set?: string | null
   questionNumber?: number
   setQuestionNumber?: (value: number) => void
-  timefirst?: number
 }
 
 const Question = (props: AvailableProps) => {
@@ -23,14 +23,15 @@ const Question = (props: AvailableProps) => {
     set,
     questionNumber,
     setQuestionNumber,
-    timefirst,
   } = props
+
+  const { timefirst, timesecond, timethird } = useContext(TimerContext)
 
   const router = useRouter()
 
+  const [passCount, setPassCount] = useState(0)
   const [showText, setShowText] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
-  const [passCount, setPassCount] = useState(0)
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0)
 
   const handlePassButtonClick = () => {
@@ -72,9 +73,9 @@ const Question = (props: AvailableProps) => {
   if (timefirst !== undefined) {
     timerStartFrom = timefirst
     if (passCount === 1) {
-      timerStartFrom = 20
+      timerStartFrom = timesecond
     } else if (passCount > 1) {
-      timerStartFrom = 15
+      timerStartFrom = timethird
     }
   }
   return (
