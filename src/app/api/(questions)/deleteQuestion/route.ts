@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server'
 import prisma from '../../../../../prisma/client'
 
-export async function PATCH(request: Request) {
+export async function DELETE(request: Request) {
   const { searchParams } = new URL(request.url)
+
   const round_id = searchParams.get('roundId')
   const questionNumber = searchParams.get('questionNumber')
 
@@ -10,11 +11,10 @@ export async function PATCH(request: Request) {
   const id = questionNumber !== null ? parseInt(questionNumber) : 0
 
   try {
-    const question = await prisma.questionAnswer.update({
+    const result = await prisma.questionAnswer.delete({
       where: { id_roundId: { id, roundId } },
-      data: { isAsked: true },
     })
-    return NextResponse.json({ question })
+    return NextResponse.json('Deleted Successfully !!!')
   } catch (error) {
     return NextResponse.json({ error })
   }

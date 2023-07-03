@@ -80,7 +80,7 @@ const NumberGrid = (props: NumberGridProps) => {
   const handleQuestionNumberClick = async (number: number) => {
     if (roundId !== null && roundName !== null) {
       await fetch(
-        `http://localhost:3000/api/updateQuestion?questionNumber=${number}&roundId=${roundId}`,
+        `http://localhost:3000/api/updateQuestion/${roundId}/${number}`,
         {
           method: 'PATCH',
         }
