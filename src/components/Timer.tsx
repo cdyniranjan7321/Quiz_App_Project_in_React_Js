@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
-
-const Timer: React.FC = () => {
-  const [time, setTime] = useState(30)
+interface TimerProps{
+  startFrom:number
+}
+const Timer: React.FC <TimerProps>= ({startFrom}) => {
+  const [time, setTime] = useState(startFrom)
   const [isRunning, setIsRunning] = useState(false)
 
+  useEffect(()=>{
+    setTime(startFrom)
+  },[startFrom])
   useEffect(() => {
     let interval: NodeJS.Timeout
     if (isRunning) {
@@ -39,7 +44,7 @@ const Timer: React.FC = () => {
   }
 
   const handleResetClick = () => {
-    setTime(30)
+    setTime(startFrom)
     setIsRunning(false)
   }
 
