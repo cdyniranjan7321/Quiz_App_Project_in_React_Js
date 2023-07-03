@@ -1,5 +1,6 @@
 'use client'
 import Sidebar from '@/components/Sidebar'
+import Navbar from '@/components/Navbar'
 import React, { useState, useEffect, ChangeEvent } from 'react'
 
 const AdditionalSettings = () => {
@@ -47,7 +48,7 @@ const AdditionalSettings = () => {
     return Array.from({ length: numberOfTeams }, (_, index) => (
       <div
         key={index}
-        className='bg-white pb-2 pt-0 flex justify-center text-center rounded-md mt-6'
+        className='bg-white h-11  rounded-md mt-6 text-2xl pl-2 pt-1'
       >
         <input
           type='text'
@@ -61,7 +62,7 @@ const AdditionalSettings = () => {
     return Array.from({ length: numberOfTeams }, (_, index) => (
       <h2
         key={index}
-        className='bg-white flex justify-center rounded-md pb-3 pt-0 w-50 mt-6'
+        className='bg-white flex justify-center items-center rounded-md py-1 mt-6 mb-7 w-50'
       >
         {index + 1}
       </h2>
@@ -78,11 +79,14 @@ const AdditionalSettings = () => {
           <div className='flex flex-col justify-center '>
             {/* the above line is the one that holds the team division page */}
 
-            <div className='  flex justify-center gap-3 items-center pt-2 pb-2'>
-              <span className='text-2xl text-white  '> Number of Teams:</span>
+            <div className='  flex justify-center gap-3 items-center pt-[13%]'>
+              <span className='text-2xl text-white pb-4   '>
+                {' '}
+                Number of Teams:
+              </span>
               <input
                 type='number'
-                className='rounded-md px-2 py-1  text-xl w-[5%]  outline-none '
+                className='rounded-md px-2 py-1  text-xl w-[5%]  outline-none mb-4 '
                 id=''
                 placeholder=''
                 max={20}
@@ -91,10 +95,15 @@ const AdditionalSettings = () => {
                 onChange={handleTeamNumber}
               />
             </div>
-            <div className='overflow-y-scroll max-h-[calc(80vh-200px)]'>
+
+            <div
+              className={`${
+                numberOfTeams > 3 ? 'overflow-y-scroll   ' : ''
+              }  max-h-[calc(90vh-500px)]  `}
+            >
               <div className=' flex flex-row  '>
                 <div className=' text-white text-3xl font-medium ml-[10%]'>
-                  <h1 className='pl-[8%] backdrop-blur-md  w-[130%] mb-2'>
+                  <h1 className=' pl-[8%] backdrop-blur-md  w-[130%] mb-1'>
                     SN
                   </h1>
                   {teams.map((team, index) => (
@@ -104,22 +113,22 @@ const AdditionalSettings = () => {
                   ))}
                 </div>
                 <div className=' text-3xl pl-[8%]'>
-                  <h1 className='text-white mb-2  flex justify-center font-medium '>
+                  <h1 className=' text-white mb-2  flex justify-center font-medium '>
                     Team Name
                   </h1>
                   <div className='text-black'>{generateHouseInputs()}</div>
                 </div>
-                <div className='pl-[8%] '>
-                  <h1 className='text-white text-3xl  font-medium mb-2'>
-                    Game Order
+                <div className='pl-[4%] '>
+                  <h1 className='text-white text-3xl  font-medium'>
+                    <span className='w-[9%] '>Game Order</span>
                   </h1>
-                  <div className=' text-black text-2xl text-center pl-3'>
+                  <div className=' text-black text-2xl  text-center '>
                     {generateOrderNumbers()}
                   </div>
                 </div>
               </div>
             </div>
-            <button className='text-black text-3xl bg-[#57CC99] rounded-full w-20 flex items-center justify-center  ml-[50%]  pb-2 mt-[7%]'>
+            <button className='fixed bottom-10 text-black text-3xl bg-[#57CC99] rounded-full w-20 flex items-center justify-center  ml-[45%]  pb-2 mt-4'>
               save
             </button>
           </div>
