@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import { useSearchParams } from 'next/navigation'
 import useRequest from '../../../utils/useQuestionRequest'
+import Timer from '@/components/Timer'
 
 const FiftyFiftyQuestion = () => {
   const searchParams = useSearchParams()
@@ -50,7 +51,7 @@ const FiftyFiftyQuestion = () => {
                 Answer : {question?.answer}
               </div>
             )}
-            <div className='mt-10 ml-20 flex justify-center'>
+            <div className='mt-10 ml-20 flex flex-col justify-center'>
               <div className='flex flex-col gap-4'>
                 {!isFiftyFifty ? (
                   <>
@@ -145,7 +146,10 @@ const FiftyFiftyQuestion = () => {
                   </div>
                 )}
               </div>
-              <div className=' flex justify-center mt-64 mb-4'>
+              <div className='fixed bottom-24 left-1/2 transform -translate-x-1/2 '>
+                <Timer startFrom={30} />
+              </div>
+              <div className='fixed flex justify-center bottom-8 left-1/2 transform -translate-x-1/2'>
                 <button
                   className=' bg-green-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
                   onClick={() => {
