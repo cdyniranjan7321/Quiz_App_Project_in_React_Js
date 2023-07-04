@@ -30,25 +30,25 @@ const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
     setTime(startFrom)
     setIsRunning(false)
     setShowStrokeDashoffset(0)
-    if (path && path.current) {
-      path.current.style.strokeDashoffset = '0'
-    }
   }
+  const { stroke, size, strokeWidth, pathLength } = useCountdown({
+    isPlaying: isRunning,
+    duration: startFrom,
+    colors: '#00FF00',
+    size: 280,
+  })
   useEffect(() => {
     setTime(startFrom)
   }, [startFrom])
   useEffect(() => {
-  
     let interval: NodeJS.Timeout
     let animationInterval: NodeJS.Timeout
-
+    const pathRef=path.current;
     const incrementOffset = () => {
-      const offsetPerSecond = pathLength/(startFrom*2)
-      const offsetps = offsetPerSecond
-
+      const offsetps = pathLength/(startFrom*2)
       setShowStrokeDashoffset((prevOffset) => prevOffset -offsetps)
-      if (path && path.current) {
-        path.current.style.strokeDashoffset = String(strokeDashoffset)
+      if (pathRef) {
+        pathRef.style.strokeDashoffset = String(strokeDashoffset)
       }
       if (strokeDashoffset <= 0) {
         clearInterval(animationInterval)
@@ -70,17 +70,12 @@ const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
     }
     return () => {
       clearInterval(interval)
-      if (path && path.current) {
-        path.current.style.strokeDashoffset = '0'
+      if (pathRef) {
+        pathRef.style.strokeDashoffset = '0'
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, time, path, startFrom])
-  const { stroke, size, strokeWidth, pathLength } = useCountdown({
-    isPlaying: isRunning,
-    duration: startFrom,
-    colors: '#00FF00',
-    size: 280,
-  })
   return (
     <div>
       <svg
