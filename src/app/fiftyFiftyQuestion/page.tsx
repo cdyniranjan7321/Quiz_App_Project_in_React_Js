@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import { useSearchParams } from 'next/navigation'
 import useRequest from '../../../utils/useQuestionRequest'
-import Timer from '@/components/Timer'
+import TimerIndicator from '@/components/TimerIndicator'
 
 const FiftyFiftyQuestion = () => {
   const searchParams = useSearchParams()
@@ -146,8 +146,8 @@ const FiftyFiftyQuestion = () => {
                   </div>
                 )}
               </div>
-              <div className='fixed bottom-24 left-1/2 transform -translate-x-1/2 '>
-                <Timer startFrom={30} />
+              <div className='fixed bottom-8 right-2  transform -translate-x-1/2 '>
+                <TimerIndicator startFrom={30} />
               </div>
               <div className='fixed flex justify-center bottom-8 left-1/2 transform -translate-x-1/2'>
                 <button
