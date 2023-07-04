@@ -26,7 +26,7 @@ const Question = (props: AvailableProps) => {
   } = props
 
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
-
+ 
   const router = useRouter()
 
   const [passCount, setPassCount] = useState(0)
@@ -128,7 +128,7 @@ const Question = (props: AvailableProps) => {
       </div>
       <div className='fixed bottom-6 left-0 right-0 '>
         <div className='fixed right-8 bottom-4 flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl'>
-          <TimerIndicator startFrom={30} />
+          <TimerIndicator startFrom={timerStartFrom} />
         </div>
         <div className=' flex justify-center'>
           {!isRapidFirePage && (
