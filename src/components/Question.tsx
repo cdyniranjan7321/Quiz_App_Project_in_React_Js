@@ -26,7 +26,7 @@ const Question = (props: AvailableProps) => {
   } = props
 
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
- 
+
   const router = useRouter()
 
   const [passCount, setPassCount] = useState(0)
