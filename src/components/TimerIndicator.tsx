@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState, useRef } from 'react'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
-import { useCountdown } from 'react-countdown-circle-timer'
+import { ColorFormat, ColorHex, useCountdown } from 'react-countdown-circle-timer'
 interface TimerProps {
   startFrom: number
 }
@@ -31,10 +31,22 @@ const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
     setIsRunning(false)
     setShowStrokeDashoffset(0)
   }
+  const [color, setColor] = useState<ColorFormat>('#22C55E'); // Default color
+
+useEffect(() => {
+  if (time<= 5) {
+    setColor('#FF0000'); // Change color to red
+  } else if(time<=10){
+    setColor('#FFFF00'); // Change color to yellow
+  }
+  else{
+    setColor('#22C55E'); // Change color to green
+  }
+}, [time]);
   const { stroke, size, strokeWidth, pathLength } = useCountdown({
     isPlaying: isRunning,
     duration: startFrom,
-    colors: '#22C55E',
+    colors:color,
     size: 280,
   })
   
@@ -89,7 +101,6 @@ const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
   
   return (
     <div>
-      <div>{startFrom}<br/>{offsetps}<br/>{strokeDashoffset}</div>
       <svg
         viewBox={`0 0 ${size} ${size}`}
         width={size}
