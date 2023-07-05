@@ -1,10 +1,10 @@
 'use client'
-import Timer from './Timer'
 import { toast } from 'react-toastify'
 import { QuestionI } from '../../types'
 import { useRouter } from 'next/navigation'
 import { TimerContext } from '@/app/providers'
 import React, { useState, useContext } from 'react'
+import TimerIndicator from './TimerIndicator'
 
 type AvailableProps = {
   isGeneralAPage?: boolean
@@ -127,8 +127,8 @@ const Question = (props: AvailableProps) => {
         )}
       </div>
       <div className='fixed bottom-6 left-0 right-0 '>
-        <div className='flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl'>
-          <Timer startFrom={timerStartFrom} />
+        <div className='fixed right-8 bottom-4 flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl'>
+          <TimerIndicator startFrom={timerStartFrom} />
         </div>
         <div className=' flex justify-center'>
           {!isRapidFirePage && (

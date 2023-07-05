@@ -25,11 +25,11 @@ const useStyles = makeStyles({
       border: '2px solid white',
       padding: '8px',
     },
-    '& .MuiTableRow-hover:hover': { // modified to target hover effect
+    '& .MuiTableRow-hover:hover': {
       background: '#444',
     },
   },
-  tableCell: { // added missing class definition
+  tableCell: {
     padding: '8px',
   },
   houseName: {
@@ -37,8 +37,8 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
   },
   teamColor: {
-    width: '9px',
-    height: '6px',
+    width: '28px',
+    height: '20px',
     borderRadius: '4px',
     marginLeft: '8px',
   },
@@ -56,8 +56,8 @@ const MyTable = () => {
 
   return (
     <div className='h-screen w-screen overflow-hidden bg-[#16083B] text-white'>
-      <div className='bg-gradient-to-r from-[#C77DFF] to-[#000000] h-[8%] w-screen'>
-        <h1 className='flex justify-center items-center text-3xl pt-4'>
+      <div className='bg-gradient-to-r from-[#C77DFF] to-[#000000] h-[9%] w-screen'>
+        <h1 className='flex justify-center items-center text-3xl pt-2'>
           Dashboard
         </h1>
       </div>
@@ -67,12 +67,12 @@ const MyTable = () => {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                  <TableCell>Round/Teams</TableCell>
+                  <TableCell>Teams/Round</TableCell>
                   <TableCell className={classes.tableCell}>
                     <div className={classes.teamName}>
                       <Typography component='span'>Team1:</Typography>
                       <div
-                        className={`bg-red-600 h-4 w-7 ${classes.teamColor}`}
+                        className={`bg-red-600 h-8 w-7 ${classes.teamColor}`}
                       />
                     </div>
                     <Typography className={classes.houseName}>
