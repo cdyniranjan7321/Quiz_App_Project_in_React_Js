@@ -12,7 +12,7 @@ export async function PATCH(request: Request, context: { params: any }) {
     console.log(request.body)
     const question = await prisma.questionAnswer.update({
       where: { id_roundId: { id, roundId } },
-      data: { isAsked: true },
+      data: { isAsked: false },
     })
     return NextResponse.json({ question })
   } catch (error) {
