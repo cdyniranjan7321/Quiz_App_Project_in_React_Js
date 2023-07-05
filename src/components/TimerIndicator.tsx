@@ -54,7 +54,7 @@ useEffect(() => {
   
   useEffect(() => {
     setTime(startFrom)
-    const newOffsetps = pathLength / (startFrom * 2);
+    const newOffsetps = pathLength / ((startFrom * 2)-2);
   setOffsetps(newOffsetps);
   setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps); // Update the strokeDashoffset immediately
   
@@ -76,7 +76,7 @@ useEffect(() => {
 
     if (isRunning && time > 0) {
       incrementOffset()
-      animationInterval = setInterval(incrementOffset, 100)
+      animationInterval = setInterval(incrementOffset)
     }
     if (isRunning) {
       interval = setInterval(() => {
@@ -101,6 +101,7 @@ useEffect(() => {
   
   return (
     <div>
+      {strokeDashoffset}
       <svg
         viewBox={`0 0 ${size} ${size}`}
         width={size}
