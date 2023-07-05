@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+input[type='number']:valid ~ .input-text,
+input[type='number']:focus ~ .input-text,
 input[type='text']:valid ~ .input-text,
 input[type='text']:focus ~ .input-text {
   @apply text-blue-600  transform -translate-x-6 -translate-y-[1.90rem] transition-all duration-500 scale-50 bg-white px-2;

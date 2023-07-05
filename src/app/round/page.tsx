@@ -10,6 +10,7 @@ import useSWR from 'swr'
 import { RoundI } from '../../../types'
 import { useContext } from 'react'
 import { TimerContext } from '../providers'
+import useRound from '../../../utils/useRoundRequest'
 
 const Round = async () => {
   const router = useRouter()
@@ -57,13 +58,7 @@ const Round = async () => {
     }
   }
 
-  const fetcher = (url: string) => fetch(url).then((res) => res.json())
-
-  const url = `http://localhost:3000/api/getRound`
-  const { data: rounds, error, isLoading } = useSWR<RoundI[]>(url, fetcher)
-
-  if (error) return <div>failed to load</div>
-  if (isLoading) return <Loading />
+  const rounds = useRound()
   console.log('data from round fetcher : ', rounds)
 
   return (
@@ -88,19 +83,22 @@ const Round = async () => {
 
         <div className='flex flex-row justify-around align-items-center pt-[12%] md:pl-[12%]'>
           <div className='flex-col justify-content:center align-items:center pt-11'>
-            {rounds?.map((round: RoundI) => {
-              return (
-                !round.issubcategory && (
-                  <button
-                    className='bg-white rounded-md p-2 mt-6 text-2xl h-15 w-[60%]'
-                    key={round.id}
-                    onClick={() => handleRapidFireModel(round.roundname, round)}
-                  >
-                    {round.roundname} Round
-                  </button>
+            {rounds.key !== null &&
+              rounds?.map((round: RoundI) => {
+                return (
+                  !round.issubcategory && (
+                    <button
+                      className='bg-white rounded-md p-2 mt-6 text-2xl h-15 w-[60%]'
+                      key={round.id}
+                      onClick={() =>
+                        handleRapidFireModel(round.roundname, round)
+                      }
+                    >
+                      {round.roundname} Round
+                    </button>
+                  )
                 )
-              )
-            })}
+              })}
           </div>
 
           <div className=' hidden md:block z-40'>
