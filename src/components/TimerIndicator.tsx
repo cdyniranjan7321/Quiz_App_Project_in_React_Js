@@ -51,14 +51,24 @@ useEffect(() => {
   })
   
   const [offsetps, setOffsetps] = useState(0);
-  
+  let s=0
+    if(startFrom>=25)
+    {s=-2}
+    else if(startFrom>=18)
+    {s=0.7}
+    else if(startFrom>=14)
+    {s=0.76}
+    else
+    {s=0}
+    
   useEffect(() => {
     setTime(startFrom)
-    const newOffsetps = pathLength / ((startFrom * 2)-2);
+    
+    const newOffsetps = pathLength / ((startFrom * 2)+s);
   setOffsetps(newOffsetps);
   setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps); // Update the strokeDashoffset immediately
   
-  }, [startFrom,pathLength])
+  }, [startFrom, pathLength, s])
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -101,7 +111,6 @@ useEffect(() => {
   
   return (
     <div>
-      {strokeDashoffset}
       <svg
         viewBox={`0 0 ${size} ${size}`}
         width={size}
