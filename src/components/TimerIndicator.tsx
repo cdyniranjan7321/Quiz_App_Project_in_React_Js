@@ -37,15 +37,22 @@ const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
     colors: '#22C55E',
     size: 280,
   })
+  
+  const [offsetps, setOffsetps] = useState(0);
+  
   useEffect(() => {
     setTime(startFrom)
-  }, [startFrom])
+    const newOffsetps = pathLength / (startFrom * 2);
+  setOffsetps(newOffsetps);
+  setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps); // Update the strokeDashoffset immediately
+  
+  }, [startFrom,pathLength])
+
   useEffect(() => {
     let interval: NodeJS.Timeout
     let animationInterval: NodeJS.Timeout
     const pathRef=path.current;
     const incrementOffset = () => {
-      const offsetps = pathLength/(startFrom*2)
       setShowStrokeDashoffset((prevOffset) => prevOffset -offsetps)
       if (pathRef) {
         pathRef.style.strokeDashoffset = String(strokeDashoffset)
@@ -76,8 +83,13 @@ const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, time, path, startFrom])
+  useEffect(() => {
+    setShowStrokeDashoffset(0); // Execute setShowStrokeDashoffset(0) when startFrom changes
+  }, [startFrom]);
+  
   return (
     <div>
+      <div>{startFrom}<br/>{offsetps}<br/>{strokeDashoffset}</div>
       <svg
         viewBox={`0 0 ${size} ${size}`}
         width={size}
