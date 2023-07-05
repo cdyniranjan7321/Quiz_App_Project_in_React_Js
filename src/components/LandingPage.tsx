@@ -135,9 +135,12 @@ const LandingPage = () => {
                 are concerned with
               </p>
               <div className='mt-6'>
-                <button className='button bg-indigo-900 bg-opacity-80 text-xl lg:text-lg  text-white rounded-lg px-3 py-1 mb-2'>
+                <Link
+                  href='/aboutus'
+                  className='button bg-indigo-900 bg-opacity-80 text-xl lg:text-lg  text-white rounded-lg px-3 py-1 mb-2'
+                >
                   About us
-                </button>
+                </Link>
               </div>
             </div>
             {/* this div finishes the line word is there*/}
