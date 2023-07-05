@@ -34,7 +34,7 @@ const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
   const { stroke, size, strokeWidth, pathLength } = useCountdown({
     isPlaying: isRunning,
     duration: startFrom,
-    colors: '#00FF00',
+    colors: '#22C55E',
     size: 280,
   })
   useEffect(() => {
