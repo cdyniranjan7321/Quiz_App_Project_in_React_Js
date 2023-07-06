@@ -51,24 +51,14 @@ useEffect(() => {
   })
   
   const [offsetps, setOffsetps] = useState(0);
-  let s=0
-    if(startFrom>=25)
-    {s=-2}
-    else if(startFrom>=18)
-    {s=0.7}
-    else if(startFrom>=14)
-    {s=0.76}
-    else
-    {s=0}
-    
+  
   useEffect(() => {
     setTime(startFrom)
-    
-    const newOffsetps = pathLength / ((startFrom * 2)+s);
+    const newOffsetps = pathLength / (startFrom * 2);
   setOffsetps(newOffsetps);
   setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps); // Update the strokeDashoffset immediately
   
-  }, [startFrom, pathLength, s])
+  }, [startFrom,pathLength])
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -86,7 +76,7 @@ useEffect(() => {
 
     if (isRunning && time > 0) {
       incrementOffset()
-      animationInterval = setInterval(incrementOffset)
+      animationInterval = setInterval(incrementOffset, 100)
     }
     if (isRunning) {
       interval = setInterval(() => {
@@ -105,6 +95,12 @@ useEffect(() => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, time, path, startFrom])
+  
+  useEffect(() => {
+    if (time<= 1) {
+       setShowStrokeDashoffset(-841.946)
+    }
+  }, [strokeDashoffset, time]);
   useEffect(() => {
     setShowStrokeDashoffset(0); // Execute setShowStrokeDashoffset(0) when startFrom changes
   }, [startFrom]);
