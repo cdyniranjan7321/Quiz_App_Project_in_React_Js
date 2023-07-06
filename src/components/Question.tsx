@@ -84,17 +84,17 @@ const Question = (props: AvailableProps) => {
         <div className='w-[70%] ml-24 mt-8 '>
           <div className='flex flex-row justify-between'>
             <div className='flex flex-col'>
-              {isGeneralAPage && (
-                <span className='text-3xl lg:text-5xl p-4 font-italiana'>
-                  {showText && <span className='pl-2'>pass question</span>}
-                </span>
-              )}
               <div className='flex'>
                 <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 ml-5'>
                   Round for: Red house{' '}
                   <button className='ml-4 mr-2 mb-1 bg-red-500 w-12 h-6 rounded-xl py-2'></button>
                 </span>
               </div>
+              {isGeneralAPage && (
+                <span className='text-3xl lg:text-5xl p-4 font-italiana'>
+                  {showText && <span className='pl-2'>pass question</span>}
+                </span>
+              )}
             </div>
           </div>
           <div className='text-2xl lg:text-4xl p-3 font-italiana'>
@@ -109,9 +109,9 @@ const Question = (props: AvailableProps) => {
         </div>
         {/* starting second part  */}
         {!isRapidFirePage && (
-          <div className='flex flex-col w-[30%] gap-12  '>
+          <div className='fixed right-0 flex flex-col w-[30%] gap-12  '>
             {/* top part of right side */}
-            <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-4 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto'>
+            <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto'>
               <span className='font-italiana text-xl'>Next question for:</span>
               <span>
                 Blue house{' '}
@@ -127,7 +127,7 @@ const Question = (props: AvailableProps) => {
         )}
       </div>
       <div className='fixed bottom-6 left-0 right-0 '>
-        <div className='fixed right-8 bottom-4 flex justify-center  mb-2 rounded-2xl mr-10 px-7 py-4 text-xl'>
+        <div className='fixed right-0 bottom-16 flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl'>
           <TimerIndicator startFrom={timerStartFrom} />
         </div>
         <div className=' flex justify-center'>
