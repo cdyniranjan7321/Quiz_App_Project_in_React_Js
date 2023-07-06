@@ -63,10 +63,46 @@ const Question = (props: AvailableProps) => {
         toast.error('Oops! 0 score recorded!')
       } else
         toast.success(
-          `Congratulations your total correct answer is : ${correctAnswerCount}`
+          Congratulations your total correct answer is : ${correctAnswerCount}
         )
       router.push('/round')
     }
+  }
+  let housename = 'Red'
+  let housecolor='red'
+  if (passCount == 1){
+        housename = 'Blue'
+        housecolor='blue'
+      }
+  else if (passCount == 2) {
+        housename = 'Green'
+        housecolor='green'
+      }
+  else if(passCount == 3) {
+      housename = 'Yellow'
+      housecolor='yellow'
+    }
+  else if(passCount==4){
+    housename='White'
+    housecolor='white'
+  }
+  let housename2 = 'Blue'
+  let housecolor2='blue'
+  if (passCount == 1) {
+        housename2 = 'Green'
+        housecolor2='green'
+      }
+  else if(passCount == 2) {
+      housename2 = 'Yellow'
+      housecolor2='yellow'
+    }
+  else if(passCount==3){
+    housename2='White'
+    housecolor2='white'
+  }
+  else if(passCount==4){
+    housename2='No more Team or'
+    housecolor2=''
   }
 
   let timerStartFrom = 0
@@ -86,8 +122,9 @@ const Question = (props: AvailableProps) => {
             <div className='flex flex-col'>
               <div className='flex'>
                 <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 ml-5'>
-                  Round for: Red house{' '}
-                  <button className='ml-4 mr-2 mb-1 bg-red-500 w-12 h-6 rounded-xl py-2'></button>
+                  Round for: {housename} house
+                  <button className={`ml-4 mr-2 mb-1 ${housecolor === 'white' ? bg-${housecolor} w-12 h-6 rounded-xl py-2 : `bg-${housecolor}-600 w-12 h-6 rounded-xl py-2`}`}></button>
+
                 </span>
               </div>
               {isGeneralAPage && (
@@ -114,8 +151,9 @@ const Question = (props: AvailableProps) => {
             <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto'>
               <span className='font-italiana text-xl'>Next question for:</span>
               <span>
-                Blue house{' '}
-                <button className='ml-2 bg-blue-500 w-12 h-6 rounded-xl py-2'></button>
+                {housename2} house
+                <button className={`ml-2 ${housecolor2 === 'white' ? bg-${housecolor2} w-12 h-6 rounded-xl py-2 : `bg-${housecolor2}-600 w-12 h-6 rounded-xl py-2`}`}></button>
+
               </span>
             </div>
           </div>
