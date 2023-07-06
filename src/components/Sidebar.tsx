@@ -11,10 +11,13 @@ const Sidebar = ({ isSidebarShown }: SidebarProps) => {
   if (!isSidebarShown) {
     return null;
   }
+  const handleBackClick=()=>{
+    window.history.back();
+  }
   return (
     <div className="bg-gradient-to-r from-[#10002B] to-[#300559] rounded-lg rounded-l-none rounded-b-none h-full ">
       <div className="flex flex-col justify-center items-center gap-5 p-4 ">
-       <BackArrowButton/>
+       <button onClick={handleBackClick}><BackArrowButton/></button>
         <Link href="/" className=" text-white text-bold text-4xl">
           <div className="">
             <Home />
