@@ -4,28 +4,19 @@ import classNames from 'classnames'
 import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
 import QuestionUploadPopup from '@/components/QuestionUploadPopup'
 
 const UploadQuestions = async () => {
   const [roundId, setRoundId] = useState(2)
   const [modalIsOpen, setIsOpen] = useState(true)
-  const [qnNo, setQnNo] = useState<string>('')
 
-  const router = useRouter()
-
-  const openModal = () => {
-    setIsOpen(true)
-  }
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
-  console.log('roundIdddd : ', roundId)
 
   const onSubmit = async (data: any) => {
-    // console.log('data : ', data)
     const id = parseInt(data.id)
     const datas = {
       ...data,
@@ -72,8 +63,6 @@ const UploadQuestions = async () => {
               type='number'
               className={inputClass}
               {...register('id')}
-              // value={qnNo}
-              // onChange={(e) => setQnNo(e.target.value)}
               required
             />
             <label className='input-text absolute left-4 top-5 opacity-20'>
