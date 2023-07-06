@@ -63,7 +63,7 @@ const LandingPage = () => {
               <div className='mt-6'>
                 <Link
                   href='/round'
-                  className='button bg-indigo-900 text-white rounded-lg px-2 py-1 mb-2 text-sm md:text-base lg:text-lg'
+                  className='button bg-indigo-900 text-white rounded-lg px-6 py-3 mb-2 text-sm md:text-base lg:text-lg'
                 >
                   Get Started
                 </Link>
