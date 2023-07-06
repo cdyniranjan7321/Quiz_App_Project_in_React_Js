@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import QuestionUploadPopup from '@/components/QuestionUploadPopup'
 
 const UploadQuestions = async () => {
-  const [roundId, setRoundId] = useState(0)
+  const [roundId, setRoundId] = useState(2)
   const [modalIsOpen, setIsOpen] = useState(true)
   const [qnNo, setQnNo] = useState<string>('')
 
@@ -22,6 +22,7 @@ const UploadQuestions = async () => {
     handleSubmit,
     formState: { errors },
   } = useForm()
+  console.log('roundIdddd : ', roundId)
 
   const onSubmit = async (data: any) => {
     // console.log('data : ', data)
