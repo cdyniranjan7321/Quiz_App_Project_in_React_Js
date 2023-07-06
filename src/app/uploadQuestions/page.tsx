@@ -102,58 +102,62 @@ const UploadQuestions = async () => {
               Enter answer <span className='text-[crimson]'>*</span>
             </label>
           </div>
-          {/* General roundId = 2 & rapidFire roundId= 3 */}
-          {roundId !== 2 && roundId !== 3 && (
-            <>
-              <div className='relative'>
-                <input
-                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                  type='text'
-                  {...register('option1')}
-                  required
-                />
-                <label className='absolute left-4 top-5 opacity-20 input-text'>
-                  Option A <span className='text-[crimson]'>*</span>
-                </label>
-              </div>
+          {/* General roundId = 2 & rapidFire SETA, setB setC, setD roundId= 4, 5, 6, 7 respectively */}
+          {roundId !== 2 &&
+            roundId !== 4 &&
+            roundId !== 5 &&
+            roundId !== 6 &&
+            roundId !== 7 && (
+              <>
+                <div className='relative'>
+                  <input
+                    className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
+                    type='text'
+                    {...register('option1')}
+                    required
+                  />
+                  <label className='absolute left-4 top-5 opacity-20 input-text'>
+                    Option A <span className='text-[crimson]'>*</span>
+                  </label>
+                </div>
 
-              <div className='relative'>
-                <input
-                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                  type='text'
-                  {...register('option2')}
-                  required
-                />
-                <label className='absolute left-4 top-5 opacity-20 input-text'>
-                  Option B <span className='text-[crimson]'>*</span>
-                </label>
-              </div>
+                <div className='relative'>
+                  <input
+                    className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
+                    type='text'
+                    {...register('option2')}
+                    required
+                  />
+                  <label className='absolute left-4 top-5 opacity-20 input-text'>
+                    Option B <span className='text-[crimson]'>*</span>
+                  </label>
+                </div>
 
-              <div className='relative'>
-                <input
-                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                  type='text'
-                  {...register('option3')}
-                  required
-                />
-                <label className='absolute left-4 top-5 opacity-20 input-text'>
-                  Option C <span className='text-[crimson]'>*</span>
-                </label>
-              </div>
+                <div className='relative'>
+                  <input
+                    className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
+                    type='text'
+                    {...register('option3')}
+                    required
+                  />
+                  <label className='absolute left-4 top-5 opacity-20 input-text'>
+                    Option C <span className='text-[crimson]'>*</span>
+                  </label>
+                </div>
 
-              <div className='relative'>
-                <input
-                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                  type='text'
-                  {...register('option4')}
-                  required
-                />
-                <label className='absolute left-4 top-5 opacity-20 input-text'>
-                  Option D <span className='text-[crimson]'>*</span>
-                </label>
-              </div>
-            </>
-          )}
+                <div className='relative'>
+                  <input
+                    className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
+                    type='text'
+                    {...register('option4')}
+                    required
+                  />
+                  <label className='absolute left-4 top-5 opacity-20 input-text'>
+                    Option D <span className='text-[crimson]'>*</span>
+                  </label>
+                </div>
+              </>
+            )}
 
           {/* fifty-fifty roundId = 8 */}
           {roundId === 8 && (

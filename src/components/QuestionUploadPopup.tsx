@@ -53,9 +53,16 @@ const QuestionUploadPopup = (props: any) => {
             {rounds.key !== null &&
               rounds?.map((round: RoundI) => {
                 return (
-                  !round.issubcategory && (
+                  !round.hassubcategory && (
                     <option key={round.id} value={round.id}>
-                      {round.roundname} Round{' '}
+                      {round.roundname === 'SetA' ||
+                      round.roundname === 'SetB' ||
+                      round.roundname === 'SetC' ||
+                      round.roundname === 'SetD' ? (
+                        <div>RapidFire {round.roundname} </div>
+                      ) : (
+                        <div>{round.roundname} Round</div>
+                      )}
                     </option>
                   )
                 )
