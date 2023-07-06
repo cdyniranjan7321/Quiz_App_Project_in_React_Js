@@ -63,3 +63,9 @@ model QuestionAnswer {
 
   @@id([id, roundId])
 }
+
+model Teams {
+  id        Int    @id
+  teamName  String
+  gameOrder Int    @unique
+}
