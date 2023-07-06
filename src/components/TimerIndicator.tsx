@@ -95,6 +95,12 @@ useEffect(() => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, time, path, startFrom])
+  
+  useEffect(() => {
+    if (time<= 1) {
+       setShowStrokeDashoffset(-841.946)
+    }
+  }, [strokeDashoffset, time]);
   useEffect(() => {
     setShowStrokeDashoffset(0); // Execute setShowStrokeDashoffset(0) when startFrom changes
   }, [startFrom]);
