@@ -27,8 +27,8 @@ const QuestionUploadPopup = (props: any) => {
   const { register, handleSubmit } = useForm()
 
   const onSubmit = (data: any) => {
-    console.log(data)
-    setRoundId(parseInt(data.roundId))
+    if (data.roundId === '') setRoundId(parseInt('2'))
+    else setRoundId(parseInt(data.roundId))
     closeModal()
   }
 
@@ -59,9 +59,9 @@ const QuestionUploadPopup = (props: any) => {
                       round.roundname === 'SetB' ||
                       round.roundname === 'SetC' ||
                       round.roundname === 'SetD' ? (
-                        <div>RapidFire {round.roundname} </div>
+                        <>RapidFire {round.roundname} </>
                       ) : (
-                        <div>{round.roundname} Round</div>
+                        <>{round.roundname} Round</>
                       )}
                     </option>
                   )
