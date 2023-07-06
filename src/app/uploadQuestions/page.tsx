@@ -51,7 +51,8 @@ const UploadQuestions = async () => {
   )
 
   return (
-    <div className='h-screen w-full flex flex-col  bg-gradient-to-b from-gray-300 to-purple-900 justify-center items-center'>
+    <div className={`${roundId === 8 ? 'w-full flex flex-col bg-gradient-to-b from-gray-300 to-purple-900 justify-center items-center' : 'h-screen w-full flex flex-col bg-gradient-to-b from-gray-300 to-purple-900 justify-center items-center'}`}>
+
       <div className=' w-[60%] sm:[90%] h-auto rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-700'>
         {modalIsOpen && (
           <QuestionUploadPopup
@@ -62,9 +63,9 @@ const UploadQuestions = async () => {
         )}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className='!w-[90%] sm:w-[50vh] space-y-6 m-auto mt-4'
+          className='!w-[90%] sm:w-[50vh] space-y-6 m-auto mt-2'
         >
-          <div className='font-extrabold text-transparent text-3xl text-center bg-clip-text bg-gradient-to-b from-gray-300 to-purple-900 p-4'>
+          <div className='font-extrabold text-transparent text-3xl text-center bg-clip-text bg-gradient-to-b from-gray-300 to-purple-900 p-4 h-full'>
             Upload Questions
           </div>
           <div className='relative'>
