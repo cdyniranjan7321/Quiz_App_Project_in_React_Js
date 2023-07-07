@@ -1,15 +1,21 @@
 import Image from "next/image";
 import React from "react";
 import { AiOutlineClose as CloseIcon } from "react-icons/ai";
-
-const Fail: React.FC = () => {
+type FailProps = {
+  onClose: () => void;
+};
+const Fail: React.FC<FailProps> = ({onClose}) => {
+const handleCloseButtonClick=()=>{
+  onClose();
+};
+ 
   return (
     <div className="relative inline-block">
       <Image
         src="/images/redfailalert.svg"
         alt="Red fail pic"
-        width={500}
-        height={500}
+        width={800}
+        height={800}
         className=""
       />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-center text-xl">
@@ -21,8 +27,8 @@ const Fail: React.FC = () => {
         
         </div>
       </div>
-      <div className="absolute top-14 right-4 mt-4 text-white text-2xl">
-          <CloseIcon />
+      <div className="absolute top-14 right-4 mt-14 text-white text-3xl">
+          <button onClick={handleCloseButtonClick}><CloseIcon /></button>
         </div>
     </div>
   );
