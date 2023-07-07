@@ -42,3 +42,9 @@ export interface QuestionI {
   fiftyOption2: string
   roundId: number
 }
+
+export interface TeamsI {
+  id: number
+  teamName: string
+  gameOrder: number
+}
