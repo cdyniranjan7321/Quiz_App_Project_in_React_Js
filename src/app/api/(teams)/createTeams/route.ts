@@ -1,12 +1,20 @@
 import { NextResponse } from 'next/server'
+import { TeamsI } from '../../../../../types'
 import prisma from '../../../../../prisma/client'
 
 export async function POST(request: Request) {
   try {
-    const { id, teamName, gameOrder } = await request.json()
+    const teamInfo: TeamsI[] = await request.json()
 
-    const teamInfo = { id, teamName, gameOrder }
-    const teams = await prisma.teams.createMany({ data: teamInfo })
+    console.log(' teamInfo : ', teamInfo)
+    const teams = await prisma.teams.createMany({
+      data: teamInfo.map(({ id, teamName, gameOrder }) => ({
+        id,
+        teamName,
+        gameOrder,
+      })),
+    })
+    console.log('teams : ', teams)
     return NextResponse.json({ teams })
   } catch (error) {
     return NextResponse.json({ error })
