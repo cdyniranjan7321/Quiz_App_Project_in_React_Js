@@ -1,6 +1,5 @@
 'use client'
 import Sidebar from '@/components/Sidebar'
-import Navbar from '@/components/Navbar'
 import React, { useState, useEffect, ChangeEvent } from 'react'
 
 const AdditionalSettings = () => {
