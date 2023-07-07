@@ -1,7 +1,7 @@
-'use client'
 import Navbar from '@/components/Navbar'
-import React, { useState, ChangeEvent } from 'react'
-import AdditionalSettings from '../additionalsettings/page'
+import React from 'react'
+import AdditionalSettings from '../../components/AdditionalSettings'
+
 const Settings = () => {
   return (
     <div className='overflow-hidden flex bg-gradient-to-b from-[#EED8FF] to-[#3E0C6E] h-screen w-screen'>
