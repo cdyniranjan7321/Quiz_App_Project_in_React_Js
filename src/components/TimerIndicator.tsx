@@ -7,7 +7,7 @@ interface TimerProps {
 }
 const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
   const [time, setTime] = useState(startFrom)
-  const [isRunning, setIsRunning] = useState(true)
+  const [isRunning, setIsRunning] = useState(false)
   const path = useRef<SVGPathElement | null>(null)
   const [strokeDashoffset, setShowStrokeDashoffset] = useState(0)
 
