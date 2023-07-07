@@ -229,14 +229,19 @@ const Question = (props: AvailableProps) => {
           <>
             <button
               className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
-              onClick={() => handleNextButtonClick('correct')}
+              onClick={() => {
+              handleNextButtonClick('correct') 
+              handleCorrectButtonClick()
+            }}
             >
               Correct
             </button>
             <button
               className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-              onClick={() => handleNextButtonClick('incorrect')}
-            >
+              onClick={() => {
+                handleNextButtonClick('incorrect')
+                handleIncorrectButtonClick()
+          }}>
               Incorrect
             </button>
           </>
