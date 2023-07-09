@@ -9,7 +9,7 @@ const AudioVisualRound1 = () => {
       {/* starting navbar and main page  */}
       <div className="flex flex-col w-full">
         {/* start navbar  and main page*/}
-        <Navbar title="Audio Visual Round" isGeneralQuestionsPage={true} />
+        <Navbar title="Audio Visual Round" />
         {/* end navbar */}
         <Question isAudioVisualPage={true} />  
       </div>
