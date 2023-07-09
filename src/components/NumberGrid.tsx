@@ -112,7 +112,7 @@ const NumberGrid = (props: NumberGridProps) => {
                   className={`px-2 mr-2 rounded-2xl rounded-bl-none w-18 md:w-20 text-6xl font-sansi font-semibold italic border-2 border-black ${
                     clickedButtons.includes(number)
                       ? ' bg-gray-500 text-black'
-                      : 'bg-blue-600  text-white'
+                      : 'bg-blue-600 hover:bg-blue-300 text-white'
                   }`}
                   onClick={() => handleQuestionNumberClick(number)}
                 >
