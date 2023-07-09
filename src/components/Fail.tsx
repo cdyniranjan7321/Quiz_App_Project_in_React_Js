@@ -3,8 +3,16 @@ import React from "react";
 import { AiOutlineClose as CloseIcon } from "react-icons/ai";
 type FailProps = {
   onClose: () => void;
+  showRapidFinalMessage:{
+    message:string;
+    totalcorrectanswer:number;
+  }
+  showGeneralMessage:{
+    message:string;
+  }
+  isRapidFirePage:boolean | undefined
 };
-const Fail: React.FC<FailProps> = ({onClose}) => {
+const Fail: React.FC<FailProps> = ({onClose,showRapidFinalMessage,showGeneralMessage,isRapidFirePage}) => {
 const handleCloseButtonClick=()=>{
   onClose();
 };
@@ -18,11 +26,17 @@ const handleCloseButtonClick=()=>{
         height={800}
         className=""
       />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-center text-xl">
-        <div className="absolute inset-0 flex items-center justify-center  w-44">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-center text-xl w-full">
+        <div className="absolute inset-0 flex items-center justify-center  w-full">
           <div className="pt-8">
-            Sorry !!<br />
-            Wrong answer by Team Blue
+          {!isRapidFirePage&&(
+             <span className="text-2xl">{showGeneralMessage.message}</span>
+            )}
+           {isRapidFirePage && (
+            <>
+            <span className="text-2xl">{showRapidFinalMessage.message}</span>
+            </>          
+           )} 
           </div>
         
         </div>

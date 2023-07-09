@@ -3,19 +3,23 @@ import { toast } from 'react-toastify'
 import { QuestionI } from '../../types'
 import { useRouter } from 'next/navigation'
 import { TimerContext } from '@/app/providers'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext,useEffect } from 'react'
 import TimerIndicator from './TimerIndicator'
 import Success from './Success'
 import Fail from './Fail'
+import RapidFireRound from '@/app/rapidFire/page'
 
 type AvailableProps = {
   isGeneralAPage?: boolean
   isRapidFirePage?: boolean
+  isAudioVisualPage?:boolean
   qn?: QuestionI | undefined
   set?: string | null
   questionNumber?: number
   setQuestionNumber?: (value: number) => void
 }
+const totalquestion = 6;
+console.log('totalquestion',totalquestion);
 
 const Question = (props: AvailableProps) => {
   const {
@@ -28,56 +32,129 @@ const Question = (props: AvailableProps) => {
   } = props
 
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
-
   const router = useRouter()
-
   const [passCount, setPassCount] = useState(0)
+  // counts number of times pass button is clicked
   const [showText, setShowText] = useState(false)
+  // this is true when pass button is clicked
   const [showAnswer, setShowAnswer] = useState(false)
+  //this button shows the answer separate handler is not required
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0)
+  //this is only for rapidfire round,it adds 1 for each correct button click
   const [showCorrectPop, setShowCorrectPop] = useState(false)
+  //when true component success is retrieved this comes if in general each click will show popup 
+  //if in rapid fire only shows when all questions are finished that means
+  // when number of correct button click and number of incorrect button click added together is equal to number of questions present
+
   const [showInCorrectPop, setShowInCorrectPop] = useState(false)
+  //when true, component fail is retrieved if in general each incorrect button click makes popup appear but in rapid
+  //all question need to be equal to addition of correct and incorrect button clicks and also need to be 0 for value of correctAnswerCount 
+  const [showRapidFinalMessage,setShowRapidFinalMessage]=useState({ message: 'tehe', totalcorrectanswer: 0 })
+  const [showGeneralMessage,setSHowGeneralMessage]=useState({ message: 'hello'})
+  //this state stores message for child element success and fail to show
+  const [correctClickCount, setCorrectClickCount] = useState(0) 
+  // this stores how many times the correct button is clicked in a page
+  const [incorrectClickCount, setIncorrectClickCount] = useState(0) 
+  // this stores how many incorrect button is clicked
   const handlePassButtonClick = () => {
     setShowText(true)
     setPassCount((prevCount) => prevCount + 1)
   }
-  const handleCorrectButtonClick = () => {
-    setShowCorrectPop(true)
-  }
-  const handleIncorrectButtonClick = () => {
-    setShowInCorrectPop(true)
-  }
+  //when pass button is clicked function one is show text in the page when true another is passCount value increases by 1 at each click
+  useEffect(() =>{
+    setShowRapidFinalMessage((prevMessage)=>({
+      ...prevMessage,
+      totalcorrectanswer: correctAnswerCount,
+    }));
+  },[correctAnswerCount]);
 
-
-  const handleNextButtonClick = (answerCheck: String) => {
-    if (
-      setQuestionNumber !== undefined &&
-      questionNumber !== undefined &&
-      questionNumber < 6
-    ) {
-      setQuestionNumber(questionNumber + 1)
+  // add oclick handler for correct and incorrect button click
+  const handleCorrectButtonClick=()=>{
+     if((correctClickCount+incorrectClickCount)<totalquestion){
+      setCorrectAnswerCount((prevCount)=>prevCount+1)
+      setCorrectClickCount((prevCount)=>prevCount+1)
+     }
     }
-    if (answerCheck === 'correct') {
-      setCorrectAnswerCount(correctAnswerCount + 1)
-      if (questionNumber === 6) {
-        toast.success(
-          `Congratulations your total correct answer is : ${
-            correctAnswerCount + 1
-          }`
-        )
-        router.push('/round')
+  const handleIncorrectButtonClick=()=>{
+    if((correctClickCount+incorrectClickCount)<totalquestion){
+    setIncorrectClickCount((prevCount)=>prevCount+1)
+    }
+  }
+  const  handleCorrectButtonClick1=()=>{
+    setShowCorrectPop(true)
+    setSHowGeneralMessage({message:`Congratulations you have received 1 point`})
+    setShowInCorrectPop(false)
+  }
+  const  handleIncorrectButtonClick1=()=>{
+    setSHowGeneralMessage({message:`Sorry!! you have received 0 point`})
+    setShowInCorrectPop(true)
+    setShowCorrectPop(false)
+  }
+  useEffect(() => {
+    console.log('isRapidFirePage:', isRapidFirePage);
+    console.log('isGeneralPage:', isGeneralAPage);
+    console.log('correctClickCount:', correctClickCount);
+    console.log('incorrectClickCount:', incorrectClickCount);
+    console.log('questionNumber:', questionNumber);
+    console.log('correctAnswerCount:', correctAnswerCount);
+    if(!isRapidFirePage){
+   handleCorrectButtonClick1()
+   handleIncorrectButtonClick1() 
+    }
+    if (isRapidFirePage) {
+      if (correctClickCount + incorrectClickCount >= totalquestion && correctAnswerCount !== 0) {
+        setShowCorrectPop(true);
+        setShowRapidFinalMessage({
+                  message: `Congratulations your total correct answer is : `,
+                  totalcorrectanswer: correctAnswerCount
+                });
+      } else if(correctClickCount + incorrectClickCount >= totalquestion && correctAnswerCount == 0){
+        setShowInCorrectPop(true);
+        setShowRapidFinalMessage({message: `Oops! 0 score received!`,totalcorrectanswer:0})
+      }
+      else
+      {
+        setShowCorrectPop(false)
+        setShowInCorrectPop(false)
       }
     }
-    if (questionNumber === 6 && answerCheck === 'incorrect') {
-      if (correctAnswerCount === 0) {
-        toast.error('Oops! 0 score recorded!')
-      } else
-        toast.success(
-          `Congratulations your total correct answer is : ${correctAnswerCount}`
-        )
-      router.push('/round')
-    }
-  }
+  }, [isRapidFirePage, correctClickCount, incorrectClickCount, questionNumber, correctAnswerCount, isGeneralAPage]);
+    //Use useEffect to update the showRapidFinalMessage state when correctAnswerCount changes here the correctAnswerCount is being listened 
+  // const handleCorrectButtonClick = (answerCheck: String) => {
+  //   //in place of  const handleNextButtonClick = (answerCheck: String) => {
+  //   if (
+  //     setQuestionNumber !== undefined &&
+  //     questionNumber !== undefined &&
+  //     questionNumber < 6
+  //   ) {
+  //     setQuestionNumber(questionNumber + 1)
+  //   }
+  //   if(answerCheck === 'correct') {
+  //     const newCorrectAnswerCount = correctAnswerCount + 1;
+  //     setCorrectAnswerCount(newCorrectAnswerCount)
+  //     setCorrectClickCount((prevCount) => prevCount + 1) // Increment correct click count
+  //     if (questionNumber === 6) {
+  //       setShowRapidFinalMessage({
+  //         message: `Congratulations your total correct answer is : `,
+  //         totalcorrectanswer: newCorrectAnswerCount
+  //       });
+  //       router.push('/round')
+  //     }
+  //   }else if (questionNumber === 6 && answerCheck === 'incorrect') {
+  //     setIncorrectClickCount((prevCount) => prevCount + 1) // Increment correct click count
+  //     if (correctAnswerCount === 0) {
+  //       setShowRapidFinalMessage({
+  //         message: `Oops! 0 score recorded!`,totalcorrectanswer:0})
+  //     } 
+  //     else
+  //     setShowRapidFinalMessage({
+  //       message: `Congratulations your total correct answer is : `,
+  //       totalcorrectanswer: correctAnswerCount
+  //     });
+  //     router.push('/round')
+  //   }
+  // }
+
   let housename = 'Red'
   let housecolor='red'
   if (passCount == 1){
@@ -125,23 +202,30 @@ const Question = (props: AvailableProps) => {
   }
   const handleFailClose = () => {
     setShowInCorrectPop(false);
-  };
+    if(isRapidFirePage){
+    router.push('/round')
+    }
+    };
   
   const handleSuccessClose = () => {
     setShowCorrectPop(false);
+    if(isRapidFirePage){
+      router.push('/round')
+      }
   };
   return (
     <div>
+      {''}
       {showCorrectPop&&(
-      <div className='fixed left-1/3 top-1/4'>
-      <Success onClose={handleSuccessClose}/>
+      <div className='fixed left-[20%] top-[20%]'>
+      <Success onClose={handleSuccessClose} showRapidFinalMessage={showRapidFinalMessage} isRapidFirePage={isRapidFirePage} showGeneralMessage={showGeneralMessage}/>
       </div>
 
     )}
     {showInCorrectPop&&(
       
-      <div className='fixed left-1/3 top-1/4'>
-        <Fail onClose={handleFailClose}/>
+      <div className='fixed left-[20%] top-[20%]'>
+        <Fail onClose={handleFailClose} showRapidFinalMessage={showRapidFinalMessage} isRapidFirePage={isRapidFirePage} showGeneralMessage={showGeneralMessage}/>
       </div> 
       )} 
       <div className='flex flex-col justify-center'>
@@ -183,7 +267,6 @@ const Question = (props: AvailableProps) => {
             <span>
               {housename2} house
               <button className={`ml-2 ${housecolor2 === 'white' ? `bg-${housecolor2} w-12 h-6 rounded-xl py-2` : `bg-${housecolor2}-600 w-12 h-6 rounded-xl py-2`}`}></button>
-
             </span>
           </div>
         </div>
@@ -211,10 +294,14 @@ const Question = (props: AvailableProps) => {
                 <span>Show Answer</span>
               )}
             </button>
-            <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'onClick={handleCorrectButtonClick}>
+            <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
+             onClick={handleCorrectButtonClick1}
+            >
               Correct
             </button>
-            <button className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'onClick={handleIncorrectButtonClick}>
+            <button className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+            onClick={handleIncorrectButtonClick1}
+            >
               Incorrect
             </button>
             <button
@@ -229,14 +316,17 @@ const Question = (props: AvailableProps) => {
           <>
             <button
               className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
-              onClick={() => handleNextButtonClick('correct')}
+              onClick={() => {
+              handleCorrectButtonClick()
+            }}
             >
               Correct
             </button>
             <button
               className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-              onClick={() => handleNextButtonClick('incorrect')}
-            >
+              onClick={() => {
+              handleIncorrectButtonClick()
+          }}>
               Incorrect
             </button>
           </>
@@ -245,7 +335,6 @@ const Question = (props: AvailableProps) => {
     </div>
   </div>
   </div>
-    
   )
 }
 export default Question
