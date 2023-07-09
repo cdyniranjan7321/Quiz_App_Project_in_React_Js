@@ -156,40 +156,71 @@ const Question = (props: AvailableProps) => {
   // }
 
   let housename = 'Red'
-  let housecolor='red'
-  if (passCount == 1){
-        housename = 'Blue'
-        housecolor='blue'
-      }
-  else if (passCount == 2) {
-        housename = 'Green'
-        housecolor='green'
-      }
-  else if(passCount == 3) {
-      housename = 'Yellow'
-      housecolor='yellow'
-    }
-  else if(passCount==4){
-    housename='White'
-    housecolor='white'
-  }
-  let housename2 = 'Blue'
-  let housecolor2='blue'
+  let housecolor = 'red'
   if (passCount == 1) {
-        housename2 = 'Green'
-        housecolor2='green'
-      }
-  else if(passCount == 2) {
-      housename2 = 'Yellow'
-      housecolor2='yellow'
-    }
-  else if(passCount==3){
-    housename2='White'
-    housecolor2='white'
+    housename = 'Blue'
+    housecolor = 'blue'
+  } else if (passCount == 2) {
+    housename = 'Green'
+    housecolor = 'green'
+  } else if (passCount == 3) {
+    housename = 'Yellow'
+    housecolor = 'yellow'
+  } else if (passCount == 4) {
+    housename = 'White'
+    housecolor = 'white'
+  } else if (passCount == 5) {
+    housename = 'Purple'
+    housecolor = 'purple'
+  } else if (passCount == 6) {
+    housename = 'Orange'
+    housecolor = 'orange'
+  } else if (passCount == 7) {
+    housename = 'Pink'
+    housecolor = 'pink'
+  } else if (passCount == 8) {
+    housename = 'Brown'
+    housecolor = 'brown'
+  } else if (passCount == 9) {
+    housename = 'Cyan'
+    housecolor = 'cyan'
+  } else if (passCount == 10) {
+    housename = 'Indigo'
+    housecolor = 'indigo'
   }
-  else if(passCount==4){
-    housename2='No more Team or'
-    housecolor2=''
+
+  let housename2 = 'Blue'
+  let housecolor2 = 'blue'
+  if (passCount == 1) {
+    housename2 = 'Green'
+    housecolor2 = 'green'
+  } else if (passCount == 2) {
+    housename2 = 'Yellow'
+    housecolor2 = 'yellow'
+  } else if (passCount == 3) {
+    housename2 = 'White'
+    housecolor2 = 'white'
+  } else if (passCount == 4) {
+    housename2 = 'Purple'
+    housecolor2 = 'purple'
+  } else if (passCount == 5) {
+    housename2 = 'Orange'
+    housecolor2 = 'orange'
+  } else if (passCount == 6) {
+    housename2 = 'Pink'
+    housecolor2 = 'pink'
+  } else if (passCount == 7) {
+    housename2 = 'Brown'
+    housecolor2 = 'brown'
+  } else if (passCount == 8) {
+    housename2 = 'Cyan'
+    housecolor2 = 'cyan'
+  } else if (passCount == 9) {
+    housename2 = 'Indigo'
+    housecolor2 = 'indigo'
+  } else if (passCount == 10) {
+    housename2 = 'No more Team or'
+    housecolor2 = ''
   }
   let timerStartFrom = 0
   if (timefirst !== undefined) {
