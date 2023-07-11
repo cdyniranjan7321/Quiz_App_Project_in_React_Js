@@ -83,6 +83,9 @@ const NumberGrid = (props: NumberGridProps) => {
         `http://localhost:3000/api/updateQuestion/${roundId}/${number}`,
         {
           method: 'PATCH',
+          body: JSON.stringify({
+            isAsked: false, //need to make true for number to be crossed after being asked
+          }),
         }
       )
       router.push(
