@@ -5,7 +5,7 @@ import { RoundI } from '../types'
 const useRound = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-  const url = 'http://localhost:3000/api/getRound'
+  const url = 'http://localhost:3000/api/getRounds'
 
   const { data: rounds, isLoading, error } = useSWR(url, fetcher)
 
