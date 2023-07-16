@@ -64,9 +64,9 @@ const UploadTeams = () => {
         <Sidebar isSidebarShown={isSidebarShown} />
       </div>
       <div className='fixed top-0 flex justify-center  mt-[6%]  backdrop-blur-4xl  border-2 border-purple-500 rounded-3xl w-[80%] h-[80%] ml-[10%]'>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className=''>
           <div className='flex justify-center'>
-            <span className='p-4 text-3xl'>Number of Teams :</span>
+            <span className='p-4 text-3xl text-white'>Number of Teams :</span>
             <input
             type="number"
             className="rounded-md w-[8%] my-2 pl-4"
@@ -78,33 +78,34 @@ const UploadTeams = () => {
             onChange={handleTeamNumber}
           />
             </div>
-          <table>
+          <table className=''>
             <thead>
-              <tr>
-                <th className='border-2 border-black'>SN</th>
-                <th className='border-2 border-black'>Team Name</th>
-                <th className='border-2 border-black'>Game Order</th>
+              <tr className='text-3xl'>
+                <th className='border-1 border-black text-white p-2'>SN</th>
+                <th className='border-1 border-black text-white'>Team Name</th>
+                <th className='border-1 border-black text-white'>Game Order</th>
               </tr>
             </thead>
             <tbody>
               {data.map((item, index) => (
                 <tr key={index}>
-                  <td className='border-2 border-black'>
+                  <td className='border-1 border-black'>
                     <input
                       type="number"
                       {...register(`id_${index}`, { required: true })}
-                    />
+                    className='rounded-xl m-2 p-4'/>
                   </td>
-                  <td className='border-2 border-black'>
+                  <td className='border-1 border-black'>
                     <input
                       type="text"
                       {...register(`teamName_${index}`, { required: true })}
-                    />
+                    className='rounded-xl m-2 p-4'/>
                   </td>
-                  <td className='border-2 border-black'>
+                  <td className='border-1 border-black '>
                     <input
                       type="number"
-                      {...register(`gameOrder_${index}`, { required: true })}
+                      {...register(`gameOrder_${index}`, { required: true }) } 
+                      className='rounded-xl m-2 p-4'
                     />
                   </td>
                   <td>
@@ -114,9 +115,10 @@ const UploadTeams = () => {
             </tbody>
           </table>
           <div className=''>
-          <div className='fixed bottom-10 ml-[26%] bg-green-600 rounded-2xl p-2'>
+          <div className='fixed left-1/2 transform -translate-x-1/2 bottom-10 bg-green-600 rounded-2xl p-2 text-black'>
           <input type="submit" value="Save" />
         </div>
+
           </div>
         </form>
       </div>

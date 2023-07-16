@@ -13,8 +13,8 @@ const Settings = () => {
           <Navbar title='Settings' isBackArrow={true} />
         </div>
         {/* end navbar */}
-        <AdditionalSettings />
-{/* <UploadTeams/> */}
+        {/* <AdditionalSettings /> */}
+<UploadTeams/>
       </div>
     </div>
   )
