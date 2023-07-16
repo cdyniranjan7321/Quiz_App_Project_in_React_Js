@@ -3,7 +3,7 @@ import React from 'react'
 import Navbar from '@/components/Navbar'
 import Question from '@/components/Question'
 
-const AudioVisualQuestion1 = () => {
+const AudioVisualRound2 = () => {
   return (
     // starting whole page
     <div className='h-screen w-screen overflow-hidden flex bg-blue-gray-900 bg-gradient-to-b from-gray-100 to-purple-900'>
@@ -18,4 +18,4 @@ const AudioVisualQuestion1 = () => {
     </div>
   )
 }
-export default AudioVisualQuestion1
+export default AudioVisualRound2
