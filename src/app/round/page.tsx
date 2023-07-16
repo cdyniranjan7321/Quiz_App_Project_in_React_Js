@@ -94,7 +94,7 @@ const Round = async () => {
                         handleRapidFireModel(round.roundname, round)
                       }
                     >
-                      {round.roundname} Round
+                      {round.roundname?.split(/(?=[A-Z])/).join('-')} Round
                     </button>
                   )
                 )

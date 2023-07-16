@@ -46,7 +46,7 @@ const MyModel = (props: MyModelProps) => {
                       handleClick(round.roundname, round)
                     }}
                   >
-                    {round.roundname}
+                    {round.roundname.split(/(?=[A-Z])/).join(' ')}
                   </button>
                 )
               )
