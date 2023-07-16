@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar'
 import React from 'react'
 import AdditionalSettings from '../../components/AdditionalSettings'
+import UploadTeams from '../uploadTeams/page'
 
 const Settings = () => {
   return (
@@ -12,7 +13,8 @@ const Settings = () => {
           <Navbar title='Settings' isBackArrow={true} />
         </div>
         {/* end navbar */}
-        <AdditionalSettings />
+        {/* <AdditionalSettings /> */}
+<UploadTeams/>
       </div>
     </div>
   )
