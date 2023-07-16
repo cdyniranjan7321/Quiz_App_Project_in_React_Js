@@ -1,19 +1,33 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { BiArrowBack as BackArrow } from 'react-icons/bi'
 import { AiOutlineClose } from 'react-icons/ai'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const AudioVisualRound = () => {
-  const videoRef = useRef(null) // Reference to the video element
-  const audioRef = useRef(null) //Reference to the video element
-  const imageRef = useRef(null) //Reference to the picture element
+  const videoRef = useRef<HTMLVideoElement | null>(null) // Reference to the video element
+  const audioRef = useRef<HTMLAudioElement | null>(null) //Reference to the video element
+  const imageRef = useRef<HTMLImageElement | null>(null) //Reference to the image element
 
   const [questionType, setQuestionType] = useState('null')
 
   const videoSource = 'your-video-source.mp4' // Replace with your video source URL
   const audioSource = 'your-audio-source.mp3' // Replace with your audio source URL
   const imageSource = 'your-image-source.jpg' // replace with your image source URL
+
+  useEffect(() => {
+    // Automatically play the video when the question type is set to 'video'
+    if (questionType === 'video' && videoRef.current) {
+      videoRef.current.play()
+    }
+
+    // Automatically play the audio when the question type is set to 'audio'
+    if (questionType === 'audio' && audioRef.current) {
+      audioRef.current.play()
+    }
+    // No autoplay for image question type
+  }, [questionType])
 
   //Function to determine which section to display based on the question type
   const renderContent = () => {
@@ -52,7 +66,7 @@ const AudioVisualRound = () => {
             flexShrink: 0,
           }}
         >
-          <img ref={imageRef} src={imageSource} className='w-full h-full' />
+          <Image src={imageSource} alt='picture' className='w-full h-full' />
         </div>
       )
     }
@@ -90,7 +104,7 @@ const AudioVisualRound = () => {
 
           {/* Next button */}
           <Link
-            href='/audio-visual1'
+            href='/audioVisualQuestion1'
             className='bg-purple-600 hover:bg-purple-700 text-white rounded-md px-4 py-2 mt-4'
             style={{ backgroundColor: '#3A00E5' }}
           >
