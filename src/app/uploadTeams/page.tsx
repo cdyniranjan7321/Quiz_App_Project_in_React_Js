@@ -79,46 +79,46 @@ const UploadTeams = () => {
           />
             </div>
           <table className=''>
-            <thead>
-              <tr className='text-3xl'>
+            <thead className=''>
+              <tr className='text-3xl  '>
                 <th className='border-1 border-black text-white p-2'>SN</th>
                 <th className='border-1 border-black text-white'>Team Name</th>
                 <th className='border-1 border-black text-white'>Game Order</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className=''>
               {data.map((item, index) => (
                 <tr key={index}>
+
                   <td className='border-1 border-black'>
                     <input
                       type="number"
                       {...register(`id_${index}`, { required: true })}
-                    className='rounded-xl m-2 p-4'/>
+                    className='rounded-xl m-2 p-2'/>
                   </td>
                   <td className='border-1 border-black'>
                     <input
                       type="text"
                       {...register(`teamName_${index}`, { required: true })}
-                    className='rounded-xl m-2 p-4'/>
+                    className='rounded-xl m-2 p-2'/>
                   </td>
                   <td className='border-1 border-black '>
                     <input
                       type="number"
                       {...register(`gameOrder_${index}`, { required: true }) } 
-                      className='rounded-xl m-2 p-4'
+                      className='rounded-xl m-2 p-2'
                     />
                   </td>
                   <td>
-                  </td>
+                  </td>  
                 </tr>
               ))}
             </tbody>
           </table>
           <div className=''>
-          <div className='fixed left-1/2 transform -translate-x-1/2 bottom-10 bg-green-600 rounded-2xl p-2 text-black'>
+          <div className='fixed left-1/2 transform -translate-x-1/2 bottom-10 bg-green-600 rounded-2xl p-2 text-black text-3xl'>
           <input type="submit" value="Save" />
         </div>
-
           </div>
         </form>
       </div>
