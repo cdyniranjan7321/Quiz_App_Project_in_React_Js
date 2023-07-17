@@ -81,20 +81,20 @@ const UploadTeams = () => {
           <table className=''>
             <thead className=''>
               <tr className='text-3xl  '>
-                <th className='border-1 border-black text-white p-2'>SN</th>
-                <th className='border-1 border-black text-white'>Team Name</th>
-                <th className='border-1 border-black text-white'>Game Order</th>
+                <th className='border-1 border-black text-white p-6'>Team Number</th>
+                <th className='border-1 border-black text-white p-6'>Team Name</th>
+                <th className='border-1 border-black text-white p-6'>Game Order</th>
               </tr>
             </thead>
-            <tbody className=''>
+            <tbody className={`fixed right-44 max-h-80 ${data.length > 5 ? 'overflow-y-scroll' : ''}`}>
               {data.map((item, index) => (
-                <tr key={index}>
+                <tr key={index} className='flex '>
 
-                  <td className='border-1 border-black'>
+                  <td className='border-1 border-black '>
                     <input
                       type="number"
                       {...register(`id_${index}`, { required: true })}
-                    className='rounded-xl m-2 p-2'/>
+                    className='rounded-xl my-2 p-2 w-20 mr-16'/>
                   </td>
                   <td className='border-1 border-black'>
                     <input
@@ -106,7 +106,7 @@ const UploadTeams = () => {
                     <input
                       type="number"
                       {...register(`gameOrder_${index}`, { required: true }) } 
-                      className='rounded-xl m-2 p-2'
+                      className='rounded-xl my-2 mr-32 ml-12 p-2 w-20'
                     />
                   </td>
                   <td>
@@ -114,6 +114,7 @@ const UploadTeams = () => {
                 </tr>
               ))}
             </tbody>
+            
           </table>
           <div className=''>
           <div className='fixed left-1/2 transform -translate-x-1/2 bottom-10 bg-green-600 rounded-2xl p-2 text-black text-3xl'>
