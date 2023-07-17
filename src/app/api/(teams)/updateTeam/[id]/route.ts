@@ -17,7 +17,7 @@ export async function PATCH(request: Request, context: { params: any }) {
       data: res,
     })
     return NextResponse.json('Updated Successfully !')
-  } catch (error) {
+  } catch (error:any) {
     if (error.name === 'PrismaClientKnownRequestError') {
       return NextResponse.json('Sorry, provided teamId does not exist !')
     } else return NextResponse.json(error)

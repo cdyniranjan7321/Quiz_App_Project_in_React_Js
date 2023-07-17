@@ -69,3 +69,10 @@ model Teams {
   teamName  String
   gameOrder Int    @unique
 }
+model AboutUs {
+  id            Int     @id @default(autoincrement())
+  Title         String
+  organization  String  @unique
+  field1        String
+  field2        String
+}
