@@ -13,6 +13,7 @@ type NumberGridProps = {
 const NumberGrid = (props: NumberGridProps) => {
   const { grid, roundId, roundName, totalQuestions } = props
   const [clickedButtons, setClickedButtons] = useState<number[]>([])
+  const [crossNumber, setCrossNumber] = useState(false)
   const router = useRouter()
 
   /* ------------- useSWRInfinite ------------ */
@@ -39,33 +40,33 @@ const NumberGrid = (props: NumberGridProps) => {
     }
   )
 
-  const refreshData = async () => {
-    for (let i = 1; i <= initialSize; i++) {
-      // Trigger data refresh for each question number
-      const cacheKey = getKey(i - 1, null, roundId)
-      const newData = await fetcher(cacheKey)
-      mutate(cacheKey, newData, false)
-    }
+  // const refreshData = async () => {
+  //   for (let i = 1; i <= initialSize; i++) {
+  //     // Trigger data refresh for each question number
+  //     const cacheKey = getKey(i - 1, null, roundId)
+  //     const newData = await fetcher(cacheKey)
+  //     mutate(cacheKey, newData, false)
+  //   }
 
-    // Generate an array of cache keys for all question numbers
-    const cacheKeys = Array.from({ length: initialSize }, (_, index) =>
-      getKey(index, null, roundId)
-    )
+  //   // Generate an array of cache keys for all question numbers
+  //   const cacheKeys = Array.from({ length: initialSize }, (_, index) =>
+  //     getKey(index, null, roundId)
+  //   )
 
-    // Trigger a re-render after updating all question numbers
-    mutate(cacheKeys)
-  }
+  //   // Trigger a re-render after updating all question numbers
+  //   mutate(cacheKeys)
+  // }
 
-  useEffect(() => {
-    const refreshInterval = setInterval(() => {
-      // Trigger data refresh for all question numbers
-      refreshData()
-    }, 500) // Refresh interval in milliseconds (e.g., 5000ms = 5 seconds)
+  // useEffect(() => {
+  //   const refreshInterval = setInterval(() => {
+  //     // Trigger data refresh for all question numbers
+  //     refreshData()
+  //   }, 500) // Refresh interval in milliseconds (e.g., 5000ms = 5 seconds)
 
-    return () => {
-      clearInterval(refreshInterval)
-    }
-  })
+  // return () => {
+  //   clearInterval(refreshInterval)
+  // }
+  // })
 
   if (error) {
     return <div>Error: {error.message}</div>
@@ -79,6 +80,7 @@ const NumberGrid = (props: NumberGridProps) => {
 
   const handleQuestionNumberClick = async (number: number) => {
     if (roundId !== null && roundName !== null) {
+      setCrossNumber(true)
       await fetch(
         `http://localhost:3000/api/updateQuestion/${roundId}/${number}`,
         {

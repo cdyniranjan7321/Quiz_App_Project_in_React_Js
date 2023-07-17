@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { QuestionI } from '../../types'
 import { useRouter } from 'next/navigation'
 import { TimerContext } from '@/app/providers'
-import React, { useState, useContext,useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import TimerIndicator from './TimerIndicator'
 import Success from './Success'
 import Fail from './Fail'
@@ -12,14 +12,14 @@ import RapidFireRound from '@/app/rapidFire/page'
 type AvailableProps = {
   isGeneralAPage?: boolean
   isRapidFirePage?: boolean
-  isAudioVisualPage?:boolean
+  isAudioVisualPage?: boolean
   qn?: QuestionI | undefined
   set?: string | null
   questionNumber?: number
   setQuestionNumber?: (value: number) => void
 }
-const totalquestion = 6;
-console.log('totalquestion',totalquestion);
+const totalquestion = 6
+console.log('totalquestion', totalquestion)
 
 const Question = (props: AvailableProps) => {
   const {
@@ -42,84 +42,105 @@ const Question = (props: AvailableProps) => {
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0)
   //this is only for rapidfire round,it adds 1 for each correct button click
   const [showCorrectPop, setShowCorrectPop] = useState(false)
-  //when true component success is retrieved this comes if in general each click will show popup 
+  //when true component success is retrieved this comes if in general each click will show popup
   //if in rapid fire only shows when all questions are finished that means
   // when number of correct button click and number of incorrect button click added together is equal to number of questions present
 
   const [showInCorrectPop, setShowInCorrectPop] = useState(false)
   //when true, component fail is retrieved if in general each incorrect button click makes popup appear but in rapid
-  //all question need to be equal to addition of correct and incorrect button clicks and also need to be 0 for value of correctAnswerCount 
-  const [showRapidFinalMessage,setShowRapidFinalMessage]=useState({ message: 'tehe', totalcorrectanswer: 0 })
-  const [showGeneralMessage,setSHowGeneralMessage]=useState({ message: 'hello'})
+  //all question need to be equal to addition of correct and incorrect button clicks and also need to be 0 for value of correctAnswerCount
+  const [showRapidFinalMessage, setShowRapidFinalMessage] = useState({
+    message: 'tehe',
+    totalcorrectanswer: 0,
+  })
+  const [showGeneralMessage, setSHowGeneralMessage] = useState({
+    message: 'hello',
+  })
   //this state stores message for child element success and fail to show
-  const [correctClickCount, setCorrectClickCount] = useState(0) 
+  const [correctClickCount, setCorrectClickCount] = useState(0)
   // this stores how many times the correct button is clicked in a page
-  const [incorrectClickCount, setIncorrectClickCount] = useState(0) 
+  const [incorrectClickCount, setIncorrectClickCount] = useState(0)
   // this stores how many incorrect button is clicked
   const handlePassButtonClick = () => {
     setShowText(true)
     setPassCount((prevCount) => prevCount + 1)
   }
   //when pass button is clicked function one is show text in the page when true another is passCount value increases by 1 at each click
-  useEffect(() =>{
-    setShowRapidFinalMessage((prevMessage)=>({
+  useEffect(() => {
+    setShowRapidFinalMessage((prevMessage) => ({
       ...prevMessage,
       totalcorrectanswer: correctAnswerCount,
-    }));
-  },[correctAnswerCount]);
+    }))
+  }, [correctAnswerCount])
 
   // add oclick handler for correct and incorrect button click
-  const handleCorrectButtonClick=()=>{
-     if((correctClickCount+incorrectClickCount)<totalquestion){
-      setCorrectAnswerCount((prevCount)=>prevCount+1)
-      setCorrectClickCount((prevCount)=>prevCount+1)
-     }
-    }
-  const handleIncorrectButtonClick=()=>{
-    if((correctClickCount+incorrectClickCount)<totalquestion){
-    setIncorrectClickCount((prevCount)=>prevCount+1)
+  const handleCorrectButtonClick = () => {
+    if (correctClickCount + incorrectClickCount < totalquestion) {
+      setCorrectAnswerCount((prevCount) => prevCount + 1)
+      setCorrectClickCount((prevCount) => prevCount + 1)
     }
   }
-  const  handleCorrectButtonClick1=()=>{
+  const handleIncorrectButtonClick = () => {
+    if (correctClickCount + incorrectClickCount < totalquestion) {
+      setIncorrectClickCount((prevCount) => prevCount + 1)
+    }
+  }
+  const handleCorrectButtonClick1 = () => {
     setShowCorrectPop(true)
-    setSHowGeneralMessage({message:`Congratulations you have received 1 point`})
+    setSHowGeneralMessage({
+      message: `Congratulations you have received 1 point`,
+    })
     setShowInCorrectPop(false)
   }
-  const  handleIncorrectButtonClick1=()=>{
-    setSHowGeneralMessage({message:`Sorry!! you have received 0 point`})
+  const handleIncorrectButtonClick1 = () => {
+    setSHowGeneralMessage({ message: `Sorry!! you have received 0 point` })
     setShowInCorrectPop(true)
     setShowCorrectPop(false)
   }
   useEffect(() => {
-    console.log('isRapidFirePage:', isRapidFirePage);
-    console.log('isGeneralPage:', isGeneralAPage);
-    console.log('correctClickCount:', correctClickCount);
-    console.log('incorrectClickCount:', incorrectClickCount);
-    console.log('questionNumber:', questionNumber);
-    console.log('correctAnswerCount:', correctAnswerCount);
-    if(!isRapidFirePage){
-   handleCorrectButtonClick1()
-   handleIncorrectButtonClick1() 
+    console.log('isRapidFirePage:', isRapidFirePage)
+    console.log('isGeneralPage:', isGeneralAPage)
+    console.log('correctClickCount:', correctClickCount)
+    console.log('incorrectClickCount:', incorrectClickCount)
+    console.log('questionNumber:', questionNumber)
+    console.log('correctAnswerCount:', correctAnswerCount)
+    if (!isRapidFirePage) {
+      handleCorrectButtonClick1()
+      handleIncorrectButtonClick1()
     }
     if (isRapidFirePage) {
-      if (correctClickCount + incorrectClickCount >= totalquestion && correctAnswerCount !== 0) {
-        setShowCorrectPop(true);
+      if (
+        correctClickCount + incorrectClickCount >= totalquestion &&
+        correctAnswerCount !== 0
+      ) {
+        setShowCorrectPop(true)
         setShowRapidFinalMessage({
-                  message: `Congratulations your total correct answer is : `,
-                  totalcorrectanswer: correctAnswerCount
-                });
-      } else if(correctClickCount + incorrectClickCount >= totalquestion && correctAnswerCount == 0){
-        setShowInCorrectPop(true);
-        setShowRapidFinalMessage({message: `Oops! 0 score received!`,totalcorrectanswer:0})
-      }
-      else
-      {
+          message: `Congratulations your total correct answer is : `,
+          totalcorrectanswer: correctAnswerCount,
+        })
+      } else if (
+        correctClickCount + incorrectClickCount >= totalquestion &&
+        correctAnswerCount == 0
+      ) {
+        setShowInCorrectPop(true)
+        setShowRapidFinalMessage({
+          message: `Oops! 0 score received!`,
+          totalcorrectanswer: 0,
+        })
+      } else {
         setShowCorrectPop(false)
         setShowInCorrectPop(false)
       }
     }
-  }, [isRapidFirePage, correctClickCount, incorrectClickCount, questionNumber, correctAnswerCount, isGeneralAPage]);
-    //Use useEffect to update the showRapidFinalMessage state when correctAnswerCount changes here the correctAnswerCount is being listened 
+  }, [
+    isRapidFirePage,
+    correctClickCount,
+    incorrectClickCount,
+    questionNumber,
+    correctAnswerCount,
+    isGeneralAPage,
+  ])
+  //Use useEffect to update the showRapidFinalMessage state when correctAnswerCount changes here the correctAnswerCount is being listened
   // const handleCorrectButtonClick = (answerCheck: String) => {
   //   //in place of  const handleNextButtonClick = (answerCheck: String) => {
   //   if (
@@ -145,7 +166,7 @@ const Question = (props: AvailableProps) => {
   //     if (correctAnswerCount === 0) {
   //       setShowRapidFinalMessage({
   //         message: `Oops! 0 score recorded!`,totalcorrectanswer:0})
-  //     } 
+  //     }
   //     else
   //     setShowRapidFinalMessage({
   //       message: `Congratulations your total correct answer is : `,
@@ -232,140 +253,163 @@ const Question = (props: AvailableProps) => {
     }
   }
   const handleFailClose = () => {
-    setShowInCorrectPop(false);
-    if(isRapidFirePage){
-    router.push('/round')
-    }
-    };
-  
-  const handleSuccessClose = () => {
-    setShowCorrectPop(false);
-    if(isRapidFirePage){
+    setShowInCorrectPop(false)
+    if (isRapidFirePage) {
       router.push('/round')
-      }
-  };
+    }
+  }
+
+  const handleSuccessClose = () => {
+    setShowCorrectPop(false)
+    if (isRapidFirePage) {
+      router.push('/round')
+    }
+  }
   return (
     <div>
       {''}
-      {showCorrectPop&&(
-      <div className='fixed left-[20%] top-[20%]'>
-      <Success onClose={handleSuccessClose} showRapidFinalMessage={showRapidFinalMessage} isRapidFirePage={isRapidFirePage} showGeneralMessage={showGeneralMessage}/>
-      </div>
-
-    )}
-    {showInCorrectPop&&(
-      
-      <div className='fixed left-[20%] top-[20%]'>
-        <Fail onClose={handleFailClose} showRapidFinalMessage={showRapidFinalMessage} isRapidFirePage={isRapidFirePage} showGeneralMessage={showGeneralMessage}/>
-      </div> 
-      )} 
+      {showCorrectPop && (
+        <div className='fixed left-[20%] top-[20%]'>
+          <Success
+            onClose={handleSuccessClose}
+            showRapidFinalMessage={showRapidFinalMessage}
+            isRapidFirePage={isRapidFirePage}
+            showGeneralMessage={showGeneralMessage}
+          />
+        </div>
+      )}
+      {showInCorrectPop && (
+        <div className='fixed left-[20%] top-[20%]'>
+          <Fail
+            onClose={handleFailClose}
+            showRapidFinalMessage={showRapidFinalMessage}
+            isRapidFirePage={isRapidFirePage}
+            showGeneralMessage={showGeneralMessage}
+          />
+        </div>
+      )}
       <div className='flex flex-col justify-center'>
-      
-    <div className='flex flex-row h-full justify-between mb-28'>
-      <div className='w-[70%] ml-24 mt-8 '>
-        <div className='flex flex-row justify-between'>
-          <div className='flex flex-col'>
-            <div className='flex'>
-            <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 ml-5'>
-                Round for: {housename} house
-                <button className={`ml-4 mr-2 mb-1 ${housecolor === 'white' ? `bg-${housecolor} w-12 h-6 rounded-xl py-2` : `bg-${housecolor}-600 w-12 h-6 rounded-xl py-2`}`}></button>
-
-              </span>
+        <div className='flex flex-row h-full justify-between mb-28'>
+          <div className='w-[70%] ml-24 mt-8 '>
+            <div className='flex flex-row justify-between'>
+              <div className='flex flex-col'>
+                <div className='flex'>
+                  <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 ml-5'>
+                    Round for: {housename} house
+                    <button
+                      className={`ml-4 mr-2 mb-1 ${
+                        housecolor === 'white'
+                          ? `bg-${housecolor} w-12 h-6 rounded-xl py-2`
+                          : `bg-${housecolor}-600 w-12 h-6 rounded-xl py-2`
+                      }`}
+                    ></button>
+                  </span>
+                </div>
+                {isGeneralAPage && (
+                  <span className='text-3xl lg:text-5xl p-4 font-italiana'>
+                    {showText && <span className='pl-2'>pass question</span>}
+                  </span>
+                )}
+              </div>
             </div>
-            {isGeneralAPage && (
-              <span className='text-3xl lg:text-5xl p-4 font-italiana'>
-                {showText && <span className='pl-2'>pass question</span>}
-              </span>
+            <div className='text-2xl lg:text-4xl p-3 font-italiana'>
+              {' '}
+              Question {qn?.id} : {qn?.question}
+            </div>
+            {showAnswer && (
+              <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
+                Answer : {qn?.answer}
+              </div>
+            )}
+          </div>
+          {/* starting second part  */}
+          {!isRapidFirePage && (
+            <div className='fixed right-0 flex flex-col w-[30%] gap-12  '>
+              {/* top part of right side */}
+              <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto'>
+                <span className='font-italiana text-xl'>
+                  Next question for:
+                </span>
+                <span>
+                  {housename2} house
+                  <button
+                    className={`ml-2 ${
+                      housecolor2 === 'white'
+                        ? `bg-${housecolor2} w-12 h-6 rounded-xl py-2`
+                        : `bg-${housecolor2}-600 w-12 h-6 rounded-xl py-2`
+                    }`}
+                  ></button>
+                </span>
+              </div>
+            </div>
+          )}
+          {isRapidFirePage && (
+            <div className=' bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 w-22 h-12 mr-6 '>
+              {set}
+            </div>
+          )}
+        </div>
+        <div className='fixed bottom-6 left-0 right-0 '>
+          <div className='fixed right-0 bottom-16 flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl'>
+            <TimerIndicator startFrom={timerStartFrom} />
+          </div>
+          <div className=' flex justify-center'>
+            {!isRapidFirePage && (
+              <>
+                <button
+                  className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
+                  onClick={() => setShowAnswer(!showAnswer)}
+                >
+                  {showAnswer ? (
+                    <span>Hide Answer</span>
+                  ) : (
+                    <span>Show Answer</span>
+                  )}
+                </button>
+                <button
+                  className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
+                  onClick={handleCorrectButtonClick1}
+                >
+                  Correct
+                </button>
+                <button
+                  className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+                  onClick={handleIncorrectButtonClick1}
+                >
+                  Incorrect
+                </button>
+                <button
+                  className='bg-custom-brown rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+                  onClick={handlePassButtonClick}
+                >
+                  Pass
+                </button>
+              </>
+            )}
+            {isRapidFirePage && (
+              <>
+                <button
+                  className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
+                  onClick={() => {
+                    handleCorrectButtonClick()
+                  }}
+                >
+                  Correct
+                </button>
+                <button
+                  className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
+                  onClick={() => {
+                    handleIncorrectButtonClick()
+                  }}
+                >
+                  Incorrect
+                </button>
+              </>
             )}
           </div>
         </div>
-        <div className='text-2xl lg:text-4xl p-3 font-italiana'>
-          {' '}
-          Question {qn?.id} : {qn?.question}
-        </div>
-        {showAnswer && (
-          <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
-            Answer : {qn?.answer}
-          </div>
-        )}
-      </div>
-      {/* starting second part  */}
-      {!isRapidFirePage && (
-        <div className='fixed right-0 flex flex-col w-[30%] gap-12  '>
-          {/* top part of right side */}
-          <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto'>
-            <span className='font-italiana text-xl'>Next question for:</span>
-            <span>
-              {housename2} house
-              <button className={`ml-2 ${housecolor2 === 'white' ? `bg-${housecolor2} w-12 h-6 rounded-xl py-2` : `bg-${housecolor2}-600 w-12 h-6 rounded-xl py-2`}`}></button>
-            </span>
-          </div>
-        </div>
-      )}
-      {isRapidFirePage && (
-        <div className=' bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 w-22 h-12 mr-6 '>
-          {set}
-        </div>
-      )}
-    </div>
-    <div className='fixed bottom-6 left-0 right-0 '>
-      <div className='fixed right-0 bottom-16 flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl'>
-        <TimerIndicator startFrom={timerStartFrom} />
-      </div>
-      <div className=' flex justify-center'>
-        {!isRapidFirePage && (
-          <>
-            <button
-              className=' bg-blue-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
-              onClick={() => setShowAnswer(!showAnswer)}
-            >
-              {showAnswer ? (
-                <span>Hide Answer</span>
-              ) : (
-                <span>Show Answer</span>
-              )}
-            </button>
-            <button className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
-             onClick={handleCorrectButtonClick1}
-            >
-              Correct
-            </button>
-            <button className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-            onClick={handleIncorrectButtonClick1}
-            >
-              Incorrect
-            </button>
-            <button
-              className='bg-custom-brown rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-              onClick={handlePassButtonClick}
-            >
-              Pass
-            </button>
-          </>
-        )}
-        {isRapidFirePage && (
-          <>
-            <button
-              className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
-              onClick={() => {
-              handleCorrectButtonClick()
-            }}
-            >
-              Correct
-            </button>
-            <button
-              className='bg-red-500 rounded-2xl mr-10 px-7 py-4 w-32 text-white text-xl'
-              onClick={() => {
-              handleIncorrectButtonClick()
-          }}>
-              Incorrect
-            </button>
-          </>
-        )}
       </div>
     </div>
-  </div>
-  </div>
   )
 }
 export default Question

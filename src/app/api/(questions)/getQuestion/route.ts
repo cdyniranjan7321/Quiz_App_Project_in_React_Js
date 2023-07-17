@@ -12,6 +12,7 @@ export async function GET(request: Request) {
       const question = await prisma.questionAnswer.findUnique({
         where: { id_roundId: { id, roundId } },
       })
+      console.log('question : ', question)
       return NextResponse.json({ question })
     }
   } catch (err) {
