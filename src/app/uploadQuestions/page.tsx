@@ -4,22 +4,12 @@ import classNames from 'classnames'
 import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-<<<<<<< Updated upstream
 import QuestionUploadPopup from '@/components/QuestionUploadPopup'
 
 const UploadQuestions = async () => {
   const [roundId, setRoundId] = useState(2)
-=======
-import { useRouter } from 'next/navigation'
-import QuestionUploadPopup from '@/components/QuestionUploadPopup'
-
-const UploadQuestions = async () => {
-  const [roundId, setRoundId] = useState(0)
->>>>>>> Stashed changes
   const [modalIsOpen, setIsOpen] = useState(true)
   const [qnNo, setQnNo] = useState<string>('')
-
-  const router = useRouter()
 
   const {
     register,
@@ -28,10 +18,6 @@ const UploadQuestions = async () => {
   } = useForm()
 
   const onSubmit = async (data: any) => {
-<<<<<<< Updated upstream
-=======
-    // console.log('data : ', data)
->>>>>>> Stashed changes
     const id = parseInt(data.id)
     const datas = {
       ...data,
@@ -57,8 +43,13 @@ const UploadQuestions = async () => {
   )
 
   return (
-    <div className={`${roundId === 8 ? 'w-full flex flex-col bg-gradient-to-b from-gray-300 to-purple-900 justify-center items-center' : 'h-screen w-full flex flex-col bg-gradient-to-b from-gray-300 to-purple-900 justify-center items-center'}`}>
-
+    <div
+      className={`${
+        roundId === 8
+          ? 'w-full flex flex-col bg-gradient-to-b from-gray-300 to-purple-900 justify-center items-center'
+          : 'h-screen w-full flex flex-col bg-gradient-to-b from-gray-300 to-purple-900 justify-center items-center'
+      }`}
+    >
       <div className=' w-[60%] sm:[90%] h-auto rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-700'>
         {modalIsOpen && (
           <QuestionUploadPopup
@@ -79,11 +70,6 @@ const UploadQuestions = async () => {
               type='number'
               className={inputClass}
               {...register('id')}
-<<<<<<< Updated upstream
-=======
-              // value={qnNo}
-              // onChange={(e) => setQnNo(e.target.value)}
->>>>>>> Stashed changes
               required
             />
             <label className='input-text absolute left-4 top-5 opacity-20'>
@@ -113,7 +99,6 @@ const UploadQuestions = async () => {
               Enter answer <span className='text-[crimson]'>*</span>
             </label>
           </div>
-<<<<<<< Updated upstream
           {/* General roundId = 2 & rapidFire SETA, setB setC, setD roundId= 4, 5, 6, 7 respectively */}
           {roundId !== 2 &&
             roundId !== 4 &&
@@ -173,73 +158,6 @@ const UploadQuestions = async () => {
 
           {/* fifty-fifty roundId = 8 */}
           {roundId === 8 && (
-=======
-          {/* General roundId = 2 & rapidFire roundId= 3 */}
-          {roundId !== 2 && roundId !== 3 && (
->>>>>>> Stashed changes
-            <>
-              <div className='relative'>
-                <input
-                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                  type='text'
-<<<<<<< Updated upstream
-                  {...register('fiftyOption1')}
-=======
-                  {...register('option1')}
->>>>>>> Stashed changes
-                  required
-                />
-                <label className='absolute left-4 top-5 opacity-20 input-text'>
-                  Fifty Option 1 <span className='text-[crimson]'>*</span>
-                </label>
-              </div>
-
-              <div className='relative'>
-                <input
-                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                  type='text'
-<<<<<<< Updated upstream
-                  {...register('fiftyOption2')}
-=======
-                  {...register('option2')}
->>>>>>> Stashed changes
-                  required
-                />
-                <label className='absolute left-4 top-5 opacity-20 input-text'>
-                  Fifty Option 2 <span className='text-[crimson]'>*</span>
-                </label>
-              </div>
-<<<<<<< Updated upstream
-=======
-
-              <div className='relative'>
-                <input
-                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                  type='text'
-                  {...register('option3')}
-                  required
-                />
-                <label className='absolute left-4 top-5 opacity-20 input-text'>
-                  Option C <span className='text-[crimson]'>*</span>
-                </label>
-              </div>
-
-              <div className='relative'>
-                <input
-                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                  type='text'
-                  {...register('option4')}
-                  required
-                />
-                <label className='absolute left-4 top-5 opacity-20 input-text'>
-                  Option D <span className='text-[crimson]'>*</span>
-                </label>
-              </div>
-            </>
-          )}
-
-          {/* fifty-fifty roundId = 8 */}
-          {roundId === 8 && (
             <>
               <div className='relative'>
                 <input
@@ -264,7 +182,6 @@ const UploadQuestions = async () => {
                   Fifty Option 2 <span className='text-[crimson]'>*</span>
                 </label>
               </div>
->>>>>>> Stashed changes
             </>
           )}
           <input
