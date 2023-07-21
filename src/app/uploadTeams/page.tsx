@@ -8,7 +8,7 @@ const UploadTeams = () => {
   const [isSidebarShown, setIsSidebarShown] = useState(true)
   const [data, setData] = useState([{ id: '', teamName: '', gameOrder: '' }]);
   const [numberOfTeams, setNumberOfTeams] = useState(1); // State to store the number of teams
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors }, } = useForm();
   useEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth
