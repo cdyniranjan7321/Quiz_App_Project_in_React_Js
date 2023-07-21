@@ -4,8 +4,19 @@ import { BiArrowBack as BackArrow } from 'react-icons/bi'
 import { AiOutlineClose } from 'react-icons/ai'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import useRequest from '../../../utils/useQuestionRequest'
 
 const AudioVisualRound1 = () => {
+  const searchParams = useSearchParams()
+  const roundId = searchParams.get('roundId')
+  const questionNumber = searchParams.get('questionNumber')
+  const round_id = roundId !== null ? parseInt(roundId) : 0
+  const questionNum = questionNumber !== null ? parseInt(questionNumber) : 0
+
+  const { question } = useRequest(questionNum, round_id)
+  console.log('data from audiovisualquestion fetcher : ', question)
+
   const videoRef = useRef<HTMLVideoElement | null>(null) // Reference to the video element
   const audioRef = useRef<HTMLAudioElement | null>(null) //Reference to the video element
   const imageRef = useRef<HTMLImageElement | null>(null) //Reference to the image element
@@ -104,7 +115,7 @@ const AudioVisualRound1 = () => {
 
           {/* Next button */}
           <Link
-            href='/AudioVisualRound2'
+            href='/audioVisual2'
             className='bg-purple-600 hover:bg-purple-700 text-white rounded-md px-4 py-2 mt-4'
             style={{ backgroundColor: '#3A00E5' }}
           >
