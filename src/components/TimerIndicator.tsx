@@ -47,7 +47,7 @@ useEffect(() => {
     isPlaying: isRunning,
     duration: startFrom,
     colors:color,
-    size: 280,
+    size: 135,
   })
   
   const [offsetps, setOffsetps] = useState(0);
@@ -148,10 +148,10 @@ useEffect(() => {
               className='flex flex-row gap-1'
               style={{ transform: 'rotate(90deg)' }}
             >
-              <div className='bg-purple-900 px-2 py-3 text-white text-2xl'>
+              <div className='bg-purple-900 px-2 py-3 text-white text-2xl border-2 border-black rounded-xl'>
                 {formatTime(time)}
               </div>
-              <div
+              {/* <div
                 className={`bg-purple-900  ${
                   isRunning
                     ? 'px-2 py-3 text-green-700 text-3xl'
@@ -160,8 +160,8 @@ useEffect(() => {
                 onClick={handlePlayClick}
               >
                 <MdPlayArrow />
-              </div>
-              <div
+              </div> */}
+              {/* <div
                 className={`bg-purple-900 ${
                   isRunning
                     ? 'px-2 py-3 text-3xl'
@@ -170,14 +170,14 @@ useEffect(() => {
                 onClick={handlePauseClick}
               >
                 <MdPause />
-              </div>
-              <div
+              </div> */}
+              {/* <div
                 className='bg-purple-900 text-white px-3 py-3 text-3xl'
                 style={{ transform: 'rotate(-90deg)' }}
                 onClick={handleResetClick}
               >
                 <MdRefresh />
-              </div>
+              </div> */}
             </div>
           </div>
         </foreignObject>
