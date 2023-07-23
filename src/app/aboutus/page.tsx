@@ -62,12 +62,13 @@ const About = () => {
           </div>
         </div>
 
-        <div className='pl-[43%] pt-[2%]  text-2xl text-black-500'>
+        <div className='pt-[2%] text-black-500 text-center'>
           
-          <h2>{Title}</h2>
-          <h3>{organization}</h3>
+          <span className='font-bold text-3xl'>{Title}</span>
+          <br/>
+          <span className='text-2xl'>{organization}</span>
         </div>
-        <div className='flex flex-row'>
+        <div className='flex flex-row mt-4'>
           <div className='w-[40%] h-[70%] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2   bg-[#6E6BFA] lg:bg-opacity-[45%] blur-2xl rounded-full  ml-[3%] mt-[5%]'></div>
 
           <div className='h-60 w-70 pl-[40%]'>
