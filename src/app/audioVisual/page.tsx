@@ -22,7 +22,7 @@ const AudioVisualRound = () => {
         <AvailableQuestions
           totalQuestions={total_questions}
           roundId={round_id}
-          roundName='Audio Visual'
+          roundName='audioVisual'
         />
       </div>
       {/* ending navbar and main page  */}
