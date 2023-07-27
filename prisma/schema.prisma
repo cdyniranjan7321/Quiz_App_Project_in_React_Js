@@ -41,6 +41,7 @@ model Round {
   isoption              Boolean          @default(false)
   isfiftyfifty          Boolean          @default(false)
   question              QuestionAnswer[]
+  Scores              Score[]
 }
 
 model QuestionAnswer {
@@ -59,15 +60,17 @@ model QuestionAnswer {
   resourceType  String?
   fiftyOption2  String?
   correctOption Int?
+  Scores        Score[]
   round         Round   @relation(fields: [roundId], references: [id])
-
   @@id([id, roundId])
 }
 
 model Teams {
-  id        Int    @id
-  teamName  String
+  id        Int    @id @default(autoincrement())
+  teamName  String @unique
   gameOrder Int    @unique
+  scores    Score[]
+  teamAnswers Json[] @default([])
 }
 model AboutUs {
   id            Int     @id @default(autoincrement())
@@ -75,4 +78,16 @@ model AboutUs {
   organization  String  @unique
   field1        String
   field2        String
+}
+model Score {
+  id        Int     @default(autoincrement())
+  score     Int
+  team      Teams   @relation(fields: [tid], references: [id])
+  tid       Int     @unique
+  round     Round   @relation(fields: [roundId], references: [id])
+  roundId   Int
+  questionanswer QuestionAnswer @relation(fields: [qid, qroundId], references: [id, roundId])
+  qid       Int
+  qroundId  Int
+  @@id([tid,roundId])
 }

@@ -47,7 +47,7 @@ useEffect(() => {
     isPlaying: isRunning,
     duration: startFrom,
     colors:color,
-    size: 280,
+    size: 135,
   })
   
   const [offsetps, setOffsetps] = useState(0);
@@ -151,8 +151,13 @@ useEffect(() => {
               <div className='bg-purple-900 px-2 py-3 text-white text-2xl'>
                 {formatTime(time)}
               </div>
-              <div
-                className={`bg-purple-900  ${
+            </div>
+          </div>
+        </foreignObject>
+      </svg>
+      <div className='flex flex-row gap-1 fixed bottom-7 right-60'>
+      <div
+                className={`bg-black ${
                   isRunning
                     ? 'px-2 py-3 text-green-700 text-3xl'
                     : 'px-2 py-3 text-white text-3xl'
@@ -162,26 +167,24 @@ useEffect(() => {
                 <MdPlayArrow />
               </div>
               <div
-                className={`bg-purple-900 ${
+                className={`bg-black ${
                   isRunning
-                    ? 'px-2 py-3 text-3xl'
+                    ? 'px-2 py-3 text-3xl text-white'
                     : ' px-2 py-3 text-green-700 text-3xl'
                 }`}
                 onClick={handlePauseClick}
               >
                 <MdPause />
               </div>
-              <div
-                className='bg-purple-900 text-white px-3 py-3 text-3xl'
+            <div
+                className='bg-black text-white px-3 py-3 text-3xl'
                 style={{ transform: 'rotate(-90deg)' }}
                 onClick={handleResetClick}
               >
                 <MdRefresh />
               </div>
-            </div>
-          </div>
-        </foreignObject>
-      </svg>
+      </div>
+
     </div>
   )
 }

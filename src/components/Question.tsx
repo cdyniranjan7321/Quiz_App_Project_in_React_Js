@@ -1,13 +1,12 @@
 'use client'
-import { toast } from 'react-toastify'
 import { QuestionI } from '../../types'
 import { useRouter } from 'next/navigation'
 import { TimerContext } from '@/app/providers'
 import React, { useState, useContext, useEffect } from 'react'
-import TimerIndicator from './TimerIndicator'
 import Success from './Success'
 import Fail from './Fail'
 import RapidFireRound from '@/app/rapidFire/page'
+import TimerIndicator from './TimerIndicator'
 
 type AvailableProps = {
   isGeneralAPage?: boolean
@@ -350,7 +349,7 @@ const Question = (props: AvailableProps) => {
           )}
         </div>
         <div className='fixed bottom-6 left-0 right-0 '>
-          <div className='fixed right-0 bottom-16 flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl'>
+          <div className='fixed right-0 top-52 flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl'>
             <TimerIndicator startFrom={timerStartFrom} />
           </div>
           <div className=' flex justify-center'>
