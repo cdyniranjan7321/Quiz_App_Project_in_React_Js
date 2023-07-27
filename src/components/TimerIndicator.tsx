@@ -3,9 +3,11 @@ import React, { useEffect, useState, useRef } from 'react'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
 import { ColorFormat, ColorHex, useCountdown } from 'react-countdown-circle-timer'
 interface TimerProps {
-  startFrom: number
+  startFrom: number,
+  isfiftyfiftypage?:boolean,
+  israpifirepage?:boolean
 }
-const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
+const TimerIndicator: React.FC<TimerProps> = ({ startFrom,isfiftyfiftypage,israpifirepage }) => {
   const [time, setTime] = useState(startFrom)
   const [isRunning, setIsRunning] = useState(false)
   const path = useRef<SVGPathElement | null>(null)
@@ -155,7 +157,7 @@ useEffect(() => {
           </div>
         </foreignObject>
       </svg>
-      <div className='flex flex-row gap-1 fixed bottom-7 right-60'>
+      <div className={`flex flex-row gap-1 fixed ${isfiftyfiftypage ? ' top-[423px] right-72': israpifirepage ? 'bottom-7 right-[420px]':'bottom-7 right-[230px]'}`}>
       <div
                 className={`bg-black ${
                   isRunning
