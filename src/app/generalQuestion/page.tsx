@@ -13,7 +13,7 @@ const GeneralQuestion = () => {
   const questionNum = questionNumber !== null ? parseInt(questionNumber) : 0
 
   const { question } = useRequest(questionNum, round_id)
-  console.log('data from generalquestion fetcher : ', question)
+  console.log('data from General Question fetcher : ', question)
 
   return (
     // starting whole page
