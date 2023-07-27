@@ -3,14 +3,13 @@ import React, { useEffect, useState, useRef } from 'react'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
 import { ColorFormat, ColorHex, useCountdown } from 'react-countdown-circle-timer'
 interface TimerProps {
-  startFrom: number,
-  isRunning:boolean,
-  strokeDashoffset:number
+  startFrom: number
 }
-const TimerIndicator: React.FC<TimerProps> = ({ startFrom,isRunning,strokeDashoffset }) => {
+const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
   const [time, setTime] = useState(startFrom)
+  const [isRunning, setIsRunning] = useState(false)
   const path = useRef<SVGPathElement | null>(null)
-  const [strokeDashoffsetvalue, setShowStrokeDashoffset] = useState(0)
+  const [strokeDashoffset, setShowStrokeDashoffset] = useState(0)
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60)
@@ -20,6 +19,17 @@ const TimerIndicator: React.FC<TimerProps> = ({ startFrom,isRunning,strokeDashof
         {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
       </div>
     )
+  }
+  const handlePlayClick = () => {
+    setIsRunning(true)
+  }
+  const handlePauseClick = () => {
+    setIsRunning(false)
+  }
+  const handleResetClick = () => {
+    setTime(startFrom)
+    setIsRunning(false)
+    setShowStrokeDashoffset(0)
   }
   const [color, setColor] = useState<ColorFormat>('#22C55E'); // Default color
 
@@ -73,7 +83,7 @@ useEffect(() => {
         if (time > 0) {
           setTime((prevTime) => prevTime - 1)
         } else {
-          // setIsRunning(false)
+          setIsRunning(false)
         }
       }, 1000)
     }
@@ -138,13 +148,43 @@ useEffect(() => {
               className='flex flex-row gap-1'
               style={{ transform: 'rotate(90deg)' }}
             >
-              <div className='bg-purple-900 px-2 py-3 text-white text-2xl border-2 border-black rounded-xl'>
+              <div className='bg-purple-900 px-2 py-3 text-white text-2xl'>
                 {formatTime(time)}
               </div>
             </div>
           </div>
         </foreignObject>
       </svg>
+      <div className='flex flex-row gap-1 fixed bottom-7 right-60'>
+      <div
+                className={`bg-black ${
+                  isRunning
+                    ? 'px-2 py-3 text-green-700 text-3xl'
+                    : 'px-2 py-3 text-white text-3xl'
+                }`}
+                onClick={handlePlayClick}
+              >
+                <MdPlayArrow />
+              </div>
+              <div
+                className={`bg-black ${
+                  isRunning
+                    ? 'px-2 py-3 text-3xl text-white'
+                    : ' px-2 py-3 text-green-700 text-3xl'
+                }`}
+                onClick={handlePauseClick}
+              >
+                <MdPause />
+              </div>
+            <div
+                className='bg-black text-white px-3 py-3 text-3xl'
+                style={{ transform: 'rotate(-90deg)' }}
+                onClick={handleResetClick}
+              >
+                <MdRefresh />
+              </div>
+      </div>
+
     </div>
   )
 }
