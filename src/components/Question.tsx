@@ -8,6 +8,7 @@ import TimerIndicator from './TimerIndicator'
 import Success from './Success'
 import Fail from './Fail'
 import RapidFireRound from '@/app/rapidFire/page'
+import TimerController from './TimerController'
 
 type AvailableProps = {
   isGeneralAPage?: boolean
@@ -17,6 +18,7 @@ type AvailableProps = {
   set?: string | null
   questionNumber?: number
   setQuestionNumber?: (value: number) => void
+  startFrom: number,
 }
 const totalquestion = 6
 console.log('totalquestion', totalquestion)
@@ -29,7 +31,11 @@ const Question = (props: AvailableProps) => {
     set,
     questionNumber,
     setQuestionNumber,
+    startFrom,
   } = props
+  const [time, setTime] = useState(startFrom)
+  const [isRunning, setIsRunning] = useState(false)
+  const [strokeDashoffset, setShowStrokeDashoffset] = useState(0)
 
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
   const router = useRouter()
@@ -42,13 +48,8 @@ const Question = (props: AvailableProps) => {
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0)
   //this is only for rapidfire round,it adds 1 for each correct button click
   const [showCorrectPop, setShowCorrectPop] = useState(false)
-  //when true component success is retrieved this comes if in general each click will show popup
-  //if in rapid fire only shows when all questions are finished that means
-  // when number of correct button click and number of incorrect button click added together is equal to number of questions present
 
   const [showInCorrectPop, setShowInCorrectPop] = useState(false)
-  //when true, component fail is retrieved if in general each incorrect button click makes popup appear but in rapid
-  //all question need to be equal to addition of correct and incorrect button clicks and also need to be 0 for value of correctAnswerCount
   const [showRapidFinalMessage, setShowRapidFinalMessage] = useState({
     message: 'tehe',
     totalcorrectanswer: 0,
@@ -94,7 +95,7 @@ const Question = (props: AvailableProps) => {
   }
   const handleIncorrectButtonClick1 = () => {
     setSHowGeneralMessage({ message: `Sorry!! you have received 0 point` })
-    setShowInCorrectPop(true)
+    // setShowInCorrectPop(true)
     setShowCorrectPop(false)
   }
   useEffect(() => {
@@ -120,7 +121,7 @@ const Question = (props: AvailableProps) => {
         })
       } else if (
         correctClickCount + incorrectClickCount >= totalquestion &&
-        correctAnswerCount == 0
+        correctAnswerCount == 0 && incorrectClickCount+correctClickCount>0
       ) {
         setShowInCorrectPop(true)
         setShowRapidFinalMessage({
@@ -350,8 +351,8 @@ const Question = (props: AvailableProps) => {
           )}
         </div>
         <div className='fixed bottom-6 left-0 right-0 '>
-          <div className='fixed right-0 bottom-16 flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl'>
-            <TimerIndicator startFrom={timerStartFrom} />
+          <div className='fixed right-0 top-52 flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl'>
+            <TimerIndicator startFrom={timerStartFrom} isRunning={isRunning} strokeDashoffset={strokeDashoffset}  />
           </div>
           <div className=' flex justify-center'>
             {!isRapidFirePage && (
@@ -384,6 +385,7 @@ const Question = (props: AvailableProps) => {
                 >
                   Pass
                 </button>
+                             <TimerController startFrom={startFrom}/> 
               </>
             )}
             {isRapidFirePage && (

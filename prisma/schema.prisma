@@ -80,13 +80,14 @@ model AboutUs {
   field2        String
 }
 model Score {
-  id        Int     @id @default(autoincrement())
+  id        Int     @default(autoincrement())
   score     Int
   team      Teams   @relation(fields: [tid], references: [id])
-  tid       Int
+  tid       Int     @unique
   round     Round   @relation(fields: [roundId], references: [id])
   roundId   Int
   questionanswer QuestionAnswer @relation(fields: [qid, qroundId], references: [id, roundId])
   qid       Int
   qroundId  Int
+  @@id([tid,roundId])
 }
