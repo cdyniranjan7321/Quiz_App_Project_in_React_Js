@@ -2,7 +2,7 @@
 import { QuestionI } from '../../types'
 import { useRouter } from 'next/navigation'
 import { TimerContext } from '@/app/providers'
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect,useRef } from 'react'
 import Success from './Success'
 import Fail from './Fail'
 import RapidFireRound from '@/app/rapidFire/page'
@@ -32,6 +32,7 @@ const Question = (props: AvailableProps) => {
 
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
   const router = useRouter()
+  const isinitialRender=useRef(true)
   const [passCount, setPassCount] = useState(0)
   const [showText, setShowText] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
@@ -89,10 +90,11 @@ const Question = (props: AvailableProps) => {
     console.log('incorrectClickCount:', incorrectClickCount)
     console.log('questionNumber:', questionNumber)
     console.log('correctAnswerCount:', correctAnswerCount)
-    if (!isRapidFirePage) {
+    if (!isRapidFirePage && !isinitialRender.current) {
       handleCorrectButtonClick1()
       handleIncorrectButtonClick1()
     }
+    isinitialRender.current=false
     if (isRapidFirePage) {
       if (
         correctClickCount + incorrectClickCount >= totalquestion &&
