@@ -86,7 +86,7 @@ const LandingPage = () => {
                   alt='Light Bulb'
                   width={400}
                   height={400}
-                  className='mx-0 w-full max-h-96 left-4'
+                  className='mx-0 w-full max-h-96 ml-32'
                 />
               </div>
             </div>
