@@ -500,6 +500,35 @@ useEffect(() => {
                 >
                   Incorrect
                 </button>
+                <div className='flex flex-row '>
+      <div
+                className={`bg-black ${
+                  isRunning
+                    ? 'px-2 py-3 text-green-700 text-3xl'
+                    : 'px-2 py-3 text-white text-3xl'
+                }`}
+                onClick={handlePlayClick}
+              >
+                <MdPlayArrow className='text-4xl'/>
+              </div>
+              <div
+                className={`bg-black ${
+                  isRunning
+                    ? 'px-2 py-3 text-3xl text-white'
+                    : ' px-2 py-3 text-green-700 text-3xl'
+                }`}
+                onClick={handlePauseClick}
+              >
+                <MdPause className='text-4xl'/>
+              </div>
+            <div
+                className='bg-black text-white px-3 py-4 text-3xl'
+                
+                onClick={handleResetClick}
+              >
+                <MdRefresh style={{ transform: 'rotate(-90deg)' }}/>
+              </div>
+      </div>
               </>
             )}
           </div>
