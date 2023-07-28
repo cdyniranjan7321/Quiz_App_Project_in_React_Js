@@ -131,7 +131,11 @@ const UploadQuestions = async () => {
                     type='file'
                     id='myfile'
                     name='myfile'
+<<<<<<< Updated upstream
                     // onChange={(e) => convert2base64(e.target.files[0])}
+=======
+                    onChange={(e) => convert2base64(e.target.files[0])}
+>>>>>>> Stashed changes
                   />
                 )
               }}
