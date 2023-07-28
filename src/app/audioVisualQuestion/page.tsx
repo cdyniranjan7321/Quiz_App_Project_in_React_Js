@@ -92,7 +92,8 @@ const AudioVisualRound1 = () => {
             <div className='w-3/4 max-w-md h-100 bg-[#4E4545]'>
               <audio
                 ref={audioRef}
-                src={question?.uri}
+                // src={question?.uri}
+                src='/images/test.mp3'
                 className='w-full h-full'
                 controls
               />
