@@ -1,13 +1,12 @@
 'use client'
-import { toast } from 'react-toastify'
 import { QuestionI } from '../../types'
 import { useRouter } from 'next/navigation'
 import { TimerContext } from '@/app/providers'
-import React, { useState, useContext, useEffect } from 'react'
-import TimerIndicator from './TimerIndicator'
+import React, { useState, useContext, useEffect,useRef } from 'react'
 import Success from './Success'
 import Fail from './Fail'
 import RapidFireRound from '@/app/rapidFire/page'
+import TimerIndicator from './TimerIndicator'
 
 type AvailableProps = {
   isGeneralAPage?: boolean
@@ -33,22 +32,13 @@ const Question = (props: AvailableProps) => {
 
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
   const router = useRouter()
+  const isinitialRender=useRef(true)
   const [passCount, setPassCount] = useState(0)
-  // counts number of times pass button is clicked
   const [showText, setShowText] = useState(false)
-  // this is true when pass button is clicked
   const [showAnswer, setShowAnswer] = useState(false)
-  //this button shows the answer separate handler is not required
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0)
-  //this is only for rapidfire round,it adds 1 for each correct button click
   const [showCorrectPop, setShowCorrectPop] = useState(false)
-  //when true component success is retrieved this comes if in general each click will show popup
-  //if in rapid fire only shows when all questions are finished that means
-  // when number of correct button click and number of incorrect button click added together is equal to number of questions present
-
   const [showInCorrectPop, setShowInCorrectPop] = useState(false)
-  //when true, component fail is retrieved if in general each incorrect button click makes popup appear but in rapid
-  //all question need to be equal to addition of correct and incorrect button clicks and also need to be 0 for value of correctAnswerCount
   const [showRapidFinalMessage, setShowRapidFinalMessage] = useState({
     message: 'tehe',
     totalcorrectanswer: 0,
@@ -56,16 +46,12 @@ const Question = (props: AvailableProps) => {
   const [showGeneralMessage, setSHowGeneralMessage] = useState({
     message: 'hello',
   })
-  //this state stores message for child element success and fail to show
   const [correctClickCount, setCorrectClickCount] = useState(0)
-  // this stores how many times the correct button is clicked in a page
   const [incorrectClickCount, setIncorrectClickCount] = useState(0)
-  // this stores how many incorrect button is clicked
   const handlePassButtonClick = () => {
     setShowText(true)
     setPassCount((prevCount) => prevCount + 1)
   }
-  //when pass button is clicked function one is show text in the page when true another is passCount value increases by 1 at each click
   useEffect(() => {
     setShowRapidFinalMessage((prevMessage) => ({
       ...prevMessage,
@@ -104,10 +90,11 @@ const Question = (props: AvailableProps) => {
     console.log('incorrectClickCount:', incorrectClickCount)
     console.log('questionNumber:', questionNumber)
     console.log('correctAnswerCount:', correctAnswerCount)
-    if (!isRapidFirePage) {
+    if (!isRapidFirePage && !isinitialRender.current) {
       handleCorrectButtonClick1()
       handleIncorrectButtonClick1()
     }
+    isinitialRender.current=false
     if (isRapidFirePage) {
       if (
         correctClickCount + incorrectClickCount >= totalquestion &&
@@ -140,42 +127,6 @@ const Question = (props: AvailableProps) => {
     correctAnswerCount,
     isGeneralAPage,
   ])
-  //Use useEffect to update the showRapidFinalMessage state when correctAnswerCount changes here the correctAnswerCount is being listened
-  // const handleCorrectButtonClick = (answerCheck: String) => {
-  //   //in place of  const handleNextButtonClick = (answerCheck: String) => {
-  //   if (
-  //     setQuestionNumber !== undefined &&
-  //     questionNumber !== undefined &&
-  //     questionNumber < 6
-  //   ) {
-  //     setQuestionNumber(questionNumber + 1)
-  //   }
-  //   if(answerCheck === 'correct') {
-  //     const newCorrectAnswerCount = correctAnswerCount + 1;
-  //     setCorrectAnswerCount(newCorrectAnswerCount)
-  //     setCorrectClickCount((prevCount) => prevCount + 1) // Increment correct click count
-  //     if (questionNumber === 6) {
-  //       setShowRapidFinalMessage({
-  //         message: `Congratulations your total correct answer is : `,
-  //         totalcorrectanswer: newCorrectAnswerCount
-  //       });
-  //       router.push('/round')
-  //     }
-  //   }else if (questionNumber === 6 && answerCheck === 'incorrect') {
-  //     setIncorrectClickCount((prevCount) => prevCount + 1) // Increment correct click count
-  //     if (correctAnswerCount === 0) {
-  //       setShowRapidFinalMessage({
-  //         message: `Oops! 0 score recorded!`,totalcorrectanswer:0})
-  //     }
-  //     else
-  //     setShowRapidFinalMessage({
-  //       message: `Congratulations your total correct answer is : `,
-  //       totalcorrectanswer: correctAnswerCount
-  //     });
-  //     router.push('/round')
-  //   }
-  // }
-
   let housename = 'Red'
   let housecolor = 'red'
   if (passCount == 1) {
@@ -350,8 +301,8 @@ const Question = (props: AvailableProps) => {
           )}
         </div>
         <div className='fixed bottom-6 left-0 right-0 '>
-          <div className='fixed right-0 bottom-16 flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl'>
-            <TimerIndicator startFrom={timerStartFrom} />
+          <div className={`fixed right-0  flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl ${isRapidFirePage ? 'top-40': 'top-52'}`}>
+            <TimerIndicator startFrom={timerStartFrom} israpifirepage={isRapidFirePage}/>
           </div>
           <div className=' flex justify-center'>
             {!isRapidFirePage && (

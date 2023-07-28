@@ -21,6 +21,7 @@ const FiftyFiftyQuestion = () => {
   const [isOption3Active, setIsOption3Active] = useState(false)
   const [isOption4Active, setIsOption4Active] = useState(false)
   const [isFiftyFifty, setIsFiftyFifty] = useState(false)
+  const [isfiftyfiftypage,setIsfiftyfiftypage]=useState(true)
 
   return (
     <div className='h-screen w-screen overflow-hidden flex bg-gray-900 bg-gradient-to-b from-gray-100 to-purple-800'>
@@ -146,8 +147,8 @@ const FiftyFiftyQuestion = () => {
                   </div>
                 )}
               </div>
-              <div className='fixed bottom-8 right-2  transform -translate-x-1/2 '>
-                <TimerIndicator startFrom={30} />
+              <div className='fixed top-52 right-0  transform -translate-x-1/2 '>
+                <TimerIndicator startFrom={30} isfiftyfiftypage={isfiftyfiftypage}/>
               </div>
               <div className='fixed flex justify-center bottom-8 left-1/2 transform -translate-x-1/2'>
                 <button

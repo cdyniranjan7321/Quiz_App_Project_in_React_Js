@@ -3,9 +3,11 @@ import React, { useEffect, useState, useRef } from 'react'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
 import { ColorFormat, ColorHex, useCountdown } from 'react-countdown-circle-timer'
 interface TimerProps {
-  startFrom: number
+  startFrom: number,
+  isfiftyfiftypage?:boolean,
+  israpifirepage?:boolean
 }
-const TimerIndicator: React.FC<TimerProps> = ({ startFrom }) => {
+const TimerIndicator: React.FC<TimerProps> = ({ startFrom,isfiftyfiftypage,israpifirepage }) => {
   const [time, setTime] = useState(startFrom)
   const [isRunning, setIsRunning] = useState(false)
   const path = useRef<SVGPathElement | null>(null)
@@ -148,11 +150,16 @@ useEffect(() => {
               className='flex flex-row gap-1'
               style={{ transform: 'rotate(90deg)' }}
             >
-              <div className='bg-purple-900 px-2 py-3 text-white text-2xl border-2 border-black rounded-xl'>
+              <div className='bg-purple-900 px-2 py-3 text-white text-2xl'>
                 {formatTime(time)}
               </div>
-              {/* <div
-                className={`bg-purple-900  ${
+            </div>
+          </div>
+        </foreignObject>
+      </svg>
+      <div className={`flex flex-row gap-1 fixed ${isfiftyfiftypage ? ' top-[423px] right-72': israpifirepage ? 'bottom-7 right-[420px]':'bottom-7 right-[230px]'}`}>
+      <div
+                className={`bg-black ${
                   isRunning
                     ? 'px-2 py-3 text-green-700 text-3xl'
                     : 'px-2 py-3 text-white text-3xl'
@@ -160,28 +167,26 @@ useEffect(() => {
                 onClick={handlePlayClick}
               >
                 <MdPlayArrow />
-              </div> */}
-              {/* <div
-                className={`bg-purple-900 ${
+              </div>
+              <div
+                className={`bg-black ${
                   isRunning
-                    ? 'px-2 py-3 text-3xl'
+                    ? 'px-2 py-3 text-3xl text-white'
                     : ' px-2 py-3 text-green-700 text-3xl'
                 }`}
                 onClick={handlePauseClick}
               >
                 <MdPause />
-              </div> */}
-              {/* <div
-                className='bg-purple-900 text-white px-3 py-3 text-3xl'
+              </div>
+            <div
+                className='bg-black text-white px-3 py-3 text-3xl'
                 style={{ transform: 'rotate(-90deg)' }}
                 onClick={handleResetClick}
               >
                 <MdRefresh />
-              </div> */}
-            </div>
-          </div>
-        </foreignObject>
-      </svg>
+              </div>
+      </div>
+
     </div>
   )
 }

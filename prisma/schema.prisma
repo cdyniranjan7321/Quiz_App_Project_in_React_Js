@@ -4,7 +4,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // url      = env("DATABASE_URL")
+  url      = env("DATABASEE_URL")
 }
 
 model Post {
@@ -41,7 +42,7 @@ model Round {
   isoption              Boolean          @default(false)
   isfiftyfifty          Boolean          @default(false)
   question              QuestionAnswer[]
-  Scores              Score[]
+  Scores                Score[]
 }
 
 model QuestionAnswer {
@@ -56,37 +57,42 @@ model QuestionAnswer {
   option3       String?
   option4       String?
   question      String
-  resource      String?
-  resourceType  String?
+  questionType  String?
+  uri           String? @unique
   fiftyOption2  String?
   correctOption Int?
   Scores        Score[]
   round         Round   @relation(fields: [roundId], references: [id])
+
   @@id([id, roundId])
 }
 
 model Teams {
-  id        Int    @id @default(autoincrement())
-  teamName  String @unique
-  gameOrder Int    @unique
-  scores    Score[]
-  teamAnswers Json[] @default([])
+  id          Int     @id @default(autoincrement())
+  teamName    String  @unique
+  gameOrder   Int     @unique
+  scores      Score[]
+  teamAnswers Json[]  @default([])
 }
+
 model AboutUs {
-  id            Int     @id @default(autoincrement())
-  Title         String
-  organization  String  @unique
-  field1        String
-  field2        String
+  id           Int    @id @default(autoincrement())
+  Title        String
+  organization String @unique
+  field1       String
+  field2       String
 }
+
 model Score {
-  id        Int     @id @default(autoincrement())
-  score     Int
-  team      Teams   @relation(fields: [tid], references: [id])
-  tid       Int
-  round     Round   @relation(fields: [roundId], references: [id])
-  roundId   Int
+  id             Int            @default(autoincrement())
+  score          Int
+  team           Teams          @relation(fields: [tid], references: [id])
+  tid            Int            @unique
+  round          Round          @relation(fields: [roundId], references: [id])
+  roundId        Int
   questionanswer QuestionAnswer @relation(fields: [qid, qroundId], references: [id, roundId])
-  qid       Int
-  qroundId  Int
+  qid            Int
+  qroundId       Int
+
+  @@id([tid, roundId])
 }
