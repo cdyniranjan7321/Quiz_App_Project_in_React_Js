@@ -7,17 +7,14 @@ import TimerIndicator from '@/components/TimerIndicator'
 import { TimerContext } from '../providers'
 import { ColorFormat,useCountdown } from 'react-countdown-circle-timer'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
-
 const FiftyFiftyQuestion = () => {
   const searchParams = useSearchParams()
   const roundId = searchParams.get('roundId')
   const questionNumber = searchParams.get('questionNumber')
   const round_id = roundId !== null ? parseInt(roundId) : 0
   const questionNum = questionNumber !== null ? parseInt(questionNumber) : 0
-
   const { question } = useRequest(questionNum, round_id)
   console.log('data from fiftyfifty fetcher : ', question)
-
   const [showAnswer, setShowAnswer] = useState(false)
   const [isOption1Active, setIsOption1Active] = useState(false)
   const [isOption2Active, setIsOption2Active] = useState(false)
@@ -26,7 +23,6 @@ const FiftyFiftyQuestion = () => {
   const [isFiftyFifty, setIsFiftyFifty] = useState(false)
   const [isfiftyfiftypage,setIsfiftyfiftypage]=useState(true)
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
-  
   const [passCount, setPassCount] = useState(0)
   let timerStartFrom = 0
   if (timefirst !== undefined) {
@@ -37,7 +33,6 @@ const FiftyFiftyQuestion = () => {
       timerStartFrom = timethird
     }
   }
-
   const startFrom=timerStartFrom
   const [time, setTime] = useState(startFrom)
   const [isRunning, setIsRunning] = useState(false)
@@ -68,12 +63,12 @@ const FiftyFiftyQuestion = () => {
 
 useEffect(() => {
   if (time<= 5) {
-    setColor('#FF0000'); // Change color to red
+    setColor('#FF0000'); //color to red
   } else if(time<=10){
-    setColor('#FFFF00'); // Change color to yellow
+    setColor('#FFFF00'); //color to yellow
   }
   else{
-    setColor('#22C55E'); // Change color to green
+    setColor('#22C55E'); //color to green
   }
 }, [time]);
   const { stroke, size, strokeWidth, pathLength } = useCountdown({
@@ -262,7 +257,7 @@ useEffect(() => {
                   </div>
                 )}
               </div>
-              <div className='fixed top-52 right-0  transform -translate-x-1/2 '>
+              <div className='fixed top-60 right-0  transform -translate-x-1/2 '>
                 <TimerIndicator startFrom={30} isfiftyfiftypage={isfiftyfiftypage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick}/>
               </div>
               <div className='fixed flex justify-center bottom-8 left-1/2 transform -translate-x-1/2'>
@@ -306,8 +301,7 @@ useEffect(() => {
                 <MdPause className='text-4xl'/>
               </div>
             <div
-                className='bg-black text-white px-3 py-4 text-3xl'
-                
+                className='bg-black text-white px-3 py-4 text-3xl'                
                 onClick={handleResetClick}
               >
                 <MdRefresh style={{ transform: 'rotate(-90deg)' }}/>
@@ -317,7 +311,6 @@ useEffect(() => {
             </div>
           </div>
           {/* ending first part */}
-
           {/* starting second part Where second part of the main page contains the details for next question.*/}
           <div className='flex flex-col w-[30%] gap-12'>
             <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-4 mr-6 rounded-lg pl-3 py-4 md:ml-60'>
@@ -336,5 +329,4 @@ useEffect(() => {
     </div>
   )
 }
-
 export default FiftyFiftyQuestion
