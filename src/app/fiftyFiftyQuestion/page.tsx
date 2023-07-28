@@ -262,7 +262,7 @@ useEffect(() => {
                   </div>
                 )}
               </div>
-              <div className='fixed top-52 right-0  transform -translate-x-1/2 '>
+              <div className='fixed top-60 right-0  transform -translate-x-1/2 '>
                 <TimerIndicator startFrom={30} isfiftyfiftypage={isfiftyfiftypage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick}/>
               </div>
               <div className='fixed flex justify-center bottom-8 left-1/2 transform -translate-x-1/2'>
