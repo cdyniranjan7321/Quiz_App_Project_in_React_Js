@@ -35,12 +35,8 @@ const Question = (props: AvailableProps) => {
     setQuestionNumber,
   } = props
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
-<<<<<<< Updated upstream
-
-=======
-  const router = useRouter()
-  const isinitialRender = useRef(true)
->>>>>>> Stashed changes
+  // const router = useRouter()
+  // const isinitialRender = useRef(true)
   const [passCount, setPassCount] = useState(0)
   let timerStartFrom = 0
   if (timefirst !== undefined) {
@@ -443,7 +439,6 @@ const Question = (props: AvailableProps) => {
             <TimerIndicator
               startFrom={timerStartFrom}
               israpifirepage={isRapidFirePage}
-<<<<<<< Updated upstream
               time={time}
               isRunning={isRunning}
               strokeDashoffset={strokeDashoffset}
@@ -451,8 +446,6 @@ const Question = (props: AvailableProps) => {
               handlePlayClick={handlePlayClick}
               handlePauseClick={handlePauseClick}
               handleResetClick={handleResetClick}
-=======
->>>>>>> Stashed changes
             />
           </div>
           <div className=' flex justify-center'>
