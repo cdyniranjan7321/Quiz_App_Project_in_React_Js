@@ -1,7 +1,4 @@
-audio visual page warning
 dashboard page two problem
-additionalsettings page how to add team names to database
 page for show table
-Debug the error for popup error
 create page for admin
-integrate api for aboutus page
+write front end code to send score to individual team using roundid teamid question id and turn id
