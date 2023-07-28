@@ -2,12 +2,15 @@
 import { QuestionI } from '../../types'
 import { useRouter } from 'next/navigation'
 import { TimerContext } from '@/app/providers'
-import React, { useState, useContext, useEffect,useRef } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import Success from './Success'
 import Fail from './Fail'
-import RapidFireRound from '@/app/rapidFire/page'
 import TimerIndicator from './TimerIndicator'
-import { ColorFormat, ColorHex, useCountdown } from 'react-countdown-circle-timer'
+import {
+  ColorFormat,
+  ColorHex,
+  useCountdown,
+} from 'react-countdown-circle-timer'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
 
 type AvailableProps = {
@@ -32,7 +35,7 @@ const Question = (props: AvailableProps) => {
     setQuestionNumber,
   } = props
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
-  
+
   const [passCount, setPassCount] = useState(0)
   let timerStartFrom = 0
   if (timefirst !== undefined) {
@@ -44,7 +47,7 @@ const Question = (props: AvailableProps) => {
     }
   }
 
-  const startFrom=timerStartFrom
+  const startFrom = timerStartFrom
   const [time, setTime] = useState(startFrom)
   const [isRunning, setIsRunning] = useState(false)
   const path = useRef<SVGPathElement | null>(null)
@@ -70,41 +73,39 @@ const Question = (props: AvailableProps) => {
     setIsRunning(false)
     setShowStrokeDashoffset(0)
   }
-  const [color, setColor] = useState<ColorFormat>('#22C55E'); // Default color
+  const [color, setColor] = useState<ColorFormat>('#22C55E') // Default color
 
-useEffect(() => {
-  if (time<= 5) {
-    setColor('#FF0000'); // Change color to red
-  } else if(time<=10){
-    setColor('#FFFF00'); // Change color to yellow
-  }
-  else{
-    setColor('#22C55E'); // Change color to green
-  }
-}, [time]);
+  useEffect(() => {
+    if (time <= 5) {
+      setColor('#FF0000') // Change color to red
+    } else if (time <= 10) {
+      setColor('#FFFF00') // Change color to yellow
+    } else {
+      setColor('#22C55E') // Change color to green
+    }
+  }, [time])
   const { stroke, size, strokeWidth, pathLength } = useCountdown({
     isPlaying: isRunning,
     duration: startFrom,
-    colors:color,
+    colors: color,
     size: 135,
   })
-  
-  const [offsetps, setOffsetps] = useState(0);
-  
+
+  const [offsetps, setOffsetps] = useState(0)
+
   useEffect(() => {
     setTime(startFrom)
-    const newOffsetps = pathLength / (startFrom * 2);
-  setOffsetps(newOffsetps);
-  setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps); // Update the strokeDashoffset immediately
-  
-  }, [startFrom,pathLength])
+    const newOffsetps = pathLength / (startFrom * 2)
+    setOffsetps(newOffsetps)
+    setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps) // Update the strokeDashoffset immediately
+  }, [startFrom, pathLength])
 
   useEffect(() => {
     let interval: NodeJS.Timeout
     let animationInterval: NodeJS.Timeout
-    const pathRef=path.current;
+    const pathRef = path.current
     const incrementOffset = () => {
-      setShowStrokeDashoffset((prevOffset) => prevOffset -offsetps)
+      setShowStrokeDashoffset((prevOffset) => prevOffset - offsetps)
       if (pathRef) {
         pathRef.style.strokeDashoffset = String(strokeDashoffset)
       }
@@ -132,23 +133,21 @@ useEffect(() => {
         pathRef.style.strokeDashoffset = '0'
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, time, path, startFrom])
-  
-  useEffect(() => {
-    if (time<= 1) {
-       setShowStrokeDashoffset(-841.946)
-    }
-  }, [strokeDashoffset, time]);
-  useEffect(() => {
-    setShowStrokeDashoffset(0); // Execute setShowStrokeDashoffset(0) when startFrom changes
-  }, [startFrom]);
-  
 
+  useEffect(() => {
+    if (time <= 1) {
+      setShowStrokeDashoffset(-841.946)
+    }
+  }, [strokeDashoffset, time])
+  useEffect(() => {
+    setShowStrokeDashoffset(0) // Execute setShowStrokeDashoffset(0) when startFrom changes
+  }, [startFrom])
 
   // const { timefirst, timesecond, timethird } = useContext(TimerContext)
   const router = useRouter()
-  const isinitialRender=useRef(true)
+  const isinitialRender = useRef(true)
   // const [passCount, setPassCount] = useState(0)
   const [showText, setShowText] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
@@ -177,12 +176,26 @@ useEffect(() => {
 
   // add oclick handler for correct and incorrect button click
   const handleCorrectButtonClick = () => {
+    if (
+      setQuestionNumber !== undefined &&
+      questionNumber !== undefined &&
+      questionNumber < 6
+    ) {
+      setQuestionNumber(questionNumber + 1)
+    }
     if (correctClickCount + incorrectClickCount < totalquestion) {
       setCorrectAnswerCount((prevCount) => prevCount + 1)
       setCorrectClickCount((prevCount) => prevCount + 1)
     }
   }
   const handleIncorrectButtonClick = () => {
+    if (
+      setQuestionNumber !== undefined &&
+      questionNumber !== undefined &&
+      questionNumber < 6
+    ) {
+      setQuestionNumber(questionNumber + 1)
+    }
     if (correctClickCount + incorrectClickCount < totalquestion) {
       setIncorrectClickCount((prevCount) => prevCount + 1)
     }
@@ -210,7 +223,7 @@ useEffect(() => {
       handleCorrectButtonClick1()
       handleIncorrectButtonClick1()
     }
-    isinitialRender.current=false
+    isinitialRender.current = false
     if (isRapidFirePage) {
       if (
         correctClickCount + incorrectClickCount >= totalquestion &&
@@ -417,8 +430,22 @@ useEffect(() => {
           )}
         </div>
         <div className='fixed bottom-6 left-0 right-0 '>
-          <div className={`fixed right-0  flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl ${isRapidFirePage ? 'top-40': 'top-52'}`}>
-            <TimerIndicator startFrom={timerStartFrom} israpifirepage={isRapidFirePage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick }/>
+          <div
+            className={`fixed right-0  flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl ${
+              isRapidFirePage ? 'top-40' : 'top-52'
+            }`}
+          >
+            <TimerIndicator
+              startFrom={timerStartFrom}
+              israpifirepage={isRapidFirePage}
+              time={time}
+              isRunning={isRunning}
+              strokeDashoffset={strokeDashoffset}
+              formatTime={formatTime}
+              handlePlayClick={handlePlayClick}
+              handlePauseClick={handlePauseClick}
+              handleResetClick={handleResetClick}
+            />
           </div>
           <div className=' flex justify-center'>
             {!isRapidFirePage && (
@@ -452,34 +479,33 @@ useEffect(() => {
                   Pass
                 </button>
                 <div className='flex flex-row '>
-      <div
-                className={`bg-black ${
-                  isRunning
-                    ? 'px-2 py-3 text-green-700 text-3xl'
-                    : 'px-2 py-3 text-white text-3xl'
-                }`}
-                onClick={handlePlayClick}
-              >
-                <MdPlayArrow className='text-4xl'/>
-              </div>
-              <div
-                className={`bg-black ${
-                  isRunning
-                    ? 'px-2 py-3 text-3xl text-white'
-                    : ' px-2 py-3 text-green-700 text-3xl'
-                }`}
-                onClick={handlePauseClick}
-              >
-                <MdPause className='text-4xl'/>
-              </div>
-            <div
-                className='bg-black text-white px-3 py-4 text-3xl'
-                
-                onClick={handleResetClick}
-              >
-                <MdRefresh style={{ transform: 'rotate(-90deg)' }}/>
-              </div>
-      </div>
+                  <div
+                    className={`bg-black ${
+                      isRunning
+                        ? 'px-2 py-3 text-green-700 text-3xl'
+                        : 'px-2 py-3 text-white text-3xl'
+                    }`}
+                    onClick={handlePlayClick}
+                  >
+                    <MdPlayArrow className='text-4xl' />
+                  </div>
+                  <div
+                    className={`bg-black ${
+                      isRunning
+                        ? 'px-2 py-3 text-3xl text-white'
+                        : ' px-2 py-3 text-green-700 text-3xl'
+                    }`}
+                    onClick={handlePauseClick}
+                  >
+                    <MdPause className='text-4xl' />
+                  </div>
+                  <div
+                    className='bg-black text-white px-3 py-4 text-3xl'
+                    onClick={handleResetClick}
+                  >
+                    <MdRefresh style={{ transform: 'rotate(-90deg)' }} />
+                  </div>
+                </div>
               </>
             )}
             {isRapidFirePage && (
@@ -501,34 +527,33 @@ useEffect(() => {
                   Incorrect
                 </button>
                 <div className='flex flex-row '>
-      <div
-                className={`bg-black ${
-                  isRunning
-                    ? 'px-2 py-3 text-green-700 text-3xl'
-                    : 'px-2 py-3 text-white text-3xl'
-                }`}
-                onClick={handlePlayClick}
-              >
-                <MdPlayArrow className='text-4xl'/>
-              </div>
-              <div
-                className={`bg-black ${
-                  isRunning
-                    ? 'px-2 py-3 text-3xl text-white'
-                    : ' px-2 py-3 text-green-700 text-3xl'
-                }`}
-                onClick={handlePauseClick}
-              >
-                <MdPause className='text-4xl'/>
-              </div>
-            <div
-                className='bg-black text-white px-3 py-4 text-3xl'
-                
-                onClick={handleResetClick}
-              >
-                <MdRefresh style={{ transform: 'rotate(-90deg)' }}/>
-              </div>
-      </div>
+                  <div
+                    className={`bg-black ${
+                      isRunning
+                        ? 'px-2 py-3 text-green-700 text-3xl'
+                        : 'px-2 py-3 text-white text-3xl'
+                    }`}
+                    onClick={handlePlayClick}
+                  >
+                    <MdPlayArrow className='text-4xl' />
+                  </div>
+                  <div
+                    className={`bg-black ${
+                      isRunning
+                        ? 'px-2 py-3 text-3xl text-white'
+                        : ' px-2 py-3 text-green-700 text-3xl'
+                    }`}
+                    onClick={handlePauseClick}
+                  >
+                    <MdPause className='text-4xl' />
+                  </div>
+                  <div
+                    className='bg-black text-white px-3 py-4 text-3xl'
+                    onClick={handleResetClick}
+                  >
+                    <MdRefresh style={{ transform: 'rotate(-90deg)' }} />
+                  </div>
+                </div>
               </>
             )}
           </div>

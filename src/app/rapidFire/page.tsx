@@ -21,7 +21,11 @@ const RapidFireRound = () => {
       {/* starting navbar and main page  */}
       <div className='flex flex-col w-full'>
         {/* start navbar  and main page*/}
-        <Navbar title='Rapid Fire Round' isRapidFirePage={true} />
+        <Navbar
+          title='Rapid Fire Round'
+          isRapidFirePage={true}
+          isBackArrow={true}
+        />
         {/* end navbar */}
         <Question
           isRapidFirePage={true}

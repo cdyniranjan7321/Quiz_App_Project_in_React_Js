@@ -3,7 +3,7 @@ import axios from 'axios'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import QuestionUploadPopup from '@/components/QuestionUploadPopup'
 
 const UploadQuestions = async () => {
@@ -11,11 +11,28 @@ const UploadQuestions = async () => {
   const [modalIsOpen, setIsOpen] = useState(true)
   const [qnNo, setQnNo] = useState<string>('')
 
+  const [preview, setPreview] = useState('')
+  const [file, setFile] = useState('')
+  const [closePreview, setClosePreview] = useState(false)
+
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm()
+
+  const convert2base64 = (file: any) => {
+    setClosePreview(false)
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      if (reader.result !== null) {
+        setPreview(reader.result.toString())
+        setFile(file)
+      }
+    }
+    reader.readAsDataURL(file)
+  }
 
   const onSubmit = async (data: any) => {
     const id = parseInt(data.id)
@@ -87,7 +104,6 @@ const UploadQuestions = async () => {
               Enter a Question <span className='text-[crimson]'>*</span>
             </label>
           </div>
-
           <div className='relative'>
             <input
               type='text'
@@ -99,66 +115,79 @@ const UploadQuestions = async () => {
               Enter answer <span className='text-[crimson]'>*</span>
             </label>
           </div>
-          {/* General roundId = 2 & rapidFire SETA, setB setC, setD roundId= 4, 5, 6, 7 respectively */}
-          {roundId !== 2 &&
-            roundId !== 4 &&
-            roundId !== 5 &&
-            roundId !== 6 &&
-            roundId !== 7 && (
-              <>
-                <div className='relative'>
+          {/* General roundId = 2 & rapidFire SETA, setB setC, setD roundId= 4, 5, 6, 7 respectively */}{' '}
+          {roundId === 1 && (
+            <Controller
+              name='myfile'
+              control={control}
+              render={({ field }) => {
+                return (
                   <input
-                    className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                    type='text'
-                    {...register('option1')}
-                    required
+                    {...field}
+                    className='block w-full text-sm text-black/50 font-medium tracking-wide file:mr-4 
+               file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
+               file:bg-blue-100 file:text-blue-500 hover:file:bg-blue-300 
+               hover:file:scale-95 file:transition-all hover:file:cursor-help duration-300'
+                    type='file'
+                    id='myfile'
+                    name='myfile'
+                    // onChange={(e) => convert2base64(e.target.files[0])}
                   />
-                  <label className='absolute left-4 top-5 opacity-20 input-text'>
-                    Option A <span className='text-[crimson]'>*</span>
-                  </label>
-                </div>
-
-                <div className='relative'>
-                  <input
-                    className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                    type='text'
-                    {...register('option2')}
-                    required
-                  />
-                  <label className='absolute left-4 top-5 opacity-20 input-text'>
-                    Option B <span className='text-[crimson]'>*</span>
-                  </label>
-                </div>
-
-                <div className='relative'>
-                  <input
-                    className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                    type='text'
-                    {...register('option3')}
-                    required
-                  />
-                  <label className='absolute left-4 top-5 opacity-20 input-text'>
-                    Option C <span className='text-[crimson]'>*</span>
-                  </label>
-                </div>
-
-                <div className='relative'>
-                  <input
-                    className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
-                    type='text'
-                    {...register('option4')}
-                    required
-                  />
-                  <label className='absolute left-4 top-5 opacity-20 input-text'>
-                    Option D <span className='text-[crimson]'>*</span>
-                  </label>
-                </div>
-              </>
-            )}
-
+                )
+              }}
+            />
+          )}
           {/* fifty-fifty roundId = 8 */}
           {roundId === 8 && (
             <>
+              <div className='relative'>
+                <input
+                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
+                  type='text'
+                  {...register('option1')}
+                  required
+                />
+                <label className='absolute left-4 top-5 opacity-20 input-text'>
+                  Option A <span className='text-[crimson]'>*</span>
+                </label>
+              </div>
+
+              <div className='relative'>
+                <input
+                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
+                  type='text'
+                  {...register('option2')}
+                  required
+                />
+                <label className='absolute left-4 top-5 opacity-20 input-text'>
+                  Option B <span className='text-[crimson]'>*</span>
+                </label>
+              </div>
+
+              <div className='relative'>
+                <input
+                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
+                  type='text'
+                  {...register('option3')}
+                  required
+                />
+                <label className='absolute left-4 top-5 opacity-20 input-text'>
+                  Option C <span className='text-[crimson]'>*</span>
+                </label>
+              </div>
+
+              <div className='relative'>
+                <input
+                  className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
+                  type='text'
+                  {...register('option4')}
+                  required
+                />
+                <label className='absolute left-4 top-5 opacity-20 input-text'>
+                  Option D <span className='text-[crimson]'>*</span>
+                </label>
+              </div>
+
               <div className='relative'>
                 <input
                   className='rounded-[6px] h-[7vh] w-full px-4 border-2 border-slate-300 text-slate-600 outline-none focus:border-blue-600 opacity-50 focus:opacity-100 transition-all duration-500 bg-white'
