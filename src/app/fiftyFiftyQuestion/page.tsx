@@ -1,9 +1,12 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState,useEffect,useRef,useContext } from 'react'
 import Navbar from '@/components/Navbar'
 import { useSearchParams } from 'next/navigation'
 import useRequest from '../../../utils/useQuestionRequest'
 import TimerIndicator from '@/components/TimerIndicator'
+import { TimerContext } from '../providers'
+import { ColorFormat,useCountdown } from 'react-countdown-circle-timer'
+import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
 
 const FiftyFiftyQuestion = () => {
   const searchParams = useSearchParams()
@@ -22,7 +25,119 @@ const FiftyFiftyQuestion = () => {
   const [isOption4Active, setIsOption4Active] = useState(false)
   const [isFiftyFifty, setIsFiftyFifty] = useState(false)
   const [isfiftyfiftypage,setIsfiftyfiftypage]=useState(true)
+  const { timefirst, timesecond, timethird } = useContext(TimerContext)
+  
+  const [passCount, setPassCount] = useState(0)
+  let timerStartFrom = 0
+  if (timefirst !== undefined) {
+    timerStartFrom = timefirst
+    if (passCount === 1) {
+      timerStartFrom = timesecond
+    } else if (passCount > 1) {
+      timerStartFrom = timethird
+    }
+  }
 
+  const startFrom=timerStartFrom
+  const [time, setTime] = useState(startFrom)
+  const [isRunning, setIsRunning] = useState(false)
+  const path = useRef<SVGPathElement | null>(null)
+  const [strokeDashoffset, setShowStrokeDashoffset] = useState(0)
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60)
+    const seconds = time % 60
+    return (
+      <div>
+        {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+      </div>
+    )
+  }
+  const handlePlayClick = () => {
+    setIsRunning(true)
+  }
+  const handlePauseClick = () => {
+    setIsRunning(false)
+  }
+  const handleResetClick = () => {
+    setTime(startFrom)
+    setIsRunning(false)
+    setShowStrokeDashoffset(0)
+  }
+  const [color, setColor] = useState<ColorFormat>('#22C55E'); // Default color
+
+useEffect(() => {
+  if (time<= 5) {
+    setColor('#FF0000'); // Change color to red
+  } else if(time<=10){
+    setColor('#FFFF00'); // Change color to yellow
+  }
+  else{
+    setColor('#22C55E'); // Change color to green
+  }
+}, [time]);
+  const { stroke, size, strokeWidth, pathLength } = useCountdown({
+    isPlaying: isRunning,
+    duration: startFrom,
+    colors:color,
+    size: 135,
+  })
+  
+  const [offsetps, setOffsetps] = useState(0);
+  
+  useEffect(() => {
+    setTime(startFrom)
+    const newOffsetps = pathLength / (startFrom * 2);
+  setOffsetps(newOffsetps);
+  setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps); // Update the strokeDashoffset immediately
+  
+  }, [startFrom,pathLength])
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout
+    let animationInterval: NodeJS.Timeout
+    const pathRef=path.current;
+    const incrementOffset = () => {
+      setShowStrokeDashoffset((prevOffset) => prevOffset -offsetps)
+      if (pathRef) {
+        pathRef.style.strokeDashoffset = String(strokeDashoffset)
+      }
+      if (strokeDashoffset <= 0) {
+        clearInterval(animationInterval)
+      }
+    }
+
+    if (isRunning && time > 0) {
+      incrementOffset()
+      animationInterval = setInterval(incrementOffset, 100)
+    }
+    if (isRunning) {
+      interval = setInterval(() => {
+        if (time > 0) {
+          setTime((prevTime) => prevTime - 1)
+        } else {
+          setIsRunning(false)
+        }
+      }, 1000)
+    }
+    return () => {
+      clearInterval(interval)
+      if (pathRef) {
+        pathRef.style.strokeDashoffset = '0'
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRunning, time, path, startFrom])
+  
+  useEffect(() => {
+    if (time<= 1) {
+       setShowStrokeDashoffset(-841.946)
+    }
+  }, [strokeDashoffset, time]);
+  useEffect(() => {
+    setShowStrokeDashoffset(0); // Execute setShowStrokeDashoffset(0) when startFrom changes
+  }, [startFrom]);
+  
   return (
     <div className='h-screen w-screen overflow-hidden flex bg-gray-900 bg-gradient-to-b from-gray-100 to-purple-800'>
       {' '}
@@ -148,7 +263,7 @@ const FiftyFiftyQuestion = () => {
                 )}
               </div>
               <div className='fixed top-52 right-0  transform -translate-x-1/2 '>
-                <TimerIndicator startFrom={30} isfiftyfiftypage={isfiftyfiftypage}/>
+                <TimerIndicator startFrom={30} isfiftyfiftypage={isfiftyfiftypage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick}/>
               </div>
               <div className='fixed flex justify-center bottom-8 left-1/2 transform -translate-x-1/2'>
                 <button
@@ -169,6 +284,35 @@ const FiftyFiftyQuestion = () => {
                     <span>Show Answer</span>
                   )}
                 </button>
+                <div className='flex flex-row '>
+      <div
+                className={`bg-black ${
+                  isRunning
+                    ? 'px-2 py-3 text-green-700 text-3xl'
+                    : 'px-2 py-3 text-white text-3xl'
+                }`}
+                onClick={handlePlayClick}
+              >
+                <MdPlayArrow className='text-4xl'/>
+              </div>
+              <div
+                className={`bg-black ${
+                  isRunning
+                    ? 'px-2 py-3 text-3xl text-white'
+                    : ' px-2 py-3 text-green-700 text-3xl'
+                }`}
+                onClick={handlePauseClick}
+              >
+                <MdPause className='text-4xl'/>
+              </div>
+            <div
+                className='bg-black text-white px-3 py-4 text-3xl'
+                
+                onClick={handleResetClick}
+              >
+                <MdRefresh style={{ transform: 'rotate(-90deg)' }}/>
+              </div>
+      </div>
               </div>
             </div>
           </div>

@@ -3,46 +3,30 @@ import React, { useEffect, useState, useRef } from 'react'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
 import { ColorFormat, ColorHex, useCountdown } from 'react-countdown-circle-timer'
 interface TimerProps {
+  time:number,
+  isRunning:boolean,
+  strokeDashoffset:number,
+  formatTime:(time: number) => React.ReactNode,
+  handlePlayClick:()=>void,
+  handlePauseClick:()=>void,
+  handleResetClick:()=>void,
   startFrom: number,
   isfiftyfiftypage?:boolean,
   israpifirepage?:boolean
 }
-const TimerIndicator: React.FC<TimerProps> = ({ startFrom,isfiftyfiftypage,israpifirepage }) => {
-  const [time, setTime] = useState(startFrom)
-  const [isRunning, setIsRunning] = useState(false)
-  const path = useRef<SVGPathElement | null>(null)
-  const [strokeDashoffset, setShowStrokeDashoffset] = useState(0)
+const TimerIndicator: React.FC<TimerProps> = ({time,isRunning,strokeDashoffset,formatTime,handlePlayClick,handlePauseClick,handleResetClick, startFrom,isfiftyfiftypage,israpifirepage }) => {
 
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60)
-    const seconds = time % 60
-    return (
-      <div>
-        {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
-      </div>
-    )
-  }
-  const handlePlayClick = () => {
-    setIsRunning(true)
-  }
-  const handlePauseClick = () => {
-    setIsRunning(false)
-  }
-  const handleResetClick = () => {
-    setTime(startFrom)
-    setIsRunning(false)
-    setShowStrokeDashoffset(0)
-  }
-  const [color, setColor] = useState<ColorFormat>('#22C55E'); // Default color
+  const path = useRef<SVGPathElement | null>(null)
+  const [color, setColor] = useState<ColorFormat>('#22C55E');
 
 useEffect(() => {
   if (time<= 5) {
-    setColor('#FF0000'); // Change color to red
+    setColor('#FF0000');
   } else if(time<=10){
-    setColor('#FFFF00'); // Change color to yellow
+    setColor('#FFFF00');
   }
   else{
-    setColor('#22C55E'); // Change color to green
+    setColor('#22C55E');
   }
 }, [time]);
   const { stroke, size, strokeWidth, pathLength } = useCountdown({
@@ -51,62 +35,7 @@ useEffect(() => {
     colors:color,
     size: 135,
   })
-  
   const [offsetps, setOffsetps] = useState(0);
-  
-  useEffect(() => {
-    setTime(startFrom)
-    const newOffsetps = pathLength / (startFrom * 2);
-  setOffsetps(newOffsetps);
-  setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps); // Update the strokeDashoffset immediately
-  
-  }, [startFrom,pathLength])
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout
-    let animationInterval: NodeJS.Timeout
-    const pathRef=path.current;
-    const incrementOffset = () => {
-      setShowStrokeDashoffset((prevOffset) => prevOffset -offsetps)
-      if (pathRef) {
-        pathRef.style.strokeDashoffset = String(strokeDashoffset)
-      }
-      if (strokeDashoffset <= 0) {
-        clearInterval(animationInterval)
-      }
-    }
-
-    if (isRunning && time > 0) {
-      incrementOffset()
-      animationInterval = setInterval(incrementOffset, 100)
-    }
-    if (isRunning) {
-      interval = setInterval(() => {
-        if (time > 0) {
-          setTime((prevTime) => prevTime - 1)
-        } else {
-          setIsRunning(false)
-        }
-      }, 1000)
-    }
-    return () => {
-      clearInterval(interval)
-      if (pathRef) {
-        pathRef.style.strokeDashoffset = '0'
-      }
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isRunning, time, path, startFrom])
-  
-  useEffect(() => {
-    if (time<= 1) {
-       setShowStrokeDashoffset(-841.946)
-    }
-  }, [strokeDashoffset, time]);
-  useEffect(() => {
-    setShowStrokeDashoffset(0); // Execute setShowStrokeDashoffset(0) when startFrom changes
-  }, [startFrom]);
-  
   return (
     <div>
       <svg
@@ -134,7 +63,6 @@ useEffect(() => {
           strokeDasharray={pathLength}
           strokeDashoffset={strokeDashoffset}
         />
-
         <foreignObject x={0} y={0} width={size} height={size}>
           <div
             style={{
@@ -157,36 +85,6 @@ useEffect(() => {
           </div>
         </foreignObject>
       </svg>
-      <div className={`flex flex-row gap-1 fixed ${isfiftyfiftypage ? ' top-[423px] right-72': israpifirepage ? 'bottom-7 right-[420px]':'bottom-7 right-[230px]'}`}>
-      <div
-                className={`bg-black ${
-                  isRunning
-                    ? 'px-2 py-3 text-green-700 text-3xl'
-                    : 'px-2 py-3 text-white text-3xl'
-                }`}
-                onClick={handlePlayClick}
-              >
-                <MdPlayArrow />
-              </div>
-              <div
-                className={`bg-black ${
-                  isRunning
-                    ? 'px-2 py-3 text-3xl text-white'
-                    : ' px-2 py-3 text-green-700 text-3xl'
-                }`}
-                onClick={handlePauseClick}
-              >
-                <MdPause />
-              </div>
-            <div
-                className='bg-black text-white px-3 py-3 text-3xl'
-                style={{ transform: 'rotate(-90deg)' }}
-                onClick={handleResetClick}
-              >
-                <MdRefresh />
-              </div>
-      </div>
-
     </div>
   )
 }
