@@ -4,8 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // url      = env("DATABASE_URL")
-  url      = env("DATABASEE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model Post {
@@ -57,12 +56,12 @@ model QuestionAnswer {
   option3       String?
   option4       String?
   question      String
-  questionType  String?
-  uri           String? @unique
+  resource      String?
+  resourceType  String?
   fiftyOption2  String?
   correctOption Int?
-  Scores        Score[]
   round         Round   @relation(fields: [roundId], references: [id])
+  Scores        Score[]
 
   @@id([id, roundId])
 }
@@ -71,8 +70,8 @@ model Teams {
   id          Int     @id @default(autoincrement())
   teamName    String  @unique
   gameOrder   Int     @unique
-  scores      Score[]
   teamAnswers Json[]  @default([])
+  scores      Score[]
 }
 
 model AboutUs {
@@ -86,13 +85,13 @@ model AboutUs {
 model Score {
   id             Int            @default(autoincrement())
   score          Int
-  team           Teams          @relation(fields: [tid], references: [id])
-  tid            Int            @unique
-  round          Round          @relation(fields: [roundId], references: [id])
   roundId        Int
-  questionanswer QuestionAnswer @relation(fields: [qid, qroundId], references: [id, roundId])
+  tid            Int
   qid            Int
   qroundId       Int
+  questionanswer QuestionAnswer @relation(fields: [qid, qroundId], references: [id, roundId])
+  round          Round          @relation(fields: [roundId], references: [id])
+  team           Teams          @relation(fields: [tid], references: [id])
 
   @@id([tid, roundId])
 }
