@@ -18,7 +18,7 @@ const AvailableQuestions = (props: AvailableProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/getTeams'); // Make a GET request to the server-side API route
+        const response = await fetch('/api/getTeams');
         const data = await response.json();
         if (response.ok) {
           setteamData(data.teams);
