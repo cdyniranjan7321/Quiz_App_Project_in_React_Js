@@ -2,18 +2,15 @@
 import Image from 'next/image'
 import NumberGrid from './NumberGrid'
 import React, { useState, useEffect } from 'react'
-
 type AvailableProps = {
   isMultipleQuestionsPage?: boolean
   totalQuestions: number
   roundId: number
   roundName: string | null
 }
-
 const AvailableQuestions = (props: AvailableProps) => {
   const { isMultipleQuestionsPage, totalQuestions, roundId, roundName } = props
   console.log(' roundName : ', roundName)
-
   const [numRows, setNumRows] = useState(5)
   //this number determines how many rows are shown
   const [numCols, setNumCols] = useState(10)
@@ -33,7 +30,6 @@ const AvailableQuestions = (props: AvailableProps) => {
     // Clean up the event listener on component unmount
     return () => window.removeEventListener('resize', handleResize)
   }, [])
-
   // Generate the grid of numbers
   const grid = []
   let count = 1
