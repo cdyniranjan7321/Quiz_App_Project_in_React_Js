@@ -127,42 +127,6 @@ const Question = (props: AvailableProps) => {
     correctAnswerCount,
     isGeneralAPage,
   ])
-  //Use useEffect to update the showRapidFinalMessage state when correctAnswerCount changes here the correctAnswerCount is being listened
-  // const handleCorrectButtonClick = (answerCheck: String) => {
-  //   //in place of  const handleNextButtonClick = (answerCheck: String) => {
-  //   if (
-  //     setQuestionNumber !== undefined &&
-  //     questionNumber !== undefined &&
-  //     questionNumber < 6
-  //   ) {
-  //     setQuestionNumber(questionNumber + 1)
-  //   }
-  //   if(answerCheck === 'correct') {
-  //     const newCorrectAnswerCount = correctAnswerCount + 1;
-  //     setCorrectAnswerCount(newCorrectAnswerCount)
-  //     setCorrectClickCount((prevCount) => prevCount + 1) // Increment correct click count
-  //     if (questionNumber === 6) {
-  //       setShowRapidFinalMessage({
-  //         message: `Congratulations your total correct answer is : `,
-  //         totalcorrectanswer: newCorrectAnswerCount
-  //       });
-  //       router.push('/round')
-  //     }
-  //   }else if (questionNumber === 6 && answerCheck === 'incorrect') {
-  //     setIncorrectClickCount((prevCount) => prevCount + 1) // Increment correct click count
-  //     if (correctAnswerCount === 0) {
-  //       setShowRapidFinalMessage({
-  //         message: `Oops! 0 score recorded!`,totalcorrectanswer:0})
-  //     }
-  //     else
-  //     setShowRapidFinalMessage({
-  //       message: `Congratulations your total correct answer is : `,
-  //       totalcorrectanswer: correctAnswerCount
-  //     });
-  //     router.push('/round')
-  //   }
-  // }
-
   let housename = 'Red'
   let housecolor = 'red'
   if (passCount == 1) {
