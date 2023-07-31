@@ -19,13 +19,13 @@ const AudioVisualRound1 = () => {
   const { question } = useRequest(questionNum, round_id)
   console.log('question data from audiovisualquestion fetcher : ', question)
 
-  const videoRef = useRef<HTMLVideoElement | null>(null) // Reference to the video element
-  const audioRef = useRef<HTMLAudioElement | null>(null) //Reference to the video element
-  const imageRef = useRef<HTMLImageElement | null>(null) //Reference to the image element
+  const videoRef = useRef<HTMLVideoElement | null>(null) // Reference to the video elements.
+  const audioRef = useRef<HTMLAudioElement | null>(null) // Reference to the audio elements.
+  const imageRef = useRef<HTMLImageElement | null>(null) // Reference to the image elements.
 
-  const videoSource = 'your-video-source.mp4' // Replace with your video source URL
-  const audioSource = 'your-audio-source.mp3' // Replace with your audio source URL
-  const imageSource = question?.uri // replace with your image source URL
+  const videoSource = 'your-video-source.mp4' // Replace with your video source URL.
+  const audioSource = 'your-audio-source.mp3' // Replace with your audio source URL.
+  const imageSource = question?.uri // Replace with your image source URL.
 
   console.log('image uri : ', imageSource)
 
@@ -85,19 +85,19 @@ const AudioVisualRound1 = () => {
                 ref={videoRef}
                 src={question?.uri}
                 className='w-full h-full'
-                controls
+                controls //Add the controls attribute for video playback controls.
               />
             </div>
           ) : question?.questionType === 'audio' ? (
-            <div className='w-3/4 max-w-md h-100 bg-[#4E4545]'>
+            <div className='w-3/4 max-w-md h-full bg-[#4E4545]'>
               <audio
                 ref={audioRef}
-                // src={question?.uri}
-                src='/images/test.mp3'
+                src={question?.uri}
                 className='w-full h-full'
-                controls
+                controls //Add the controls attribute for video playback controls.
               />
             </div>
+            
           ) : (
             <></>
           )}
@@ -115,5 +115,4 @@ const AudioVisualRound1 = () => {
     </div>
   )
 }
-
 export default AudioVisualRound1
