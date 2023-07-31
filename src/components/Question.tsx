@@ -337,15 +337,9 @@ useEffect(() => {
             <div className='flex flex-row justify-between'>
               <div className='flex flex-col'>
                 <div className='flex'>
-                  <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 ml-5'>
+                  <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white py-4 px-2 rounded-lg text-xl my-4 ml-5 '>
                     Round for: {housename}
-                    <button
-                      // className={`ml-4 mr-2 mb-1 ${
-                      //   housecolor === 'white'
-                      //     ? `bg-${housecolor} w-12 h-6 rounded-xl py-2`
-                      //     : `bg-${housecolor}-600 w-12 h-6 rounded-xl py-2`
-                      // }`}
-                    ></button>
+                    
                   </span>
                 </div>
                 {isGeneralAPage && (
@@ -367,18 +361,12 @@ useEffect(() => {
           </div>
           {/* starting second part  */}
           {!isRapidFirePage && (
-            <div className='fixed right-0 top-16 flex flex-col w-[350px] gap-12  '>
+            <div className='fixed right-0 top-16 flex flex-col gap-12  '>
               {/* top part of right side */}
-              <div className='flex flex-row items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg pl-3 pr-2 py-4'>
+              <div className='flex flex-row items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg px-2 pr-2 py-4'>
                 <span className='font-italiana text-xl'>
                   Next question for: {housename2}
-                  <button
-                    // className={`ml-2 ${
-                      // housecolor2 === 'white'
-                        // ? `bg-${housecolor2} w-12 h-6 rounded-xl py-2`
-                        // : `bg-${housecolor2}-600 w-12 h-6 rounded-xl py-2`
-                    // }`}
-                  ></button></span>
+                  </span>
                   
                 
               </div>
