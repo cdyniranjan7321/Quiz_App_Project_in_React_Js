@@ -78,9 +78,8 @@ const teamNames = Array.from({ length: numTeams }, (_, index) => (teamData.lengt
         <div className='flex flex-row justify-between'>
           <div className='flex flex-col'>
             <div className='flex'>
-              <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 ml-5'>
+              <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-3 rounded-lg text-xl my-4 ml-5'>
                 Round for: {teamNames[0]}
-                <button className='ml-4 mr-2 mb-1 bg-red-500 w-12 h-6 rounded-xl py-2'></button>
               </span>
             </div>
           </div>
@@ -96,14 +95,10 @@ const teamNames = Array.from({ length: numTeams }, (_, index) => (teamData.lengt
         />
       </div>
       {/* starting second part  */}
-      <div className='flex flex-col w-[30%] gap-12  '>
+      <div className='flex flex-col gap-12  '>
         {/* top part of right side */}
-        <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-4 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto'>
-          <span className='font-italiana text-xl'>Next question for:</span>
-          <span>
-            {teamNames[1]}
-            <button className='ml-2 bg-blue-500 w-12 h-6 rounded-xl py-2'></button>
-          </span>
+        <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg p-3 w-auto '>
+          <span className='font-italiana text-xl'>Next question for: {teamNames[1]}</span>
         </div>
         {/* end of top part of right side */}
         <div className='left-32 lightbulbside relative'>
