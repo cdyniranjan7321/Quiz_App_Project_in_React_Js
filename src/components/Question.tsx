@@ -42,6 +42,7 @@ const Question = (props: AvailableProps) => {
         const data = await response.json();
         if (response.ok) {
           setteamData(data.teams);
+          setNumTeams(data.teams.length);
         } else {
           setError(data.error || 'Failed to fetch data');
         }
@@ -54,7 +55,7 @@ const Question = (props: AvailableProps) => {
 
     fetchData();
   }, []);
-  const numTeams = 10;
+  const [numTeams,setNumTeams]=useState(2)
 const teamNames = Array.from({ length: numTeams }, (_, index) => (teamData.length > index ? teamData[index].teamName : ''));
 
   const [passCount, setPassCount] = useState(0)
