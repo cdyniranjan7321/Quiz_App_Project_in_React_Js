@@ -67,9 +67,8 @@ model QuestionAnswer {
 }
 
 model Teams {
-  id          Int     @id @default(autoincrement())
   teamName    String  @unique
-  gameOrder   Int     @unique
+  gameOrder   Int     @unique @id
   teamAnswers Json[]  @default([])
   scores      Score[]
 }
@@ -91,7 +90,7 @@ model Score {
   qroundId       Int
   questionanswer QuestionAnswer @relation(fields: [qid, qroundId], references: [id, roundId])
   round          Round          @relation(fields: [roundId], references: [id])
-  team           Teams          @relation(fields: [tid], references: [id])
+  team           Teams          @relation(fields: [tid], references: [gameOrder])
 
   @@id([tid, roundId])
 }

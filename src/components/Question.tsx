@@ -2,15 +2,12 @@
 import { QuestionI } from '../../types'
 import { useRouter } from 'next/navigation'
 import { TimerContext } from '@/app/providers'
-import React, { useState, useContext, useEffect, useRef } from 'react'
+import React, { useState, useContext, useEffect,useRef } from 'react'
 import Success from './Success'
 import Fail from './Fail'
+import RapidFireRound from '@/app/rapidFire/page'
 import TimerIndicator from './TimerIndicator'
-import {
-  ColorFormat,
-  ColorHex,
-  useCountdown,
-} from 'react-countdown-circle-timer'
+import { ColorFormat, ColorHex, useCountdown } from 'react-countdown-circle-timer'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
 
 type AvailableProps = {
@@ -35,12 +32,32 @@ const Question = (props: AvailableProps) => {
     setQuestionNumber,
   } = props
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
-<<<<<<< Updated upstream
+  const [teamData, setteamData] = useState<Array<{ id: number; teamName: string;}>>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/getTeams');
+        const data = await response.json();
+        if (response.ok) {
+          setteamData(data.teams);
+          setNumTeams(data.teams.length);
+        } else {
+          setError(data.error || 'Failed to fetch data');
+        }
+        setIsLoading(false);
+      } catch (error) {
+        setError('Error fetching data. Please try again later.');
+        setIsLoading(false);
+      }
+    };
 
-=======
-  const router = useRouter()
-  const isinitialRender = useRef(true)
->>>>>>> Stashed changes
+    fetchData();
+  }, []);
+  const [numTeams,setNumTeams]=useState(2)
+const teamNames = Array.from({ length: numTeams }, (_, index) => (teamData.length > index ? teamData[index].teamName : ''));
+
   const [passCount, setPassCount] = useState(0)
   let timerStartFrom = 0
   if (timefirst !== undefined) {
@@ -52,7 +69,7 @@ const Question = (props: AvailableProps) => {
     }
   }
 
-  const startFrom = timerStartFrom
+  const startFrom=timerStartFrom
   const [time, setTime] = useState(startFrom)
   const [isRunning, setIsRunning] = useState(false)
   const path = useRef<SVGPathElement | null>(null)
@@ -78,39 +95,41 @@ const Question = (props: AvailableProps) => {
     setIsRunning(false)
     setShowStrokeDashoffset(0)
   }
-  const [color, setColor] = useState<ColorFormat>('#22C55E') // Default color
+  const [color, setColor] = useState<ColorFormat>('#22C55E'); // Default color
 
-  useEffect(() => {
-    if (time <= 5) {
-      setColor('#FF0000') // Change color to red
-    } else if (time <= 10) {
-      setColor('#FFFF00') // Change color to yellow
-    } else {
-      setColor('#22C55E') // Change color to green
-    }
-  }, [time])
+useEffect(() => {
+  if (time<= 5) {
+    setColor('#FF0000'); // Change color to red
+  } else if(time<=10){
+    setColor('#FFFF00'); // Change color to yellow
+  }
+  else{
+    setColor('#22C55E'); // Change color to green
+  }
+}, [time]);
   const { stroke, size, strokeWidth, pathLength } = useCountdown({
     isPlaying: isRunning,
     duration: startFrom,
-    colors: color,
+    colors:color,
     size: 135,
   })
-
-  const [offsetps, setOffsetps] = useState(0)
-
+  
+  const [offsetps, setOffsetps] = useState(0);
+  
   useEffect(() => {
     setTime(startFrom)
-    const newOffsetps = pathLength / (startFrom * 2)
-    setOffsetps(newOffsetps)
-    setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps) // Update the strokeDashoffset immediately
-  }, [startFrom, pathLength])
+    const newOffsetps = pathLength / (startFrom * 2);
+  setOffsetps(newOffsetps);
+  setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps); // Update the strokeDashoffset immediately
+  
+  }, [startFrom,pathLength])
 
   useEffect(() => {
     let interval: NodeJS.Timeout
     let animationInterval: NodeJS.Timeout
-    const pathRef = path.current
+    const pathRef=path.current;
     const incrementOffset = () => {
-      setShowStrokeDashoffset((prevOffset) => prevOffset - offsetps)
+      setShowStrokeDashoffset((prevOffset) => prevOffset -offsetps)
       if (pathRef) {
         pathRef.style.strokeDashoffset = String(strokeDashoffset)
       }
@@ -138,21 +157,23 @@ const Question = (props: AvailableProps) => {
         pathRef.style.strokeDashoffset = '0'
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, time, path, startFrom])
-
+  
   useEffect(() => {
-    if (time <= 1) {
-      setShowStrokeDashoffset(-841.946)
+    if (time<= 1) {
+       setShowStrokeDashoffset(-841.946)
     }
-  }, [strokeDashoffset, time])
+  }, [strokeDashoffset, time]);
   useEffect(() => {
-    setShowStrokeDashoffset(0) // Execute setShowStrokeDashoffset(0) when startFrom changes
-  }, [startFrom])
+    setShowStrokeDashoffset(0); // Execute setShowStrokeDashoffset(0) when startFrom changes
+  }, [startFrom]);
+  
+
 
   // const { timefirst, timesecond, timethird } = useContext(TimerContext)
   const router = useRouter()
-  const isinitialRender = useRef(true)
+  const isinitialRender=useRef(true)
   // const [passCount, setPassCount] = useState(0)
   const [showText, setShowText] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
@@ -181,26 +202,12 @@ const Question = (props: AvailableProps) => {
 
   // add oclick handler for correct and incorrect button click
   const handleCorrectButtonClick = () => {
-    if (
-      setQuestionNumber !== undefined &&
-      questionNumber !== undefined &&
-      questionNumber < 6
-    ) {
-      setQuestionNumber(questionNumber + 1)
-    }
     if (correctClickCount + incorrectClickCount < totalquestion) {
       setCorrectAnswerCount((prevCount) => prevCount + 1)
       setCorrectClickCount((prevCount) => prevCount + 1)
     }
   }
   const handleIncorrectButtonClick = () => {
-    if (
-      setQuestionNumber !== undefined &&
-      questionNumber !== undefined &&
-      questionNumber < 6
-    ) {
-      setQuestionNumber(questionNumber + 1)
-    }
     if (correctClickCount + incorrectClickCount < totalquestion) {
       setIncorrectClickCount((prevCount) => prevCount + 1)
     }
@@ -228,7 +235,7 @@ const Question = (props: AvailableProps) => {
       handleCorrectButtonClick1()
       handleIncorrectButtonClick1()
     }
-    isinitialRender.current = false
+    isinitialRender.current=false
     if (isRapidFirePage) {
       if (
         correctClickCount + incorrectClickCount >= totalquestion &&
@@ -261,73 +268,6 @@ const Question = (props: AvailableProps) => {
     correctAnswerCount,
     isGeneralAPage,
   ])
-  let housename = 'Red'
-  let housecolor = 'red'
-  if (passCount == 1) {
-    housename = 'Blue'
-    housecolor = 'blue'
-  } else if (passCount == 2) {
-    housename = 'Green'
-    housecolor = 'green'
-  } else if (passCount == 3) {
-    housename = 'Yellow'
-    housecolor = 'yellow'
-  } else if (passCount == 4) {
-    housename = 'White'
-    housecolor = 'white'
-  } else if (passCount == 5) {
-    housename = 'Purple'
-    housecolor = 'purple'
-  } else if (passCount == 6) {
-    housename = 'Orange'
-    housecolor = 'orange'
-  } else if (passCount == 7) {
-    housename = 'Pink'
-    housecolor = 'pink'
-  } else if (passCount == 8) {
-    housename = 'Brown'
-    housecolor = 'brown'
-  } else if (passCount == 9) {
-    housename = 'Cyan'
-    housecolor = 'cyan'
-  } else if (passCount == 10) {
-    housename = 'Indigo'
-    housecolor = 'indigo'
-  }
-
-  let housename2 = 'Blue'
-  let housecolor2 = 'blue'
-  if (passCount == 1) {
-    housename2 = 'Green'
-    housecolor2 = 'green'
-  } else if (passCount == 2) {
-    housename2 = 'Yellow'
-    housecolor2 = 'yellow'
-  } else if (passCount == 3) {
-    housename2 = 'White'
-    housecolor2 = 'white'
-  } else if (passCount == 4) {
-    housename2 = 'Purple'
-    housecolor2 = 'purple'
-  } else if (passCount == 5) {
-    housename2 = 'Orange'
-    housecolor2 = 'orange'
-  } else if (passCount == 6) {
-    housename2 = 'Pink'
-    housecolor2 = 'pink'
-  } else if (passCount == 7) {
-    housename2 = 'Brown'
-    housecolor2 = 'brown'
-  } else if (passCount == 8) {
-    housename2 = 'Cyan'
-    housecolor2 = 'cyan'
-  } else if (passCount == 9) {
-    housename2 = 'Indigo'
-    housecolor2 = 'indigo'
-  } else if (passCount == 10) {
-    housename2 = 'No more Team or'
-    housecolor2 = ''
-  }
   // let timerStartFrom = 0
   // if (timefirst !== undefined) {
   //   timerStartFrom = timefirst
@@ -349,6 +289,24 @@ const Question = (props: AvailableProps) => {
     if (isRapidFirePage) {
       router.push('/round')
     }
+  }
+  const selectedTeamName = teamNames[passCount % numTeams];
+  let housename = '';
+
+  if (passCount >= 0 && passCount < numTeams) {
+    housename = teamNames[passCount];
+  } else {
+    housename = 'No more Team';
+    // housecolor = '';
+  }
+  let housename2 = '';
+  // let housecolor2 = '';
+
+  if (passCount + 1 >= 0 && passCount + 1 < numTeams) {
+    housename2 = teamNames[passCount + 1];
+    // housecolor2 = teamColors[passCount + 1];
+  } else {
+    housename2 = 'No more Team';
   }
   return (
     <div>
@@ -380,13 +338,13 @@ const Question = (props: AvailableProps) => {
               <div className='flex flex-col'>
                 <div className='flex'>
                   <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 ml-5'>
-                    Round for: {housename} house
+                    Round for: {housename}
                     <button
-                      className={`ml-4 mr-2 mb-1 ${
-                        housecolor === 'white'
-                          ? `bg-${housecolor} w-12 h-6 rounded-xl py-2`
-                          : `bg-${housecolor}-600 w-12 h-6 rounded-xl py-2`
-                      }`}
+                      // className={`ml-4 mr-2 mb-1 ${
+                      //   housecolor === 'white'
+                      //     ? `bg-${housecolor} w-12 h-6 rounded-xl py-2`
+                      //     : `bg-${housecolor}-600 w-12 h-6 rounded-xl py-2`
+                      // }`}
                     ></button>
                   </span>
                 </div>
@@ -409,22 +367,20 @@ const Question = (props: AvailableProps) => {
           </div>
           {/* starting second part  */}
           {!isRapidFirePage && (
-            <div className='fixed right-0 flex flex-col w-[30%] gap-12  '>
+            <div className='fixed right-0 top-16 flex flex-col w-[350px] gap-12  '>
               {/* top part of right side */}
-              <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto'>
+              <div className='flex flex-row items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg pl-3 pr-2 py-4'>
                 <span className='font-italiana text-xl'>
-                  Next question for:
-                </span>
-                <span>
-                  {housename2} house
+                  Next question for: {housename2}
                   <button
-                    className={`ml-2 ${
-                      housecolor2 === 'white'
-                        ? `bg-${housecolor2} w-12 h-6 rounded-xl py-2`
-                        : `bg-${housecolor2}-600 w-12 h-6 rounded-xl py-2`
-                    }`}
-                  ></button>
-                </span>
+                    // className={`ml-2 ${
+                      // housecolor2 === 'white'
+                        // ? `bg-${housecolor2} w-12 h-6 rounded-xl py-2`
+                        // : `bg-${housecolor2}-600 w-12 h-6 rounded-xl py-2`
+                    // }`}
+                  ></button></span>
+                  
+                
               </div>
             </div>
           )}
@@ -435,25 +391,8 @@ const Question = (props: AvailableProps) => {
           )}
         </div>
         <div className='fixed bottom-6 left-0 right-0 '>
-          <div
-            className={`fixed right-0  flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl ${
-              isRapidFirePage ? 'top-40' : 'top-52'
-            }`}
-          >
-            <TimerIndicator
-              startFrom={timerStartFrom}
-              israpifirepage={isRapidFirePage}
-<<<<<<< Updated upstream
-              time={time}
-              isRunning={isRunning}
-              strokeDashoffset={strokeDashoffset}
-              formatTime={formatTime}
-              handlePlayClick={handlePlayClick}
-              handlePauseClick={handlePauseClick}
-              handleResetClick={handleResetClick}
-=======
->>>>>>> Stashed changes
-            />
+          <div className={`fixed right-0  flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl ${isRapidFirePage ? 'top-40': 'top-52'}`}>
+            <TimerIndicator startFrom={timerStartFrom} israpifirepage={isRapidFirePage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick }/>
           </div>
           <div className=' flex justify-center'>
             {!isRapidFirePage && (
@@ -487,33 +426,34 @@ const Question = (props: AvailableProps) => {
                   Pass
                 </button>
                 <div className='flex flex-row '>
-                  <div
-                    className={`bg-black ${
-                      isRunning
-                        ? 'px-2 py-3 text-green-700 text-3xl'
-                        : 'px-2 py-3 text-white text-3xl'
-                    }`}
-                    onClick={handlePlayClick}
-                  >
-                    <MdPlayArrow className='text-4xl' />
-                  </div>
-                  <div
-                    className={`bg-black ${
-                      isRunning
-                        ? 'px-2 py-3 text-3xl text-white'
-                        : ' px-2 py-3 text-green-700 text-3xl'
-                    }`}
-                    onClick={handlePauseClick}
-                  >
-                    <MdPause className='text-4xl' />
-                  </div>
-                  <div
-                    className='bg-black text-white px-3 py-4 text-3xl'
-                    onClick={handleResetClick}
-                  >
-                    <MdRefresh style={{ transform: 'rotate(-90deg)' }} />
-                  </div>
-                </div>
+      <div
+                className={`bg-black ${
+                  isRunning
+                    ? 'px-2 py-3 text-green-700 text-3xl'
+                    : 'px-2 py-3 text-white text-3xl'
+                }`}
+                onClick={handlePlayClick}
+              >
+                <MdPlayArrow className='text-4xl'/>
+              </div>
+              <div
+                className={`bg-black ${
+                  isRunning
+                    ? 'px-2 py-3 text-3xl text-white'
+                    : ' px-2 py-3 text-green-700 text-3xl'
+                }`}
+                onClick={handlePauseClick}
+              >
+                <MdPause className='text-4xl'/>
+              </div>
+            <div
+                className='bg-black text-white px-3 py-4 text-3xl'
+                
+                onClick={handleResetClick}
+              >
+                <MdRefresh style={{ transform: 'rotate(-90deg)' }}/>
+              </div>
+      </div>
               </>
             )}
             {isRapidFirePage && (
@@ -535,33 +475,34 @@ const Question = (props: AvailableProps) => {
                   Incorrect
                 </button>
                 <div className='flex flex-row '>
-                  <div
-                    className={`bg-black ${
-                      isRunning
-                        ? 'px-2 py-3 text-green-700 text-3xl'
-                        : 'px-2 py-3 text-white text-3xl'
-                    }`}
-                    onClick={handlePlayClick}
-                  >
-                    <MdPlayArrow className='text-4xl' />
-                  </div>
-                  <div
-                    className={`bg-black ${
-                      isRunning
-                        ? 'px-2 py-3 text-3xl text-white'
-                        : ' px-2 py-3 text-green-700 text-3xl'
-                    }`}
-                    onClick={handlePauseClick}
-                  >
-                    <MdPause className='text-4xl' />
-                  </div>
-                  <div
-                    className='bg-black text-white px-3 py-4 text-3xl'
-                    onClick={handleResetClick}
-                  >
-                    <MdRefresh style={{ transform: 'rotate(-90deg)' }} />
-                  </div>
-                </div>
+      <div
+                className={`bg-black ${
+                  isRunning
+                    ? 'px-2 py-3 text-green-700 text-3xl'
+                    : 'px-2 py-3 text-white text-3xl'
+                }`}
+                onClick={handlePlayClick}
+              >
+                <MdPlayArrow className='text-4xl'/>
+              </div>
+              <div
+                className={`bg-black ${
+                  isRunning
+                    ? 'px-2 py-3 text-3xl text-white'
+                    : ' px-2 py-3 text-green-700 text-3xl'
+                }`}
+                onClick={handlePauseClick}
+              >
+                <MdPause className='text-4xl'/>
+              </div>
+            <div
+                className='bg-black text-white px-3 py-4 text-3xl'
+                
+                onClick={handleResetClick}
+              >
+                <MdRefresh style={{ transform: 'rotate(-90deg)' }}/>
+              </div>
+      </div>
               </>
             )}
           </div>
