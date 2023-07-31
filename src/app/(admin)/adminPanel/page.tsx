@@ -1,3 +1,5 @@
+// Importing necessary modules and components
+
 'use client'
 import React, { useState } from 'react'
 import Image from 'next/image'
@@ -8,11 +10,15 @@ import { AiOutlineTeam as Team } from 'react-icons/ai'
 import { MdExtension } from 'react-icons/md'
 import { MdLogout } from 'react-icons/md'
 
+// Define the AdminPanel component
 const AdminPanel = () => {
+  // State variables to manage button colors
   const [generalColor, setGeneralColor] = useState<string>('')
   const [fiftyfiftyColor, setFiftyfiftyColor] = useState<string>('')
   const [rapidfireColor, setRapidfireColor] = useState<string>('')
   const [avColor, setAVColor] = useState<string>('')
+
+  // Event handlers for clicking on buttons
   const handleGeneralClick = () => {
     setGeneralColor('green')
   }
@@ -37,11 +43,17 @@ const AdminPanel = () => {
   const handleAVunClick = () => {
     setAVColor('red')
   }
+
+  // Render thee component
   return (
+    // Main container with a flex layout
     <div className='h-screen w-screen flex flex-row    overflow-hidden bg-blue-gray-900 bg-gradient-to-b from-gray-100 to-purple-950'>
+      {/* Left Sidebar */}
       <div className='flex flex-col bg-[#300559] text-white w-[15%] rounded-3xl rounded-bl-none rounded-tl-none'>
+        {/* Logo */}
         <h1 className='text-5xl bold-md pl-11 pt-[20%] pb-2'>Quiz</h1>
         <hr></hr>
+        {/* Sidebar navigation */}
         <div className='text-sm  flex flex-col pt-[15%] mt-[30%] pb-5 pl-11 '>
           <button className='pt-4 flex flex-row'>
             <Home size={30} className=' pr-2 pb-2' /> Home
@@ -61,7 +73,6 @@ const AdminPanel = () => {
         </div>
         <div className=' pt-[72%] flex flex-col   text-sm'>
           <button className='pb-3  flex flex-row  pl-10'>
-           
             <Setting size={28} className='pr-2 pb-2' />
             Settings
           </button>
@@ -95,16 +106,16 @@ const AdminPanel = () => {
             </h1>
           </div>
           <div className='flex  flex-col pt-11  pl-[25%]'>
-            {/* row the rounds */}
-            <div
-              className='flex flex-row pt-3 pb-3 ml-11'
-              >
+            {/* Row for General Rounds */}
+            <div className='flex flex-row pt-3 pb-3 ml-11'>
+              {/* General Round button */}
               <h1
                 style={{ backgroundColor: generalColor }}
                 className='text-2xl bg-white text-black flex justify-center rounded-md w-[50%] pt-1 pb-1 p'
               >
                 General round
               </h1>
+              {/* Tick icon for general */}
               <Image
                 src='/images/tick.svg'
                 alt='tick '
@@ -112,7 +123,8 @@ const AdminPanel = () => {
                 height={30}
                 className='mx-2 text-2xl'
                 onClick={handleGeneralClick}
-                />
+              />
+              {/* Delete icon General Round */}
               <Image
                 src='/images/del.svg'
                 alt='delete '
@@ -120,16 +132,18 @@ const AdminPanel = () => {
                 height={30}
                 className='mx-2 text-2xl'
                 onClick={handleGeneralunClick}
-                />
+              />
             </div>
+            {/* Row for Rapid Fire Round */}
             <div className='flex flex-row pt-3 pb-3 pl-11'>
+              {/* Rapid Fire Round button */}
               <h1
                 style={{ backgroundColor: rapidfireColor }}
                 className='text-2xl bg-white text-black pl-[16%] rounded-md w-[50%]'
               >
                 Rapid Fire
               </h1>
-            
+              {/* Tick icon for Rapid Fire Round */}
               <Image
                 src='/images/tick.svg'
                 alt='tick '
@@ -138,6 +152,7 @@ const AdminPanel = () => {
                 className='mx-2 text-2xl hover:bg-violet-600 '
                 onClick={handleRapidfireClick}
               />
+              {/* Delete icon for Rapid Fire Round */}
               <Image
                 src='/images/del.svg'
                 alt='delete '
@@ -147,14 +162,17 @@ const AdminPanel = () => {
                 onClick={handleRapidfireunClick}
               />
             </div>
+
+            {/* Row for 50/50 Round  */}
             <div className='flex flex-row pt-3 pb-3 pl-11'>
+              {/* 50/50 Round button */}
               <h1
                 style={{ backgroundColor: fiftyfiftyColor }}
                 className='text-2xl bg-white text-black pl-[16%] rounded-md w-[50%]'
               >
                 50/50
               </h1>
-              
+              {/* Tick icon for 50/50 Round */}
               <Image
                 src='/images/tick.svg'
                 alt='tick '
@@ -163,7 +181,7 @@ const AdminPanel = () => {
                 className='mx-2 text-2xl'
                 onClick={handleFiftyfiftyClick}
               />
-              
+              {/* Delete icon for 50/50 Round */}
               <Image
                 src='/images/del.svg'
                 alt='delete '
@@ -173,13 +191,17 @@ const AdminPanel = () => {
                 onClick={handleFiftyfiftyunClick}
               />
             </div>
+
+            {/* Row for Audio/Visual Round */}
             <div className='flex flex-row pt-3 pb-3 pl-11'>
+              {/* Audio/Visual Round button */}
               <h1
                 style={{ backgroundColor: avColor }}
                 className='text-2xl bg-white text-black pl-[16%] rounded-md w-[50%]'
               >
                 Audio/visual
               </h1>
+              {/* Tick icon Audio/Visual Round */}
               <Image
                 src='/images/tick.svg'
                 alt='tick '
@@ -188,6 +210,7 @@ const AdminPanel = () => {
                 className='mx-2 text-3xl'
                 onClick={handleAVClick}
               />
+              {/* Delete icon for Audio/Visual Round */}
               <Image
                 src='/images/del.svg'
                 alt='delete '
@@ -197,6 +220,8 @@ const AdminPanel = () => {
                 onClick={handleAVunClick}
               />
             </div>
+
+            {/* Save button */}
             <button className='bg-[#417468] text-2xl  w-[10%] rounded-2xl flex justify-center items-center ml-[30%] mt-[10%] mb-3'>
               Save
             </button>
