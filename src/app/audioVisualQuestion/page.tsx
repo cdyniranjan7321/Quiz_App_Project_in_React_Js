@@ -79,6 +79,7 @@ const AudioVisualRound1 = () => {
                 height='400'
               />
             </div>
+
           ) : question?.questionType === 'video' ? (
             <div className='w-3/4 max-w-md h-100 bg-[#4E4545]'>
               <video
@@ -88,13 +89,14 @@ const AudioVisualRound1 = () => {
                 controls //Add the controls attribute for video playback controls.
               />
             </div>
+
           ) : question?.questionType === 'audio' ? (
-            <div className='w-3/4 max-w-md h-full bg-[#4E4545]'>
+            <div>
               <audio
                 ref={audioRef}
                 src={question?.uri}
                 className='w-full h-full'
-                controls //Add the controls attribute for video playback controls.
+                controls //Add the controls attribute for audio playback controls.
               />
             </div>
             

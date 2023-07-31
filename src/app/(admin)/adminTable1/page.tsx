@@ -1,3 +1,4 @@
+// Importing necessary modules and components
 'use client'
 import React, { useState } from 'react'
 import Image from 'next/image'
@@ -10,19 +11,27 @@ import { AiOutlineUpload as Upload } from 'react-icons/ai'
 import { MdExtension } from 'react-icons/md'
 import { MdLogout } from 'react-icons/md'
 
+// Define the AdminPanel component
 const AdminPanel = () => {
+  // Sample data for the table
   const dummyData = [
-    { id: 1, roundName: 'what is your name i want to know ' },
-    { id: 2, roundName: 'ho ' },
-    { id: 3, roundName: ' k' },
-    { id: 3, roundName: 'timi ' },
+    { id: 1, roundName: 'Brass gets discoloured in air because of the presence of which of the following gases in air?' },
+    { id: 2, roundName: 'Which of the following is a non metal that remains liquid at room temperature?' },
+    { id: 3, roundName: 'Which of the following is used in pencils?' },
+    { id: 3, roundName: 'Which of the follwing metals forms an amalgam with other metals?' },
     // Add more data as needed
-  ]
+  ];
+
+  // Return the JSX representing the component
   return (
+    // Main ncontainer with background and layout styling
     <div className='h-screen w-screen flex flex-row    overflow-hidden bg-blue-gray-900 bg-gradient-to-b from-gray-100 to-purple-950'>
+      {/* Sidebar/navigation area */}
       <div className='flex flex-col bg-[#300559] text-white w-[15%] rounded-3xl rounded-bl-none rounded-tl-none'>
+        {/* Heading */}
         <h1 className='text-5xl bold-md pl-11 pt-[20%] pb-2'>Quiz</h1>
         <hr></hr>
+        {/* Sidebar buttons */}
         <div className='text-sm  flex flex-col pt-[15%] mt-[30%] pb-5 pl-11 '>
           <button className='pt-4 flex flex-row'>
             <Home size={30} className=' pr-2 pb-2' /> Home
@@ -40,6 +49,7 @@ const AdminPanel = () => {
             Teams
           </button>
         </div>
+        {/* Setting and logout buttons */}
         <div className=' pt-[72%] flex flex-col   text-sm'>
           <button className='pb-3  flex flex-row  pl-10'>
             <Setting size={28} className='pr-2 pb-2' />
@@ -53,7 +63,9 @@ const AdminPanel = () => {
           </button>
         </div>
       </div>
+      {/* Main content area */}
       <div className='flex flex-col w-[65%]'>
+        {/* Admin header */}
         <div className='ml-[115%] w-11'>
           <div className='flex flex-row  pt-6  '>
             <Image
@@ -66,9 +78,11 @@ const AdminPanel = () => {
             <h1 className='text-2xl pt-2 text-gray'>Admin</h1>
           </div>
         </div>
-        {/* table */}
+
+        {/* Table Section */}
         <div className='pt-5  pl-7  '>
           <div className='bg-gray-600  w-[130%] rounded-md pl-[14%] pr-10  pt-10  '>
+            {/* Input and buttons */}
             <label className=' text-white text-2xl pl-[30%]'>
               Enter the no.of question:
             </label>{' '}
@@ -103,6 +117,8 @@ const AdminPanel = () => {
                 </tr>
               </thead>
               <tbody>
+
+                {/* Loop through dummyData to create table rows */}
                 {dummyData.map((data) => (
                   <tr key={data.id} className=''>
                     <td className='text-white px-4 py-2 border border-white'>
@@ -135,6 +151,8 @@ const AdminPanel = () => {
                 ))}
               </tbody>
             </table>
+
+            {/* Save  button */}
             <div className='pt-[5%] pb-5'>
               <button className='bg-[#417468] text-2xl text-white  w-[14%] rounded-2xl flex justify-center  ml-[40%] '>
                 Save
@@ -144,7 +162,7 @@ const AdminPanel = () => {
         </div>
       </div>
     </div>
-  )
-}
-
-export default AdminPanel
+  );
+};
+// Export the AdminPanel component as the default export
+export default AdminPanel;
