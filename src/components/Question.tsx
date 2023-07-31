@@ -268,15 +268,6 @@ useEffect(() => {
     correctAnswerCount,
     isGeneralAPage,
   ])
-  // let timerStartFrom = 0
-  // if (timefirst !== undefined) {
-  //   timerStartFrom = timefirst
-  //   if (passCount === 1) {
-  //     timerStartFrom = timesecond
-  //   } else if (passCount > 1) {
-  //     timerStartFrom = timethird
-  //   }
-  // }
   const handleFailClose = () => {
     setShowInCorrectPop(false)
     if (isRapidFirePage) {
