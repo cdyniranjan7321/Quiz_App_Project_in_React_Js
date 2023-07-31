@@ -32,7 +32,31 @@ const Question = (props: AvailableProps) => {
     setQuestionNumber,
   } = props
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
-  
+  const [teamData, setteamData] = useState<Array<{ id: number; teamName: string;}>>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/getTeams');
+        const data = await response.json();
+        if (response.ok) {
+          setteamData(data.teams);
+        } else {
+          setError(data.error || 'Failed to fetch data');
+        }
+        setIsLoading(false);
+      } catch (error) {
+        setError('Error fetching data. Please try again later.');
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+  const numTeams = 10;
+const teamNames = Array.from({ length: numTeams }, (_, index) => (teamData.length > index ? teamData[index].teamName : ''));
+
   const [passCount, setPassCount] = useState(0)
   let timerStartFrom = 0
   if (timefirst !== undefined) {
@@ -243,73 +267,6 @@ useEffect(() => {
     correctAnswerCount,
     isGeneralAPage,
   ])
-  let housename = 'Red'
-  let housecolor = 'red'
-  if (passCount == 1) {
-    housename = 'Blue'
-    housecolor = 'blue'
-  } else if (passCount == 2) {
-    housename = 'Green'
-    housecolor = 'green'
-  } else if (passCount == 3) {
-    housename = 'Yellow'
-    housecolor = 'yellow'
-  } else if (passCount == 4) {
-    housename = 'White'
-    housecolor = 'white'
-  } else if (passCount == 5) {
-    housename = 'Purple'
-    housecolor = 'purple'
-  } else if (passCount == 6) {
-    housename = 'Orange'
-    housecolor = 'orange'
-  } else if (passCount == 7) {
-    housename = 'Pink'
-    housecolor = 'pink'
-  } else if (passCount == 8) {
-    housename = 'Brown'
-    housecolor = 'brown'
-  } else if (passCount == 9) {
-    housename = 'Cyan'
-    housecolor = 'cyan'
-  } else if (passCount == 10) {
-    housename = 'Indigo'
-    housecolor = 'indigo'
-  }
-
-  let housename2 = 'Blue'
-  let housecolor2 = 'blue'
-  if (passCount == 1) {
-    housename2 = 'Green'
-    housecolor2 = 'green'
-  } else if (passCount == 2) {
-    housename2 = 'Yellow'
-    housecolor2 = 'yellow'
-  } else if (passCount == 3) {
-    housename2 = 'White'
-    housecolor2 = 'white'
-  } else if (passCount == 4) {
-    housename2 = 'Purple'
-    housecolor2 = 'purple'
-  } else if (passCount == 5) {
-    housename2 = 'Orange'
-    housecolor2 = 'orange'
-  } else if (passCount == 6) {
-    housename2 = 'Pink'
-    housecolor2 = 'pink'
-  } else if (passCount == 7) {
-    housename2 = 'Brown'
-    housecolor2 = 'brown'
-  } else if (passCount == 8) {
-    housename2 = 'Cyan'
-    housecolor2 = 'cyan'
-  } else if (passCount == 9) {
-    housename2 = 'Indigo'
-    housecolor2 = 'indigo'
-  } else if (passCount == 10) {
-    housename2 = 'No more Team or'
-    housecolor2 = ''
-  }
   // let timerStartFrom = 0
   // if (timefirst !== undefined) {
   //   timerStartFrom = timefirst
@@ -331,6 +288,24 @@ useEffect(() => {
     if (isRapidFirePage) {
       router.push('/round')
     }
+  }
+  const selectedTeamName = teamNames[passCount % numTeams];
+  let housename = '';
+
+  if (passCount >= 0 && passCount < numTeams) {
+    housename = teamNames[passCount];
+  } else {
+    housename = 'No more Team';
+    // housecolor = '';
+  }
+  let housename2 = '';
+  // let housecolor2 = '';
+
+  if (passCount + 1 >= 0 && passCount + 1 < numTeams) {
+    housename2 = teamNames[passCount + 1];
+    // housecolor2 = teamColors[passCount + 1];
+  } else {
+    housename2 = 'No more Team';
   }
   return (
     <div>
@@ -362,13 +337,13 @@ useEffect(() => {
               <div className='flex flex-col'>
                 <div className='flex'>
                   <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-4 ml-5'>
-                    Round for: {housename} house
+                    Round for: {housename}
                     <button
-                      className={`ml-4 mr-2 mb-1 ${
-                        housecolor === 'white'
-                          ? `bg-${housecolor} w-12 h-6 rounded-xl py-2`
-                          : `bg-${housecolor}-600 w-12 h-6 rounded-xl py-2`
-                      }`}
+                      // className={`ml-4 mr-2 mb-1 ${
+                      //   housecolor === 'white'
+                      //     ? `bg-${housecolor} w-12 h-6 rounded-xl py-2`
+                      //     : `bg-${housecolor}-600 w-12 h-6 rounded-xl py-2`
+                      // }`}
                     ></button>
                   </span>
                 </div>
@@ -391,22 +366,20 @@ useEffect(() => {
           </div>
           {/* starting second part  */}
           {!isRapidFirePage && (
-            <div className='fixed right-0 flex flex-col w-[30%] gap-12  '>
+            <div className='fixed right-0 top-16 flex flex-col w-[350px] gap-12  '>
               {/* top part of right side */}
-              <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg pl-3 pr-2 py-4 ml-auto'>
+              <div className='flex flex-row items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg pl-3 pr-2 py-4'>
                 <span className='font-italiana text-xl'>
-                  Next question for:
-                </span>
-                <span>
-                  {housename2} house
+                  Next question for: {housename2}
                   <button
-                    className={`ml-2 ${
-                      housecolor2 === 'white'
-                        ? `bg-${housecolor2} w-12 h-6 rounded-xl py-2`
-                        : `bg-${housecolor2}-600 w-12 h-6 rounded-xl py-2`
-                    }`}
-                  ></button>
-                </span>
+                    // className={`ml-2 ${
+                      // housecolor2 === 'white'
+                        // ? `bg-${housecolor2} w-12 h-6 rounded-xl py-2`
+                        // : `bg-${housecolor2}-600 w-12 h-6 rounded-xl py-2`
+                    // }`}
+                  ></button></span>
+                  
+                
               </div>
             </div>
           )}
