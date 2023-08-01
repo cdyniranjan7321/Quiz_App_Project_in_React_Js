@@ -27,6 +27,7 @@ const GeneralQuestion = () => {
           isGeneralAPage={true}
           // questionNum={questionNum}
           qn={question}
+        roundId={round_id}
         />
       </div>
       {/* ending navbar and main page  */}

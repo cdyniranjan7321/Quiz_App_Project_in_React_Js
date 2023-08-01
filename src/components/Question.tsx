@@ -15,6 +15,7 @@ type AvailableProps = {
   isRapidFirePage?: boolean
   isAudioVisualPage?: boolean
   qn?: QuestionI | undefined
+  roundId:number
   set?: string | null
   questionNumber?: number
   setQuestionNumber?: (value: number) => void
@@ -27,39 +28,172 @@ const Question = (props: AvailableProps) => {
     isGeneralAPage,
     isRapidFirePage,
     qn,
+    roundId,
     set,
     questionNumber,
     setQuestionNumber,
   } = props
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
-  const [teamData, setteamData] = useState<Array<{ id: number; teamName: string;}>>([]);
+  const [teamData, setteamData] = useState<Array<{ gameOrder: number; teamName: string;}>>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
-  useEffect(() => {
-    const fetchData = async () => {
+  const [error, setError] = useState('');//checked
+   const [numTeams,setNumTeams]=useState(2)
+   const teamNames = Array.from({ length: numTeams }, (_, index) => (teamData.length > index ? teamData[index].teamName : ''));
+
+   const [passCount, setPassCount] = useState(0)//checked
+   const selectedTeamName = teamNames[passCount % numTeams];
+   let housename = '';
+   if (passCount >= 0 && passCount < numTeams) {
+     housename = teamNames[passCount];
+   } else {
+     housename = 'No more Team';
+   }
+   let housename2 = '';
+   if (passCount + 1 >= 0 && passCount + 1 < numTeams) {
+     housename2 = teamNames[passCount + 1];
+   } else {
+     housename2 = 'No more Team';
+   }
+   
+   useEffect(() => {
+    const fetchteamData = async () => {
       try {
         const response = await fetch('/api/getTeams');
         const data = await response.json();
         if (response.ok) {
           setteamData(data.teams);
           setNumTeams(data.teams.length);
+          if (data.teams.length > 0) {
+            setTid(data?.teams[0].gameOrder);
+          }
         } else {
           setError(data.error || 'Failed to fetch data');
         }
         setIsLoading(false);
       } catch (error) {
-        setError('Error fetching data. Please try again later.');
+        setError('Error fetching data.Try again later.');
         setIsLoading(false);
       }
     };
+    fetchteamData();
+  }, []); 
+  useEffect(() => {
+    const currentTeam = teamData.find((team) => team.teamName === housename);
+    if (currentTeam) {
+      setTid(currentTeam?.gameOrder);
+    }
+  }, [housename, teamData]);
 
-    fetchData();
-  }, []);
-  const [numTeams,setNumTeams]=useState(2)
-const teamNames = Array.from({ length: numTeams }, (_, index) => (teamData.length > index ? teamData[index].teamName : ''));
+  const [tid, setTid] = useState<number>(0);
+const createScore = (score: number, roundId: number, tid: number, qid: number, qroundId: number) => {
+    
+    fetch('/api/createScore', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        score: score,
+        roundId: roundId,
+        tid:tid,
+        qid:qid,
+        qroundId:qroundId,
+      }),
+      
 
-  const [passCount, setPassCount] = useState(0)
-  let timerStartFrom = 0
+    })
+      .then((response) =>{
+        if(!response.ok){
+          throw new Error('response network was not ok')
+        }
+      return response.json() // Parse the response data as JSON
+      })
+      .then((data) => {
+        console.log('data to score:', data);
+        // Handle the response data if needed (optional)
+        console.log('Score created successfully:', data);
+      })
+      .catch((error) => {
+        // Handle errors if any
+        console.error('Error creating score:', error);
+      });
+  };
+  const updateScore = (scoreId: number, score: number,roundId:number,tid:number,qid:number,qroundId:number) => {
+    fetch(`/api/updateScore/${roundId}/${tid}`, {
+      method: 'PATCH', // Use the Patch method for updating existing data
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        score: score, // Send the updated score value in the request body as JSON
+        roundId:roundId,
+        tid:tid,
+        qid:qid,
+        qroundId:qroundId,
+      }),
+    })
+      .then((response) => response.json()) // Parse the response data as JSON
+      .then((data) => {
+        console.log('Score updated using updateScore successfully:', data);
+      })
+      .catch((error) => {
+        // Handle errors if any
+        console.error('Error updating score:', error);
+      });
+  };
+ const handleCorrectButtonClick1 = () => {
+    setShowCorrectPop(true)
+    setSHowGeneralMessage({
+      message: `Congratulations you have received 1 point`,
+    })
+    setShowInCorrectPop(false)
+  
+    
+    const qid=qn?.id || 0
+    const qroundId=roundId
+    const tidval=tid
+    let scoreIncrement = 0;
+if(roundId===1){
+  if (passCount === 0) {
+    scoreIncrement = 30;
+  } else if (passCount === 1) {
+    scoreIncrement = 15;
+  } else {
+    scoreIncrement = 10;
+  }
+}
+const score=scoreIncrement
+    fetch(`/api/getScore?roundId=${roundId}&tid=${tid}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(' check for Data table:', data);
+
+      let foundEntry = false;
+
+// If no matching entry was found, create a new entry
+if (!foundEntry) {
+  console.log('sc',score,'roun', roundId,'tidv', tidval,'qid', qid,'qroun', qroundId)
+  createScore(score, roundId, tidval, qid, qroundId);
+}
+for (const entry of data.score) {
+  if (entry.tid === tid && entry.roundId === roundId) {
+    // Found a matching entry for the team and round
+    const previousScore = entry.score;
+    // Calculate the updated score by adding scoreIncrement to the previous score
+    const score = scoreIncrement + previousScore;
+    // Call the updateScore function with the id of the matching entry and the updated score
+    updateScore(entry.id, score, roundId, tidval, qid, qroundId);
+    foundEntry = true;
+    break; // Exit the loop s
+  }
+}
+    })
+    .catch((error) => {
+      console.error('Error checking score:', error);
+    });
+  
+  };
+let timerStartFrom = 0
   if (timefirst !== undefined) {
     timerStartFrom = timefirst
     if (passCount === 1) {
@@ -168,13 +302,8 @@ useEffect(() => {
   useEffect(() => {
     setShowStrokeDashoffset(0); // Execute setShowStrokeDashoffset(0) when startFrom changes
   }, [startFrom]);
-  
-
-
-  // const { timefirst, timesecond, timethird } = useContext(TimerContext)
   const router = useRouter()
   const isinitialRender=useRef(true)
-  // const [passCount, setPassCount] = useState(0)
   const [showText, setShowText] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0)
@@ -199,8 +328,6 @@ useEffect(() => {
       totalcorrectanswer: correctAnswerCount,
     }))
   }, [correctAnswerCount])
-
-  // add oclick handler for correct and incorrect button click
   const handleCorrectButtonClick = () => {
     if (correctClickCount + incorrectClickCount < totalquestion) {
       setCorrectAnswerCount((prevCount) => prevCount + 1)
@@ -211,13 +338,6 @@ useEffect(() => {
     if (correctClickCount + incorrectClickCount < totalquestion) {
       setIncorrectClickCount((prevCount) => prevCount + 1)
     }
-  }
-  const handleCorrectButtonClick1 = () => {
-    setShowCorrectPop(true)
-    setSHowGeneralMessage({
-      message: `Congratulations you have received 1 point`,
-    })
-    setShowInCorrectPop(false)
   }
   const handleIncorrectButtonClick1 = () => {
     setSHowGeneralMessage({ message: `Sorry!! you have received 0 point` })
@@ -260,6 +380,7 @@ useEffect(() => {
         setShowInCorrectPop(false)
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isRapidFirePage,
     correctClickCount,
@@ -280,24 +401,6 @@ useEffect(() => {
     if (isRapidFirePage) {
       router.push('/round')
     }
-  }
-  const selectedTeamName = teamNames[passCount % numTeams];
-  let housename = '';
-
-  if (passCount >= 0 && passCount < numTeams) {
-    housename = teamNames[passCount];
-  } else {
-    housename = 'No more Team';
-    // housecolor = '';
-  }
-  let housename2 = '';
-  // let housecolor2 = '';
-
-  if (passCount + 1 >= 0 && passCount + 1 < numTeams) {
-    housename2 = teamNames[passCount + 1];
-    // housecolor2 = teamColors[passCount + 1];
-  } else {
-    housename2 = 'No more Team';
   }
   return (
     <div>
