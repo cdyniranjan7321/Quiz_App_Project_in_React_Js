@@ -1,8 +1,5 @@
 'use client'
 import React, { useRef, useState, useEffect } from 'react'
-import { BiArrowBack as BackArrow } from 'react-icons/bi'
-import { AiOutlineClose } from 'react-icons/ai'
-import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import useRequest from '../../../utils/useQuestionRequest'
@@ -94,7 +91,7 @@ const AudioVisualRound1 = () => {
                 ref={audioRef}
                 src={question?.uri}
                 className='w-full h-full'
-                controls //Add the controls attribute for video playback controls.
+                controls //Add the controls attribute for audio playback controls.
               />
             </div>
           ) : (
