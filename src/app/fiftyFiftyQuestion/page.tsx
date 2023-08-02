@@ -30,6 +30,7 @@ const FiftyFiftyQuestion = (props:FiftyFiftyProps) => {
   const [isfiftyfiftypage,setIsfiftyfiftypage]=useState(true)
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
   const [passCount, setPassCount] = useState(0)
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
   let timerStartFrom = 0
   if (timefirst !== undefined) {
     timerStartFrom = timefirst
@@ -257,15 +258,24 @@ useEffect(() => {
         console.error('Error updating score:', error)
       })
   }
-  const handleoption1click=()=>{
+  const handleoptionclick=(optionNumber:number)=>{
+    setSelectedOption(optionNumber);
     const roundId=round_id
     const qid=question?.id || 0
     const qroundId=roundId
     const tidval=tid
     let scoreIncrement = 0;
+    console.log('roundi',roundId)
     
-    if(roundId===8){
-    scoreIncrement=10
+    if (
+      (optionNumber === 1 && question?.option1 === question?.answer) ||
+      (optionNumber === 2 && question?.option2 === question?.answer) ||
+      (optionNumber === 3 && question?.option3 === question?.answer) ||
+      (optionNumber === 4 && question?.option4 === question?.answer) ||
+      (optionNumber === 5 && question?.fiftyOption1 === question?.answer) ||
+      (optionNumber === 6 && question?.fiftyOption2 === question?.answer)
+    ) {
+      scoreIncrement = 10;
     }
     const score=scoreIncrement
     fetch(`/api/getScore?roundId=${roundId}&tid=${tid}`)
@@ -350,10 +360,12 @@ useEffect(() => {
                             ? 'bg-[#B1DE76]'
                             : 'bg-[#FF0000]'
                         }`}
-                        onClick={() => {
+                        onClick={
+                          () => {
                           setIsOption1Active(true);
-                          handleoption1click();
-                        }}
+                          handleoptionclick(1)
+                        }
+                      }
                       >
                         <span className='fixed text-left'>A. </span><span className='text-center ml-4'>{question?.option1}</span>
                       </button>
@@ -367,7 +379,10 @@ useEffect(() => {
                             ? 'bg-[#B1DE76]'
                             : 'bg-[#FF0000]'
                         }`}
-                        onClick={() => setIsOption2Active(true)}
+                        onClick={() =>{
+                          setIsOption2Active(true)
+                          handleoptionclick(2)
+                        }}
                       >
                       <span className='fixed text-left'>B. </span><span className='text-center ml-4'>{question?.option2}</span>
                       </button>
@@ -382,7 +397,11 @@ useEffect(() => {
                             ? 'bg-[#B1DE76]'
                             : 'bg-[#FF0000]'
                         }`}
-                        onClick={() => setIsOption3Active(true)}
+                        onClick={() => {
+                          setIsOption3Active(true)
+                          handleoptionclick(3)
+                        }
+                      }
                       >
                         <span className='fixed text-left'>C. </span><span className='ml-4 text-center'>{question?.option3}</span>
                         
@@ -397,7 +416,9 @@ useEffect(() => {
                             ? 'bg-[#B1DE76]'
                             : 'bg-[#FF0000]'
                         }`}
-                        onClick={() => setIsOption4Active(true)}
+                        onClick={() =>{ setIsOption4Active(true)
+                          handleoptionclick(4)
+                        }}
                       >
                         <span className='fixed text-left'>D. </span><span className='ml-4 text-center'>{question?.option4}</span>
                       </button>
@@ -414,10 +435,12 @@ useEffect(() => {
                           ? 'bg-[#B1DE76]'
                           : 'bg-[#FF0000]'
                       }`}
-                      onClick={() => setIsOption1Active(true)}
+                      onClick={() => {setIsOption1Active(true)
+                      handleoptionclick(5)
+                      }}
                     >
                       <span className='fixed text-left'>A. </span><span className='ml-4 text-center'>{question?.fiftyOption1}</span>
-                      {/* A. {question?.fiftyOption1} */}
+                      
                     </button>
                     <div style={{ marginLeft: '2rem' }}></div>
                     <button
@@ -429,7 +452,10 @@ useEffect(() => {
                           ? 'bg-[#B1DE76]'
                           : 'bg-[#FF0000]'
                       }`}
-                      onClick={() => setIsOption2Active(true)}
+                      onClick={() => {
+                        setIsOption2Active(true)
+                      handleoptionclick(6)
+                      }}
                     >
                       <span className='fixed text-left'>B. </span><span className='ml-4 text-center'>{question?.fiftyOption2}</span>
                     
