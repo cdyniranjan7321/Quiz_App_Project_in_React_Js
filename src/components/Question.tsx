@@ -165,21 +165,25 @@ const Question = (props: AvailableProps) => {
       message: `Congratulations you have received 1 point`,
     })
     setShowInCorrectPop(false)
-
-    const qid = qn?.id || 0
-    const qroundId = roundId
-    const tidval = tid
-    let scoreIncrement = 0
-    if (roundId === 1) {
-      if (passCount === 0) {
-        scoreIncrement = 30
-      } else if (passCount === 1) {
-        scoreIncrement = 15
-      } else {
-        scoreIncrement = 10
-      }
-    }
-    const score = scoreIncrement
+  
+    
+    const qid=qn?.id || 0
+    const qroundId=roundId
+    const tidval=tid
+    let scoreIncrement = 0;
+if(roundId===1||roundId===2||roundId===8){
+  if (passCount === 0) {
+    scoreIncrement = 30;
+  } else if (passCount === 1) {
+    scoreIncrement = 20;
+  } else {
+    scoreIncrement = 15;
+  }
+}
+else if(roundId===4||roundId===5||roundId===6||roundId===7){
+scoreIncrement=10
+}
+const score=scoreIncrement
     fetch(`/api/getScore?roundId=${roundId}&tid=${tid}`)
       .then((response) => response.json())
       .then((data) => {

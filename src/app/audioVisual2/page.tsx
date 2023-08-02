@@ -23,7 +23,7 @@ const AudioVisualRound2 = () => {
         {/* start navbar  and main page*/}
         <Navbar title='Audio Visual Round' isBackArrow={true} />
         {/* end navbar */}
-        <Question isAudioVisualPage={true} qn={question} />
+        <Question isAudioVisualPage={true} qn={question} roundId={round_id}  />
       </div>
       {/* ending navbar and main page  */}
     </div>
