@@ -150,7 +150,7 @@ useEffect(() => {
               Question {question?.id} : {question?.question}
             </div>
             {showAnswer && (
-              <div className='text-2xl pl-9 font-italiana'>
+              <div className='text-2xl pl-11 font-italiana'>
                 Answer : {question?.answer}
               </div>
             )}
