@@ -142,27 +142,37 @@ useEffect(() => {
         <Navbar title='Fifty-fifty Round' isBackArrow={true} />
 
         {/* starting main page */}
-        <div className='flex flex-col md:flex-row h-full'>
+        <div className=' '>
           {/* starting first part */}
-          <div className='md:w-[70%] md:ml-24 mt-8'>
-            <div className='flex flex-row justify-between'>
-              <div className='flex flex-col'>
-                <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-2 rounded-lg text-xl my-3'>
+          <div className='flex h-full w-[70vw] ml-28 mt-12'>
+            <div className='flex flex-row justify-between '>
+              <div className='flex flex-col '>
+                <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-3 rounded-lg text-xl'>
                   Round for: Red house
-                  <button className='ml-2 bg-red-500 w-10 h-6 rounded-xl py-2'></button>
                 </span>
-              </div>
-            </div>
-            <div className='text-2xl lg:text-4xl p-3 font-italiana'>
+                <div className='text-2xl p-3 font-italiana mt-8 ml-8'>
               {' '}
               Question {question?.id} : {question?.question}
             </div>
             {showAnswer && (
-              <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
+              <div className='text-2xl pl-9 font-italiana'>
                 Answer : {question?.answer}
               </div>
             )}
-            <div className='mt-10 ml-20 flex flex-col justify-center'>
+              </div>
+            </div>
+            <div className='fixed w-[20vw] right-0'>
+            <div className='fixed flex-ro items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white rounded-lg p-3'>
+              <span className='font-italiana text-xl '>Next question for: Blue house </span>
+              
+            </div>
+            <div className='fixed top-56 right-0 transform -translate-x-1/2 '>
+                <TimerIndicator startFrom={30} isfiftyfiftypage={isfiftyfiftypage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick}/>
+              </div>
+          </div>
+
+
+            <div className='mt-44 ml-20 flex flex-col justify-center'>
               <div className='flex flex-col gap-4'>
                 {!isFiftyFifty ? (
                   <>
@@ -257,9 +267,7 @@ useEffect(() => {
                   </div>
                 )}
               </div>
-              <div className='fixed top-60 right-0  transform -translate-x-1/2 '>
-                <TimerIndicator startFrom={30} isfiftyfiftypage={isfiftyfiftypage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick}/>
-              </div>
+              
               <div className='fixed flex justify-center bottom-8 left-1/2 transform -translate-x-1/2'>
                 <button
                   className=' bg-green-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
@@ -310,22 +318,9 @@ useEffect(() => {
               </div>
             </div>
           </div>
-          {/* ending first part */}
-          {/* starting second part Where second part of the main page contains the details for next question.*/}
-          <div className='flex flex-col w-[30%] gap-12'>
-            <div className='flex flex-col items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-4 mr-6 rounded-lg pl-3 py-4 md:ml-60'>
-              <span className='font-italiana text-xl'>Next question for:</span>
-              <span>
-                Blue house{' '}
-                <button className='ml-2 bg-blue-500 w-10 h-6 rounded-xl py-2'></button>
-              </span>
-            </div>
-          </div>
-          {/* ending second part */}
+          
         </div>
-        {/* ending main page */}
       </div>
-      {/* ending navbar and main page */}
     </div>
   )
 }
