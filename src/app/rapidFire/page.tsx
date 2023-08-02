@@ -32,8 +32,7 @@ const RapidFireRound = () => {
           set={set}
           qn={question}
           questionNumber={questionNumber}
-          setQuestionNumber={setQuestionNumber}
-        />
+          setQuestionNumber={setQuestionNumber} roundId={roundId}/>
       </div>
       {/* ending navbar and main page  */}
     </div>
