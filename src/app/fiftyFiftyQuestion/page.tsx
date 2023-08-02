@@ -154,6 +154,11 @@ useEffect(() => {
               {' '}
               Question {question?.id} : {question?.question}
             </div>
+            {showAnswer && (
+              <div className='text-2xl pl-9 font-italiana'>
+                Answer : {question?.answer}
+              </div>
+            )}
               </div>
             </div>
             <div className='fixed w-[20vw] right-0'>
@@ -166,12 +171,8 @@ useEffect(() => {
               </div>
           </div>
 
-            {showAnswer && (
-              <div className='text-2xl lg:text-4xl pl-9 font-italiana'>
-                Answer : {question?.answer}
-              </div>
-            )}
-            <div className='mt-40 ml-20 flex flex-col justify-center'>
+
+            <div className='mt-44 ml-20 flex flex-col justify-center'>
               <div className='flex flex-col gap-4'>
                 {!isFiftyFifty ? (
                   <>
