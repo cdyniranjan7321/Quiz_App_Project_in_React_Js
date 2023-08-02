@@ -1,8 +1,5 @@
 'use client'
 import React, { useRef, useState, useEffect } from 'react'
-import { BiArrowBack as BackArrow } from 'react-icons/bi'
-import { AiOutlineClose } from 'react-icons/ai'
-import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import useRequest from '../../../utils/useQuestionRequest'
@@ -79,7 +76,6 @@ const AudioVisualRound1 = () => {
                 height='400'
               />
             </div>
-
           ) : question?.questionType === 'video' ? (
             <div className='w-3/4 max-w-md h-100 bg-[#4E4545]'>
               <video
@@ -89,9 +85,8 @@ const AudioVisualRound1 = () => {
                 controls //Add the controls attribute for video playback controls.
               />
             </div>
-
           ) : question?.questionType === 'audio' ? (
-            <div>
+            <div className='w-3/4 max-w-md h-[10%] '>
               <audio
                 ref={audioRef}
                 src={question?.uri}
@@ -99,7 +94,6 @@ const AudioVisualRound1 = () => {
                 controls //Add the controls attribute for audio playback controls.
               />
             </div>
-            
           ) : (
             <></>
           )}

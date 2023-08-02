@@ -2,12 +2,16 @@
 import { QuestionI } from '../../types'
 import { useRouter } from 'next/navigation'
 import { TimerContext } from '@/app/providers'
-import React, { useState, useContext, useEffect,useRef } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import Success from './Success'
 import Fail from './Fail'
 import RapidFireRound from '@/app/rapidFire/page'
 import TimerIndicator from './TimerIndicator'
-import { ColorFormat, ColorHex, useCountdown } from 'react-countdown-circle-timer'
+import {
+  ColorFormat,
+  ColorHex,
+  useCountdown,
+} from 'react-countdown-circle-timer'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
 
 type AvailableProps = {
@@ -15,7 +19,7 @@ type AvailableProps = {
   isRapidFirePage?: boolean
   isAudioVisualPage?: boolean
   qn?: QuestionI | undefined
-  roundId:number
+  roundId: number
   set?: string | null
   questionNumber?: number
   setQuestionNumber?: (value: number) => void
@@ -34,59 +38,68 @@ const Question = (props: AvailableProps) => {
     setQuestionNumber,
   } = props
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
-  const [teamData, setteamData] = useState<Array<{ gameOrder: number; teamName: string;}>>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');//checked
-   const [numTeams,setNumTeams]=useState(2)
-   const teamNames = Array.from({ length: numTeams }, (_, index) => (teamData.length > index ? teamData[index].teamName : ''));
+  const [teamData, setteamData] = useState<
+    Array<{ gameOrder: number; teamName: string }>
+  >([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState('') //checked
+  const [numTeams, setNumTeams] = useState(2)
+  const teamNames = Array.from({ length: numTeams }, (_, index) =>
+    teamData.length > index ? teamData[index].teamName : ''
+  )
 
-   const [passCount, setPassCount] = useState(0)//checked
-   const selectedTeamName = teamNames[passCount % numTeams];
-   let housename = '';
-   if (passCount >= 0 && passCount < numTeams) {
-     housename = teamNames[passCount];
-   } else {
-     housename = 'No more Team';
-   }
-   let housename2 = '';
-   if (passCount + 1 >= 0 && passCount + 1 < numTeams) {
-     housename2 = teamNames[passCount + 1];
-   } else {
-     housename2 = 'No more Team';
-   }
-   
-   useEffect(() => {
+  const [passCount, setPassCount] = useState(0) //checked
+  const selectedTeamName = teamNames[passCount % numTeams]
+  let housename = ''
+  if (passCount >= 0 && passCount < numTeams) {
+    housename = teamNames[passCount]
+  } else {
+    housename = 'No more Team'
+  }
+  let housename2 = ''
+  if (passCount + 1 >= 0 && passCount + 1 < numTeams) {
+    housename2 = teamNames[passCount + 1]
+  } else {
+    housename2 = 'No more Team'
+  }
+
+  useEffect(() => {
     const fetchteamData = async () => {
       try {
-        const response = await fetch('/api/getTeams');
-        const data = await response.json();
+        const response = await fetch('/api/getTeams')
+        const data = await response.json()
         if (response.ok) {
-          setteamData(data.teams);
-          setNumTeams(data.teams.length);
+          setteamData(data.teams)
+          setNumTeams(data.teams.length)
           if (data.teams.length > 0) {
-            setTid(data?.teams[0].gameOrder);
+            setTid(data?.teams[0].gameOrder)
           }
         } else {
-          setError(data.error || 'Failed to fetch data');
+          setError(data.error || 'Failed to fetch data')
         }
-        setIsLoading(false);
+        setIsLoading(false)
       } catch (error) {
-        setError('Error fetching data.Try again later.');
-        setIsLoading(false);
+        setError('Error fetching data.Try again later.')
+        setIsLoading(false)
       }
-    };
-    fetchteamData();
-  }, []); 
-  useEffect(() => {
-    const currentTeam = teamData.find((team) => team.teamName === housename);
-    if (currentTeam) {
-      setTid(currentTeam?.gameOrder);
     }
-  }, [housename, teamData]);
+    fetchteamData()
+  }, [])
+  useEffect(() => {
+    const currentTeam = teamData.find((team) => team.teamName === housename)
+    if (currentTeam) {
+      setTid(currentTeam?.gameOrder)
+    }
+  }, [housename, teamData])
 
-  const [tid, setTid] = useState<number>(0);
-const createScore = (score: number, roundId: number, tid: number, qid: number, qroundId: number) => {
-    
+  const [tid, setTid] = useState<number>(0)
+  const createScore = (
+    score: number,
+    roundId: number,
+    tid: number,
+    qid: number,
+    qroundId: number
+  ) => {
     fetch('/api/createScore', {
       method: 'POST',
       headers: {
@@ -95,30 +108,35 @@ const createScore = (score: number, roundId: number, tid: number, qid: number, q
       body: JSON.stringify({
         score: score,
         roundId: roundId,
-        tid:tid,
-        qid:qid,
-        qroundId:qroundId,
+        tid: tid,
+        qid: qid,
+        qroundId: qroundId,
       }),
-      
-
     })
-      .then((response) =>{
-        if(!response.ok){
+      .then((response) => {
+        if (!response.ok) {
           throw new Error('response network was not ok')
         }
-      return response.json() // Parse the response data as JSON
+        return response.json() // Parse the response data as JSON
       })
       .then((data) => {
-        console.log('data to score:', data);
+        console.log('data to score:', data)
         // Handle the response data if needed (optional)
-        console.log('Score created successfully:', data);
+        console.log('Score created successfully:', data)
       })
       .catch((error) => {
         // Handle errors if any
-        console.error('Error creating score:', error);
-      });
-  };
-  const updateScore = (scoreId: number, score: number,roundId:number,tid:number,qid:number,qroundId:number) => {
+        console.error('Error creating score:', error)
+      })
+  }
+  const updateScore = (
+    scoreId: number,
+    score: number,
+    roundId: number,
+    tid: number,
+    qid: number,
+    qroundId: number
+  ) => {
     fetch(`/api/updateScore/${roundId}/${tid}`, {
       method: 'PATCH', // Use the Patch method for updating existing data
       headers: {
@@ -126,74 +144,83 @@ const createScore = (score: number, roundId: number, tid: number, qid: number, q
       },
       body: JSON.stringify({
         score: score, // Send the updated score value in the request body as JSON
-        roundId:roundId,
-        tid:tid,
-        qid:qid,
-        qroundId:qroundId,
+        roundId: roundId,
+        tid: tid,
+        qid: qid,
+        qroundId: qroundId,
       }),
     })
       .then((response) => response.json()) // Parse the response data as JSON
       .then((data) => {
-        console.log('Score updated using updateScore successfully:', data);
+        console.log('Score updated using updateScore successfully:', data)
       })
       .catch((error) => {
         // Handle errors if any
-        console.error('Error updating score:', error);
-      });
-  };
- const handleCorrectButtonClick1 = () => {
+        console.error('Error updating score:', error)
+      })
+  }
+  const handleCorrectButtonClick1 = () => {
     setShowCorrectPop(true)
     setSHowGeneralMessage({
       message: `Congratulations you have received 1 point`,
     })
     setShowInCorrectPop(false)
-  
-    
-    const qid=qn?.id || 0
-    const qroundId=roundId
-    const tidval=tid
-    let scoreIncrement = 0;
-if(roundId===1){
-  if (passCount === 0) {
-    scoreIncrement = 30;
-  } else if (passCount === 1) {
-    scoreIncrement = 15;
-  } else {
-    scoreIncrement = 10;
-  }
-}
-const score=scoreIncrement
+
+    const qid = qn?.id || 0
+    const qroundId = roundId
+    const tidval = tid
+    let scoreIncrement = 0
+    if (roundId === 1) {
+      if (passCount === 0) {
+        scoreIncrement = 30
+      } else if (passCount === 1) {
+        scoreIncrement = 15
+      } else {
+        scoreIncrement = 10
+      }
+    }
+    const score = scoreIncrement
     fetch(`/api/getScore?roundId=${roundId}&tid=${tid}`)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(' check for Data table:', data);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(' check for Data table:', data)
 
-      let foundEntry = false;
+        let foundEntry = false
 
-// If no matching entry was found, create a new entry
-if (!foundEntry) {
-  console.log('sc',score,'roun', roundId,'tidv', tidval,'qid', qid,'qroun', qroundId)
-  createScore(score, roundId, tidval, qid, qroundId);
-}
-for (const entry of data.score) {
-  if (entry.tid === tid && entry.roundId === roundId) {
-    // Found a matching entry for the team and round
-    const previousScore = entry.score;
-    // Calculate the updated score by adding scoreIncrement to the previous score
-    const score = scoreIncrement + previousScore;
-    // Call the updateScore function with the id of the matching entry and the updated score
-    updateScore(entry.id, score, roundId, tidval, qid, qroundId);
-    foundEntry = true;
-    break; // Exit the loop s
+        // If no matching entry was found, create a new entry
+        if (!foundEntry) {
+          console.log(
+            'sc',
+            score,
+            'roun',
+            roundId,
+            'tidv',
+            tidval,
+            'qid',
+            qid,
+            'qroun',
+            qroundId
+          )
+          createScore(score, roundId, tidval, qid, qroundId)
+        }
+        for (const entry of data.score) {
+          if (entry.tid === tid && entry.roundId === roundId) {
+            // Found a matching entry for the team and round
+            const previousScore = entry.score
+            // Calculate the updated score by adding scoreIncrement to the previous score
+            const score = scoreIncrement + previousScore
+            // Call the updateScore function with the id of the matching entry and the updated score
+            updateScore(entry.id, score, roundId, tidval, qid, qroundId)
+            foundEntry = true
+            break // Exit the loop s
+          }
+        }
+      })
+      .catch((error) => {
+        console.error('Error checking score:', error)
+      })
   }
-}
-    })
-    .catch((error) => {
-      console.error('Error checking score:', error);
-    });
-  
-  };
-let timerStartFrom = 0
+  let timerStartFrom = 0
   if (timefirst !== undefined) {
     timerStartFrom = timefirst
     if (passCount === 1) {
@@ -203,7 +230,7 @@ let timerStartFrom = 0
     }
   }
 
-  const startFrom=timerStartFrom
+  const startFrom = timerStartFrom
   const [time, setTime] = useState(startFrom)
   const [isRunning, setIsRunning] = useState(false)
   const path = useRef<SVGPathElement | null>(null)
@@ -229,41 +256,39 @@ let timerStartFrom = 0
     setIsRunning(false)
     setShowStrokeDashoffset(0)
   }
-  const [color, setColor] = useState<ColorFormat>('#22C55E'); // Default color
+  const [color, setColor] = useState<ColorFormat>('#22C55E') // Default color
 
-useEffect(() => {
-  if (time<= 5) {
-    setColor('#FF0000'); // Change color to red
-  } else if(time<=10){
-    setColor('#FFFF00'); // Change color to yellow
-  }
-  else{
-    setColor('#22C55E'); // Change color to green
-  }
-}, [time]);
+  useEffect(() => {
+    if (time <= 5) {
+      setColor('#FF0000') // Change color to red
+    } else if (time <= 10) {
+      setColor('#FFFF00') // Change color to yellow
+    } else {
+      setColor('#22C55E') // Change color to green
+    }
+  }, [time])
   const { stroke, size, strokeWidth, pathLength } = useCountdown({
     isPlaying: isRunning,
     duration: startFrom,
-    colors:color,
+    colors: color,
     size: 135,
   })
-  
-  const [offsetps, setOffsetps] = useState(0);
-  
+
+  const [offsetps, setOffsetps] = useState(0)
+
   useEffect(() => {
     setTime(startFrom)
-    const newOffsetps = pathLength / (startFrom * 2);
-  setOffsetps(newOffsetps);
-  setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps); // Update the strokeDashoffset immediately
-  
-  }, [startFrom,pathLength])
+    const newOffsetps = pathLength / (startFrom * 2)
+    setOffsetps(newOffsetps)
+    setShowStrokeDashoffset((prevOffset) => prevOffset - newOffsetps) // Update the strokeDashoffset immediately
+  }, [startFrom, pathLength])
 
   useEffect(() => {
     let interval: NodeJS.Timeout
     let animationInterval: NodeJS.Timeout
-    const pathRef=path.current;
+    const pathRef = path.current
     const incrementOffset = () => {
-      setShowStrokeDashoffset((prevOffset) => prevOffset -offsetps)
+      setShowStrokeDashoffset((prevOffset) => prevOffset - offsetps)
       if (pathRef) {
         pathRef.style.strokeDashoffset = String(strokeDashoffset)
       }
@@ -291,19 +316,19 @@ useEffect(() => {
         pathRef.style.strokeDashoffset = '0'
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, time, path, startFrom])
-  
+
   useEffect(() => {
-    if (time<= 1) {
-       setShowStrokeDashoffset(-841.946)
+    if (time <= 1) {
+      setShowStrokeDashoffset(-841.946)
     }
-  }, [strokeDashoffset, time]);
+  }, [strokeDashoffset, time])
   useEffect(() => {
-    setShowStrokeDashoffset(0); // Execute setShowStrokeDashoffset(0) when startFrom changes
-  }, [startFrom]);
+    setShowStrokeDashoffset(0) // Execute setShowStrokeDashoffset(0) when startFrom changes
+  }, [startFrom])
   const router = useRouter()
-  const isinitialRender=useRef(true)
+  const isinitialRender = useRef(true)
   const [showText, setShowText] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0)
@@ -355,7 +380,7 @@ useEffect(() => {
       handleCorrectButtonClick1()
       handleIncorrectButtonClick1()
     }
-    isinitialRender.current=false
+    isinitialRender.current = false
     if (isRapidFirePage) {
       if (
         correctClickCount + incorrectClickCount >= totalquestion &&
@@ -380,7 +405,7 @@ useEffect(() => {
         setShowInCorrectPop(false)
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isRapidFirePage,
     correctClickCount,
@@ -433,7 +458,6 @@ useEffect(() => {
                 <div className='flex'>
                   <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white py-4 px-2 rounded-lg text-xl my-4 ml-5 '>
                     Round for: {housename}
-                    
                   </span>
                 </div>
                 {isGeneralAPage && (
@@ -460,9 +484,7 @@ useEffect(() => {
               <div className='flex flex-row items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white mt-12 mr-8 rounded-lg px-2 pr-2 py-4'>
                 <span className='font-italiana text-xl'>
                   Next question for: {housename2}
-                  </span>
-                  
-                
+                </span>
               </div>
             </div>
           )}
@@ -473,8 +495,22 @@ useEffect(() => {
           )}
         </div>
         <div className='fixed bottom-6 left-0 right-0 '>
-          <div className={`fixed right-0  flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl ${isRapidFirePage ? 'top-40': 'top-52'}`}>
-            <TimerIndicator startFrom={timerStartFrom} israpifirepage={isRapidFirePage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick }/>
+          <div
+            className={`fixed right-0  flex justify-center  mb-2 rounded-2xl px-7 py-4 text-xl ${
+              isRapidFirePage ? 'top-40' : 'top-52'
+            }`}
+          >
+            <TimerIndicator
+              startFrom={timerStartFrom}
+              israpifirepage={isRapidFirePage}
+              time={time}
+              isRunning={isRunning}
+              strokeDashoffset={strokeDashoffset}
+              formatTime={formatTime}
+              handlePlayClick={handlePlayClick}
+              handlePauseClick={handlePauseClick}
+              handleResetClick={handleResetClick}
+            />
           </div>
           <div className=' flex justify-center'>
             {!isRapidFirePage && (
@@ -508,34 +544,33 @@ useEffect(() => {
                   Pass
                 </button>
                 <div className='flex flex-row '>
-      <div
-                className={`bg-black ${
-                  isRunning
-                    ? 'px-2 py-3 text-green-700 text-3xl'
-                    : 'px-2 py-3 text-white text-3xl'
-                }`}
-                onClick={handlePlayClick}
-              >
-                <MdPlayArrow className='text-4xl'/>
-              </div>
-              <div
-                className={`bg-black ${
-                  isRunning
-                    ? 'px-2 py-3 text-3xl text-white'
-                    : ' px-2 py-3 text-green-700 text-3xl'
-                }`}
-                onClick={handlePauseClick}
-              >
-                <MdPause className='text-4xl'/>
-              </div>
-            <div
-                className='bg-black text-white px-3 py-4 text-3xl'
-                
-                onClick={handleResetClick}
-              >
-                <MdRefresh style={{ transform: 'rotate(-90deg)' }}/>
-              </div>
-      </div>
+                  <div
+                    className={`bg-black ${
+                      isRunning
+                        ? 'px-2 py-3 text-green-700 text-3xl'
+                        : 'px-2 py-3 text-white text-3xl'
+                    }`}
+                    onClick={handlePlayClick}
+                  >
+                    <MdPlayArrow className='text-4xl' />
+                  </div>
+                  <div
+                    className={`bg-black ${
+                      isRunning
+                        ? 'px-2 py-3 text-3xl text-white'
+                        : ' px-2 py-3 text-green-700 text-3xl'
+                    }`}
+                    onClick={handlePauseClick}
+                  >
+                    <MdPause className='text-4xl' />
+                  </div>
+                  <div
+                    className='bg-black text-white px-3 py-4 text-3xl'
+                    onClick={handleResetClick}
+                  >
+                    <MdRefresh style={{ transform: 'rotate(-90deg)' }} />
+                  </div>
+                </div>
               </>
             )}
             {isRapidFirePage && (
@@ -557,34 +592,33 @@ useEffect(() => {
                   Incorrect
                 </button>
                 <div className='flex flex-row '>
-      <div
-                className={`bg-black ${
-                  isRunning
-                    ? 'px-2 py-3 text-green-700 text-3xl'
-                    : 'px-2 py-3 text-white text-3xl'
-                }`}
-                onClick={handlePlayClick}
-              >
-                <MdPlayArrow className='text-4xl'/>
-              </div>
-              <div
-                className={`bg-black ${
-                  isRunning
-                    ? 'px-2 py-3 text-3xl text-white'
-                    : ' px-2 py-3 text-green-700 text-3xl'
-                }`}
-                onClick={handlePauseClick}
-              >
-                <MdPause className='text-4xl'/>
-              </div>
-            <div
-                className='bg-black text-white px-3 py-4 text-3xl'
-                
-                onClick={handleResetClick}
-              >
-                <MdRefresh style={{ transform: 'rotate(-90deg)' }}/>
-              </div>
-      </div>
+                  <div
+                    className={`bg-black ${
+                      isRunning
+                        ? 'px-2 py-3 text-green-700 text-3xl'
+                        : 'px-2 py-3 text-white text-3xl'
+                    }`}
+                    onClick={handlePlayClick}
+                  >
+                    <MdPlayArrow className='text-4xl' />
+                  </div>
+                  <div
+                    className={`bg-black ${
+                      isRunning
+                        ? 'px-2 py-3 text-3xl text-white'
+                        : ' px-2 py-3 text-green-700 text-3xl'
+                    }`}
+                    onClick={handlePauseClick}
+                  >
+                    <MdPause className='text-4xl' />
+                  </div>
+                  <div
+                    className='bg-black text-white px-3 py-4 text-3xl'
+                    onClick={handleResetClick}
+                  >
+                    <MdRefresh style={{ transform: 'rotate(-90deg)' }} />
+                  </div>
+                </div>
               </>
             )}
           </div>
