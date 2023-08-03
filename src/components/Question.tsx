@@ -160,7 +160,11 @@ const Question = (props: AvailableProps) => {
       })
   }
   const handleCorrectButtonClick1 = () => {
-    setShowCorrectPop(true)
+    if(!isRapidFirePage){
+      setShowCorrectPop(true)
+    }
+    
+    
     setSHowGeneralMessage({
       message: `Congratulations you have received 1 point`,
     })
@@ -583,6 +587,7 @@ const score=scoreIncrement
                   className=' bg-green-500 rounded-2xl mr-10 px-7 py-4 w-32 text-xl'
                   onClick={() => {
                     handleCorrectButtonClick()
+                    handleCorrectButtonClick1()
                   }}
                 >
                   Correct
