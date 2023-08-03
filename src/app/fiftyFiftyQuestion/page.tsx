@@ -7,11 +7,17 @@ import TimerIndicator from '@/components/TimerIndicator'
 import { TimerContext } from '../providers'
 import { ColorFormat,useCountdown } from 'react-countdown-circle-timer'
 import { MdPause, MdPlayArrow, MdRefresh } from 'react-icons/md'
-const FiftyFiftyQuestion = () => {
+import { QuestionI } from '../../../types'
+type FiftyFiftyProps={
+  qn?:QuestionI | undefined
+}
+const FiftyFiftyQuestion = (props:FiftyFiftyProps) => {
+  const {qn,}=props
   const searchParams = useSearchParams()
   const roundId = searchParams.get('roundId')
   const questionNumber = searchParams.get('questionNumber')
   const round_id = roundId !== null ? parseInt(roundId) : 0
+  
   const questionNum = questionNumber !== null ? parseInt(questionNumber) : 0
   const { question } = useRequest(questionNum, round_id)
   console.log('data from fiftyfifty fetcher : ', question)
@@ -24,6 +30,7 @@ const FiftyFiftyQuestion = () => {
   const [isfiftyfiftypage,setIsfiftyfiftypage]=useState(true)
   const { timefirst, timesecond, timethird } = useContext(TimerContext)
   const [passCount, setPassCount] = useState(0)
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
   let timerStartFrom = 0
   if (timefirst !== undefined) {
     timerStartFrom = timefirst
@@ -132,17 +139,179 @@ useEffect(() => {
   useEffect(() => {
     setShowStrokeDashoffset(0); // Execute setShowStrokeDashoffset(0) when startFrom changes
   }, [startFrom]);
+  const [teamData, setteamData] = useState<
+    Array<{ gameOrder: number; teamName: string }>
+  >([])
+  const [numTeams, setNumTeams] = useState(2)
+  const teamNames = Array.from({ length: numTeams }, (_, index) =>
+    teamData.length > index ? teamData[index].teamName : ''
+  )
+  const selectedTeamName = teamNames[passCount % numTeams]
+  let housename = ''
+  if (passCount >= 0 && passCount < numTeams) {
+    housename = teamNames[passCount]
+  } else {
+    housename = 'No more Team'
+  }
+  let housename2 = ''
+  if (passCount + 1 >= 0 && passCount + 1 < numTeams) {
+    housename2 = teamNames[passCount + 1]
+  } else {
+    housename2 = 'No more Team'
+  }
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState('') //checked
   
+  useEffect(() => {
+    const fetchteamData = async () => {
+      try {
+        const response = await fetch('/api/getTeams')
+        const data = await response.json()
+        if (response.ok) {
+          setteamData(data.teams)
+          setNumTeams(data.teams.length)
+          if (data.teams.length > 0) {
+            setTid(data?.teams[0].gameOrder)
+          }
+        } else {
+          setError(data.error || 'Failed to fetch data')
+        }
+        setIsLoading(false)
+      } catch (error) {
+        setError('Error fetching data.Try again later.')
+        setIsLoading(false)
+      }
+    }
+    fetchteamData()
+  }, [])
+  useEffect(() => {
+    const currentTeam = teamData.find((team) => team.teamName === housename)
+    if (currentTeam) {
+      setTid(currentTeam?.gameOrder)
+    }
+  }, [housename, teamData])
+
+  const [tid, setTid] = useState<number>(0)
+  const createScore = (
+    score: number,
+    roundId: number,
+    tid: number,
+    qid: number,
+    qroundId: number
+  ) => {
+    fetch('/api/createScore', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        score: score,
+        roundId: roundId,
+        tid: tid,
+        qid: qid,
+        qroundId: qroundId,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('response network was not ok')
+        }
+        return response.json() // Parse the response data as JSON
+      })
+      .then((data) => {
+        console.log('data to score:', data)
+        // Handle the response data if needed (optional)
+        console.log('Score created successfully:', data)
+      })
+      .catch((error) => {
+        // Handle errors if any
+        console.error('Error creating score:', error)
+      })
+  }
+  const updateScore = (
+    scoreId: number,
+    score: number,
+    roundId: number,
+    tid: number,
+    qid: number,
+    qroundId: number
+  ) => {
+    fetch(`/api/updateScore/${roundId}/${tid}`, {
+      method: 'PATCH', // Use the Patch method for updating existing data
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        score: score, // Send the updated score value in the request body as JSON
+        roundId: roundId,
+        tid: tid,
+        qid: qid,
+        qroundId: qroundId,
+      }),
+    })
+      .then((response) => response.json()) // Parse the response data as JSON
+      .then((data) => {
+        console.log('Score updated using updateScore successfully:', data)
+      })
+      .catch((error) => {
+        // Handle errors if any
+        console.error('Error updating score:', error)
+      })
+  }
+  const handleoptionclick=(optionNumber:number)=>{
+    setSelectedOption(optionNumber);
+    const roundId=round_id
+    const qid=question?.id || 0
+    const qroundId=roundId
+    const tidval=tid
+    let scoreIncrement = 0;
+    console.log('roundi',roundId)
+    
+    if (
+      (optionNumber === 1 && question?.option1 === question?.answer) ||
+      (optionNumber === 2 && question?.option2 === question?.answer) ||
+      (optionNumber === 3 && question?.option3 === question?.answer) ||
+      (optionNumber === 4 && question?.option4 === question?.answer) ||
+      (optionNumber === 5 && question?.fiftyOption1 === question?.answer) ||
+      (optionNumber === 6 && question?.fiftyOption2 === question?.answer)
+    ) {
+      scoreIncrement = 10;
+    }
+    const score=scoreIncrement
+    fetch(`/api/getScore?roundId=${roundId}&tid=${tid}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(' check for Data table:', data)
+        let foundEntry = false
+        if (!foundEntry) {
+          console.log(
+            'sc', score,
+            'roun',            roundId,
+            'tidv',            tidval,
+            'qid',  
+               qid,
+            'qroun',qroundId)
+          createScore(score, roundId, tidval, qid, qroundId)
+        }
+        for (const entry of data.score) {
+          if (entry.tid === tid && entry.roundId === roundId) {
+            const previousScore = entry.score
+            const score = scoreIncrement + previousScore
+            updateScore(entry.id, score, roundId, tidval, qid, qroundId)
+            foundEntry = true
+            break
+          }
+        }
+      })
+      .catch((error) => {
+        console.error('Error checking score:', error)
+      })
+  }
   return (
     <div className='h-screen w-screen overflow-hidden flex bg-gray-900 bg-gradient-to-b from-gray-100 to-purple-800'>
-      {' '}
-      {/* The component starts with a div that covers the entire screen and has a gradient background. */}
-      {/* starting navbar and main page where main component is wrapped in a flex container with a vertical column layout.*/}
       <div className='flex flex-col w-full'>
         <Navbar title='Fifty-fifty Round' isBackArrow={true} />
-
-        {/* starting main page */}
-        <div className=' '>
+  <div className=' '>
           {/* starting first part */}
           <div className='fixed top-52 left-20'>
           <div className=' text-2xl p-3 font-italiana ml-8'>
@@ -156,12 +325,11 @@ useEffect(() => {
             )}
           </div>
           
-          
           <div className='flex h-full w-[70vw] ml-28 mt-12'>
             <div className='flex flex-col justify-between '>
               <div className='flex flex-col '>
                 <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-3 rounded-lg text-xl'>
-                  Round for: Red house
+                  Round for: {housename}
                 </span>
               
               </div>
@@ -170,7 +338,7 @@ useEffect(() => {
             
             <div className='fixed w-[20vw] right-0'>
             <div className='fixed flex-ro items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white rounded-lg p-3'>
-              <span className='font-italiana text-xl '>Next question for: Blue house </span>
+              <span className='font-italiana text-xl '>Next question for: {housename2} </span>
               
             </div>
             <div className='fixed top-56 right-0 transform -translate-x-1/2 '>
@@ -192,7 +360,12 @@ useEffect(() => {
                             ? 'bg-[#B1DE76]'
                             : 'bg-[#FF0000]'
                         }`}
-                        onClick={() => setIsOption1Active(true)}
+                        onClick={
+                          () => {
+                          setIsOption1Active(true);
+                          handleoptionclick(1)
+                        }
+                      }
                       >
                         <span className='fixed text-left'>A. </span><span className='text-center ml-4'>{question?.option1}</span>
                       </button>
@@ -206,7 +379,10 @@ useEffect(() => {
                             ? 'bg-[#B1DE76]'
                             : 'bg-[#FF0000]'
                         }`}
-                        onClick={() => setIsOption2Active(true)}
+                        onClick={() =>{
+                          setIsOption2Active(true)
+                          handleoptionclick(2)
+                        }}
                       >
                       <span className='fixed text-left'>B. </span><span className='text-center ml-4'>{question?.option2}</span>
                       </button>
@@ -221,7 +397,11 @@ useEffect(() => {
                             ? 'bg-[#B1DE76]'
                             : 'bg-[#FF0000]'
                         }`}
-                        onClick={() => setIsOption3Active(true)}
+                        onClick={() => {
+                          setIsOption3Active(true)
+                          handleoptionclick(3)
+                        }
+                      }
                       >
                         <span className='fixed text-left'>C. </span><span className='ml-4 text-center'>{question?.option3}</span>
                         
@@ -236,7 +416,9 @@ useEffect(() => {
                             ? 'bg-[#B1DE76]'
                             : 'bg-[#FF0000]'
                         }`}
-                        onClick={() => setIsOption4Active(true)}
+                        onClick={() =>{ setIsOption4Active(true)
+                          handleoptionclick(4)
+                        }}
                       >
                         <span className='fixed text-left'>D. </span><span className='ml-4 text-center'>{question?.option4}</span>
                       </button>
@@ -253,10 +435,12 @@ useEffect(() => {
                           ? 'bg-[#B1DE76]'
                           : 'bg-[#FF0000]'
                       }`}
-                      onClick={() => setIsOption1Active(true)}
+                      onClick={() => {setIsOption1Active(true)
+                      handleoptionclick(5)
+                      }}
                     >
                       <span className='fixed text-left'>A. </span><span className='ml-4 text-center'>{question?.fiftyOption1}</span>
-                      {/* A. {question?.fiftyOption1} */}
+                      
                     </button>
                     <div style={{ marginLeft: '2rem' }}></div>
                     <button
@@ -268,11 +452,13 @@ useEffect(() => {
                           ? 'bg-[#B1DE76]'
                           : 'bg-[#FF0000]'
                       }`}
-                      onClick={() => setIsOption2Active(true)}
+                      onClick={() => {
+                        setIsOption2Active(true)
+                      handleoptionclick(6)
+                      }}
                     >
                       <span className='fixed text-left'>B. </span><span className='ml-4 text-center'>{question?.fiftyOption2}</span>
-                      
-                      {/* B. {question?.fiftyOption2} */}
+                    
                     </button>
                   </div>
                 )}
