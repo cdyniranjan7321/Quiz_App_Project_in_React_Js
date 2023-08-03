@@ -1,4 +1,6 @@
-'use client'
+'use client' // This line appears to be a typo; it should be 'use strict' to enforce stricter rules in the code.
+
+// Import necessary modules and components from React and other packages.
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { AiFillSetting as Setting } from 'react-icons/ai'
@@ -10,14 +12,18 @@ import { AiOutlineUpload as Upload } from 'react-icons/ai'
 import { MdExtension } from 'react-icons/md'
 import { MdLogout } from 'react-icons/md'
 
-const audioVisual = () => {
+const audioVisual = () => { //Define the functional component "audioVisual".
+  // Define an array of dummy data containing objects with 'id' and 'roundName' properties.
   const dummyData = [
-    { id: 1, roundName: 'who is the singer?' },
-    { id: 2, roundName: '' },
-    { id: 3, roundName: '' },
-    { id: 3, roundName: ' ' },
-    // Add more data as needed
+    { id: 1, roundName: 'This dialog belongs to which movie?' },
+    { id: 2, roundName: 'Identify the logo' },
+    { id: 3, roundName: 'Can you identify the guy.(no option)' },
+    { id: 3, roundName: 'Identify the Lyricist of the song' },
+
+    // Add more data as needed.
   ]
+
+  // Return JSX for rendering the user interface.
   return (
     <div className='h-screen w-screen flex flex-row    overflow-hidden bg-blue-gray-900 bg-gradient-to-b from-gray-100 to-purple-950'>
       <div className='flex flex-col bg-[#300559] text-white w-[15%] rounded-3xl rounded-bl-none rounded-tl-none'>
@@ -53,6 +59,8 @@ const audioVisual = () => {
           </button>
         </div>
       </div>
+      
+      {/*  Right-side content panel */}
       <div className='flex flex-col w-[65%]'>
         <div className='ml-[115%] w-11'>
           <div className='flex flex-row  pt-6  '>
@@ -103,6 +111,7 @@ const audioVisual = () => {
                 </tr>
               </thead>
               <tbody>
+                {/*  Map through dummyData and create table rows */}
                 {dummyData.map((data) => (
                   <tr key={data.id} className=''>
                     <td className='text-white px-4 py-2 border border-white'>

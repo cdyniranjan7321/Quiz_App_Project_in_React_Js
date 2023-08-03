@@ -11,19 +11,24 @@ import { MdExtension } from 'react-icons/md'
 import { MdLogout } from 'react-icons/md'
 
 const generalRoundAdm = () => {
+  // Dummy data for quiz rounds
   const dummyData = [
-    { id: 1, roundName: 'who is first pilot?' },
-    { id: 2, roundName: '' },
-    { id: 3, roundName: '' },
-    { id: 3, roundName: ' ' },
+    { id: 1, roundName: 'What country has the has the highest life expectancy?' },
+    { id: 2, roundName: 'How many bones do we have in an ear?' },
+    { id: 3, roundName: 'Which planet has the most moons?' },
+    { id: 3, roundName: 'Who was the last Tsar of Russia? ' },
     // Add more data as needed
   ]
+  // Return the JSX structure representing the UI
   return (
     <div className='h-screen w-screen flex flex-row    overflow-hidden bg-blue-gray-900 bg-gradient-to-b from-gray-100 to-purple-950'>
+      {/* Sidebar */}
       <div className='flex flex-col bg-[#300559] text-white w-[15%] rounded-3xl rounded-bl-none rounded-tl-none'>
+        {/* Title */}
         <h1 className='text-5xl bold-md pl-11 pt-[20%] pb-2'>Quiz</h1>
         <hr></hr>
         <div className='text-sm  flex flex-col pt-[15%] mt-[30%] pb-5 pl-11 '>
+          {/* Sidebar buttons */}
           <button className='pt-4 flex flex-row'>
             <Home size={30} className=' pr-2 pb-2' /> Home
           </button>
@@ -41,19 +46,22 @@ const generalRoundAdm = () => {
           </button>
         </div>
         <div className=' pt-[72%] flex flex-col   text-sm'>
+          {/* Settings button */}
           <button className='pb-3  flex flex-row  pl-10'>
             <Setting size={28} className='pr-2 pb-2' />
             Settings
           </button>
           <hr></hr>
-
+          {/* Logout button */}
           <button className='mb-[17%]  pl-11 pt-3  flex flex-row'>
             <MdLogout size={28} className='pr-2 pb-2' />
             Logout
           </button>
         </div>
       </div>
+      {/* Main Content Area */}
       <div className='flex flex-col w-[65%]'>
+        {/* Admin avatar */}
         <div className='ml-[115%] w-11'>
           <div className='flex flex-row  pt-6  '>
             <Image
@@ -69,18 +77,21 @@ const generalRoundAdm = () => {
         {/* table */}
         <div className='pt-5  pl-7  '>
           <div className='bg-gray-600  w-[130%] rounded-md pl-[14%] pr-10  pt-10  '>
+            {/* Input field to enter number of questions */}
             <label className=' text-white text-2xl pl-[30%]'>
               Enter the no.of question:
             </label>{' '}
             <input type='text' className='bg-white text-black w-6 h-6'></input>
             <hr className='pb-3 w-[90%] h-5'></hr>
             <div className='flex pb-4'>
+              {/* Edit all button */}
               <div className='flex items-center border  border-white bg-white rounded ml-[25%]'>
                 {/* Delete Button */}
                 <button className=' ml-11 mr-11 py-1 text-black flex'>
                   <Edit className='pr-2 text-2xl' /> Edit all
                 </button>
               </div>
+              {/* Upload button */}
               <div className='flex items-center text-white  bg-white border border-white rounded pl-3 ml-3'>
                 {/* Delete Button */}
                 <button className=' ml-11 mr-11 py-1 text-black flex '>
@@ -88,6 +99,7 @@ const generalRoundAdm = () => {
                 </button>
               </div>
             </div>
+            {/* Table displaying round information */}
             <table className=' text-2xl'>
               <thead>
                 <tr>
@@ -103,6 +115,7 @@ const generalRoundAdm = () => {
                 </tr>
               </thead>
               <tbody>
+                {/* Map through dummy to display round details */}
                 {dummyData.map((data) => (
                   <tr key={data.id} className=''>
                     <td className='text-white px-4 py-2 border border-white'>
@@ -147,4 +160,4 @@ const generalRoundAdm = () => {
   )
 }
 
-export default generalRoundAdm
+export default generalRoundAdm;

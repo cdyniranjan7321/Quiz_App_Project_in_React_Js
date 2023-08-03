@@ -12,8 +12,10 @@ import { MdLogout } from 'react-icons/md'
 import { TiTick } from 'react-icons/ti'
 import { BiArrowBack as BackArrow } from 'react-icons/bi'
 
+// Functional component definition named general1Round 
 const general1Round= () => {
 
+// The JSX code that represents the component's structure and UI
   return (
     <div className='h-screen w-screen flex flex-row    overflow-hidden bg-blue-gray-900 bg-gradient-to-b from-gray-100 to-purple-950'>
       <div className='flex flex-col bg-[#300559] text-white w-[15%] rounded-3xl rounded-bl-none rounded-tl-none'>
@@ -49,6 +51,8 @@ const general1Round= () => {
           </button>
         </div>
       </div>
+
+      {/*  Main content */}
       <div className='flex flex-col w-[65%]'>
         <div className='ml-[111%] w-11 pt-7'>
           <div className='flex flex-row  pt-2  '>
@@ -87,4 +91,4 @@ const general1Round= () => {
   )
 }
 
-export default general1Round
+export default general1Round;

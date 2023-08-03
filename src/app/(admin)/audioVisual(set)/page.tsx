@@ -23,6 +23,8 @@ const audioVisualSet = () => {
       <div className='flex flex-col bg-[#300559] text-white w-[15%] rounded-3xl rounded-bl-none rounded-tl-none'>
         <h1 className='text-5xl bold-md pl-11 pt-[20%] pb-2'>Quiz</h1>
         <hr></hr>
+
+        {/* sidebar Navigation */}
         <div className='text-sm  flex flex-col pt-[15%] mt-[30%] pb-5 pl-11 '>
           <button className='pt-4 flex flex-row'>
             <Home size={30} className=' pr-2 pb-2' /> Home
@@ -40,6 +42,8 @@ const audioVisualSet = () => {
             Teams
           </button>
         </div>
+
+        {/*  Sidebar Botton Section */}
         <div className=' pt-[72%] flex flex-col   text-sm'>
           <button className='pb-3  flex flex-row  pl-10'>
             <Setting size={28} className='pr-2 pb-2' />
@@ -53,6 +57,8 @@ const audioVisualSet = () => {
           </button>
         </div>
       </div>
+
+      {/*  Main content Area */}
       <div className='flex flex-col w-[65%]'>
         <div className='ml-[115%] w-11'>
           <div className='flex flex-row  pt-6  '>
@@ -66,7 +72,8 @@ const audioVisualSet = () => {
             <h1 className='text-2xl pt-2 text-gray'>Admin</h1>
           </div>
         </div>
-        {/* table */}
+
+        {/* Main table */}
         <div className='pt-5  pl-7  '>
           <div className='bg-gray-600  w-[130%] rounded-md pl-[14%] pr-10  pt-10  '>
             <label className=' text-white text-2xl pl-[30%]'>
@@ -103,6 +110,8 @@ const audioVisualSet = () => {
                 </tr>
               </thead>
               <tbody>
+
+                {/*  Mapping dummyData to populate table rows */}
                 {dummyData.map((data) => (
                   <tr key={data.id} className=''>
                     <td className='text-white px-4 py-2 border border-white'>
@@ -135,6 +144,8 @@ const audioVisualSet = () => {
                 ))}
               </tbody>
             </table>
+
+            {/*  Save Button */}
             <div className='pt-[5%] pb-5'>
               <button className='bg-[#417468] text-2xl text-white  w-[14%] rounded-2xl flex justify-center  ml-[40%] '>
                 Save

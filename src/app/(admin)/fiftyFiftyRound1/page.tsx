@@ -10,7 +10,7 @@ import { AiOutlineUpload as Upload } from 'react-icons/ai'
 import { MdExtension } from 'react-icons/md'
 import { MdLogout } from 'react-icons/md'
 
-const audioVisualSet = () => {
+const fiftyFiftyRound1 = () => {
   const dummyData = [
     { id: 1, roundName: 'SET A' },
     { id: 2, roundName: ' SET B' },
@@ -18,7 +18,9 @@ const audioVisualSet = () => {
     { id: 3, roundName: ' SET D' },
     // Add more data as needed
   ]
-  return (
+
+  return ( // The JSX code starts here.
+  // Outermost container div with some classes and styles.
     <div className='h-screen w-screen flex flex-row    overflow-hidden bg-blue-gray-900 bg-gradient-to-b from-gray-100 to-purple-950'>
       <div className='flex flex-col bg-[#300559] text-white w-[15%] rounded-3xl rounded-bl-none rounded-tl-none'>
         <h1 className='text-5xl bold-md pl-11 pt-[20%] pb-2'>Quiz</h1>
@@ -40,6 +42,7 @@ const audioVisualSet = () => {
             Teams
           </button>
         </div>
+        {/*  More buttons in the sidebar. */}
         <div className=' pt-[72%] flex flex-col   text-sm'>
           <button className='pb-3  flex flex-row  pl-10'>
             <Setting size={28} className='pr-2 pb-2' />
@@ -53,6 +56,8 @@ const audioVisualSet = () => {
           </button>
         </div>
       </div>
+
+      {/*  Main content section */}
       <div className='flex flex-col w-[65%]'>
         <div className='ml-[115%] w-11'>
           <div className='flex flex-row  pt-6  '>
@@ -66,7 +71,8 @@ const audioVisualSet = () => {
             <h1 className='text-2xl pt-2 text-gray'>Admin</h1>
           </div>
         </div>
-   
+
+                 {/* 50/50 Round form */}
         <div className='pt-9 pl-7  '>
           <div className='bg-gray-600  w-[130%] rounded-md pl-[14%] pr-10  pt-10  '>
             <h1 className='pl-[28%] text-4xl text-white font-bold pb-2 mt-10'>
@@ -120,4 +126,4 @@ const audioVisualSet = () => {
   )
 }
 
-export default audioVisualSet
+export default fiftyFiftyRound1;
