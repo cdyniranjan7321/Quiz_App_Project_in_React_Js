@@ -12,11 +12,15 @@ import { MdLogout } from 'react-icons/md'
 import { TiTick } from 'react-icons/ti'
 import { BiArrowBack as BackArrow } from 'react-icons/bi'
 
-const fiftyFiftyRound3 = () => {
+
+const FiftyFiftyRound3 = () => {
+  // State variables to keep track of the correct trics for each option
   const [showcorrecttick1, setshowcorrecttick1] = useState(false)
   const [showcorrecttick2, setshowcorrecttick2] = useState(false)
   const [showcorrecttick3, setshowcorrecttick3] = useState(false)
   const [showcorrecttick4, setshowcorrecttick4] = useState(false)
+
+   // Event handlers to set the correct tick state vairables 
   const handlecorrectclick1 = () => {
     setshowcorrecttick1(true)
   }
@@ -28,14 +32,18 @@ const fiftyFiftyRound3 = () => {
   }
   const handlecorrectclick4 = () => {
     setshowcorrecttick4(true)
-  }
+  };
+
+  // Dummy data for rounds 
   const dummyData = [
     { id: 1, roundName: 'SET A' },
     { id: 2, roundName: ' SET B' },
     { id: 3, roundName: ' SET C' },
     { id: 3, roundName: ' SET D' },
     // Add more data as needed
-  ]
+  ];
+
+  // Return thre JSX elements for rendering 
   return (
     <div className='h-screen w-screen flex flex-row    overflow-hidden bg-blue-gray-900 bg-gradient-to-b from-gray-100 to-purple-950'>
       <div className='flex flex-col bg-[#300559] text-white w-[15%] rounded-3xl rounded-bl-none rounded-tl-none'>
@@ -71,6 +79,8 @@ const fiftyFiftyRound3 = () => {
           </button>
         </div>
       </div>
+
+      {/* Main Content*/}
       <div className='flex flex-col w-[65%]'>
         <div className='ml-[115%] w-11'>
           <div className='flex flex-row  pt-2  '>
@@ -226,7 +236,8 @@ const fiftyFiftyRound3 = () => {
                   </div>
                 </div>
               </div>
-              {/* addition */}
+
+              {/* Addition */}
               <div className='flex flex-row pl-1 mt-1'>
                 <label className='text-white text-3xl  font-bold'>
                   Question 2:
@@ -372,4 +383,4 @@ const fiftyFiftyRound3 = () => {
   )
 }
 
-export default fiftyFiftyRound3
+export default FiftyFiftyRound3;

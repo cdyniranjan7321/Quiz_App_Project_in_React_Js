@@ -10,11 +10,17 @@ import { AiOutlineUpload as Upload } from 'react-icons/ai'
 import { MdExtension } from 'react-icons/md'
 import { MdLogout } from 'react-icons/md'
 import { TiTick } from 'react-icons/ti'
-const fiftyFiftyRound2 = () => {
-  const [showcorrecttick1,setshowcorrecttick1]=useState(false)
-  const [showcorrecttick2,setshowcorrecttick2]=useState(false)
-  const [showcorrecttick3,setshowcorrecttick3]=useState(false)
-  const [showcorrecttick4,setshowcorrecttick4]=useState(false)
+
+// Define the function component
+const FiftyFiftyRound2 = () => {
+  // State variables and their setters using the useState hook
+
+  const [showcorrecttick1,setshowcorrecttick1]= useState(false)
+  const [showcorrecttick2,setshowcorrecttick2]= useState(false)
+  const [showcorrecttick3,setshowcorrecttick3]= useState(false)
+  const [showcorrecttick4,setshowcorrecttick4]= useState(false)
+  
+  // Event handler functions 
   const handlecorrectclick1=()=>{
     setshowcorrecttick1(true)    
   }
@@ -26,14 +32,18 @@ const fiftyFiftyRound2 = () => {
   }
   const handlecorrectclick4=()=>{
     setshowcorrecttick4(true)    
-  }
+  };
+
+  // Dummy data array.
     const dummyData = [
     { id: 1, roundName: 'SET A' },
     { id: 2, roundName: ' SET B' },
     { id: 3, roundName: ' SET C' },
     { id: 3, roundName: ' SET D' },
     // Add more data as needed
-  ]
+  ];
+
+  // JSX code for the component
   return (
     <div className='h-screen w-screen flex flex-row    overflow-hidden bg-blue-gray-900 bg-gradient-to-b from-gray-100 to-purple-950'>
       <div className='flex flex-col bg-[#300559] text-white w-[15%] rounded-3xl rounded-bl-none rounded-tl-none'>
@@ -180,4 +190,4 @@ const fiftyFiftyRound2 = () => {
   )
 }
 
-export default fiftyFiftyRound2
+export default FiftyFiftyRound2;
