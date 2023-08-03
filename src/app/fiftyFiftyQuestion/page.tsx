@@ -340,7 +340,7 @@ useEffect(() => {
 
           {/* choices section */}
 
-                <div className=' flex items-center justify-center mt-20 w-screen'>
+                <div className=' flex items-center justify-center mt-20'>
                 {!isFiftyFifty ? (
                   
                   <div className='flex flex-col'>
