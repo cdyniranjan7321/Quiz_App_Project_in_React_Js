@@ -322,7 +322,10 @@ useEffect(() => {
                   Next question for: {housename2}
                 </span>
             </div>
-            <div className='ml-24 mt-6'>
+
+            <div className='flex flex-col mt-12' >
+            <div className='w-[70vw]'>
+            <div className='ml-24'>
             <div className=' text-2xl p-3 font-italiana '>
               Question {question?.id} : {question?.question}
             </div>
@@ -334,16 +337,10 @@ useEffect(() => {
             </div>
           
             
-            <div className='fixed w-[20vw]'>
-            
-            <div className='fixed top-56 right-0 transform -translate-x-1/2 '>
-              
-                <TimerIndicator startFrom={30} isfiftyfiftypage={isfiftyfiftypage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick}/>
-              </div>
-          </div>
+
           {/* choices section */}
 
-                <div className=' flex items-center justify-center h-screen'>
+                <div className=' flex items-center justify-center mt-20 w-screen'>
                 {!isFiftyFifty ? (
                   
                   <div className='flex flex-col'>
@@ -460,6 +457,17 @@ useEffect(() => {
                 )}
               </div>
               {/* last section */}
+            </div>
+            
+              <div className='w-[30vw]'>
+            
+            <div className='fixed top-56 right-0 transform -translate-x-1/2 '>
+              
+                <TimerIndicator startFrom={30} isfiftyfiftypage={isfiftyfiftypage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick}/>
+              </div>
+          </div>
+          </div>
+          {/* timer indi section with question answer */}
               <div className='fixed flex justify-center bottom-8 left-1/2 transform -translate-x-1/2'>
                 <button
                   className=' bg-green-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
