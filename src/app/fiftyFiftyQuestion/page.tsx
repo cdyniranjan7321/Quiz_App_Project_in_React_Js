@@ -309,50 +309,47 @@ useEffect(() => {
   }
   return (
     <div className='h-screen w-screen overflow-hidden flex bg-gray-900 bg-gradient-to-b from-gray-100 to-purple-800'>
+      <div>
+        
+      </div>
       <div className='flex flex-col w-full'>
         <Navbar title='Fifty-fifty Round' isBackArrow={true} />
-  <div className=' '>
-          {/* starting first part */}
-          <div className='fixed top-52 left-20'>
-          <div className=' text-2xl p-3 font-italiana ml-8'>
-              {' '}
+        <div className='flex flex-row justify-between w-screen'>
+                <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-3 rounded-lg text-xl mt-8 ml-24'>
+                  Round for: {housename}
+                </span>
+                <span className=' bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-3 rounded-lg text-xl font-italiana mt-8 mr-12'>
+                  Next question for: {housename2}
+                </span>
+            </div>
+            <div className='ml-24 mt-6'>
+            <div className=' text-2xl p-3 font-italiana '>
               Question {question?.id} : {question?.question}
             </div>
             {showAnswer && (
-              <div className='text-2xl pl-11 font-italiana'>
+              <div className='fixed text-2xl p-3 font-italiana'>
                 Answer : {question?.answer}
               </div>
             )}
-          </div>
+            </div>
           
-          <div className='flex h-full w-[70vw] ml-28 mt-12'>
-            <div className='flex flex-col justify-between '>
-              <div className='flex flex-col '>
-                <span className='bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white p-3 rounded-lg text-xl'>
-                  Round for: {housename}
-                </span>
-              
-              </div>
-              
-            </div>
             
-            <div className='fixed w-[20vw] right-0'>
-            <div className='fixed flex-ro items-center bg-gray-900 bg-gradient-to-b from-gray-700 to-purple-900 text-white rounded-lg p-3'>
-              <span className='font-italiana text-xl '>Next question for: {housename2} </span>
-              
-            </div>
+            <div className='fixed w-[20vw]'>
+            
             <div className='fixed top-56 right-0 transform -translate-x-1/2 '>
+              
                 <TimerIndicator startFrom={30} isfiftyfiftypage={isfiftyfiftypage} time={time} isRunning={isRunning} strokeDashoffset={strokeDashoffset} formatTime={formatTime} handlePlayClick={handlePlayClick} handlePauseClick={handlePauseClick} handleResetClick={handleResetClick}/>
               </div>
           </div>
-           <div className='mt-44 ml-20 flex flex-col justify-center'>
-              <div className='flex flex-col gap-4'>
-                
+          {/* choices section */}
+
+                <div className=' flex items-center justify-center h-screen'>
                 {!isFiftyFifty ? (
-                  <>
-                    <div className='flex'>
+                  
+                  <div className='flex flex-col'>
+                    <div className='flex flex-row'>
                       <button
-                        className={`option rounded-lg p-2  text-base w-[300px] h-16 ${
+                        className={`option rounded-lg p-2 m-5 text-base w-[300px] h-16 ${
                           !isOption1Active
                             ? 'bg-gray-200'
                             : isOption1Active &&
@@ -369,9 +366,8 @@ useEffect(() => {
                       >
                         <span className='fixed text-left'>A. </span><span className='text-center ml-4'>{question?.option1}</span>
                       </button>
-                      <div style={{ marginLeft: '2rem' }}></div>
                       <button
-                        className={`option rounded-lg p-2 text-base w-[300px] h-16  ${
+                        className={`option rounded-lg p-2 m-5 text-base w-[300px] h-16  ${
                           !isOption2Active
                             ? 'bg-gray-200'
                             : isOption2Active &&
@@ -387,9 +383,9 @@ useEffect(() => {
                       <span className='fixed text-left'>B. </span><span className='text-center ml-4'>{question?.option2}</span>
                       </button>
                     </div>
-                    <div className='flex justify-center'>
+                    <div className='flex flex-row'>
                       <button
-                        className={`option rounded-lg p-2 text-base w-[300px] h-16  ${
+                        className={`option rounded-lg p-2 m-5 text-base w-[300px] h-16  ${
                           !isOption3Active
                             ? 'bg-gray-200'
                             : isOption3Active &&
@@ -406,9 +402,8 @@ useEffect(() => {
                         <span className='fixed text-left'>C. </span><span className='ml-4 text-center'>{question?.option3}</span>
                         
                       </button>
-                      <div style={{ marginLeft: '2rem' }}></div>
                       <button
-                        className={`option rounded-lg p-2 text-base w-[300px] h-16  ${
+                        className={`option rounded-lg p-2 m-5 text-base w-[300px] h-16  ${
                           !isOption4Active
                             ? 'bg-gray-200'
                             : isOption4Active &&
@@ -423,11 +418,11 @@ useEffect(() => {
                         <span className='fixed text-left'>D. </span><span className='ml-4 text-center'>{question?.option4}</span>
                       </button>
                     </div>
-                  </>
+                  </div>
                 ) : (
-                  <div className='flex justify-center'>
+                  <div >
                     <button
-                      className={`option rounded-lg p-2 text-base w-[300px] h-16  ${
+                      className={`option rounded-lg p-2 m-5 text-base w-[300px] h-16  ${
                         !isOption1Active
                           ? 'bg-gray-200'
                           : isOption1Active &&
@@ -444,7 +439,7 @@ useEffect(() => {
                     </button>
                     <div style={{ marginLeft: '2rem' }}></div>
                     <button
-                      className={`option rounded-lg p-2 text-base w-[300px] h-16  ${
+                      className={`option rounded-lg p-2 m-5 text-base w-[300px] h-16  ${
                         !isOption2Active
                           ? 'bg-gray-200'
                           : isOption2Active &&
@@ -461,9 +456,10 @@ useEffect(() => {
                     
                     </button>
                   </div>
+                  
                 )}
               </div>
-              
+              {/* last section */}
               <div className='fixed flex justify-center bottom-8 left-1/2 transform -translate-x-1/2'>
                 <button
                   className=' bg-green-400 rounded-2xl mr-10 px-7 py-4 w-auto text-xl'
@@ -511,13 +507,11 @@ useEffect(() => {
                 <MdRefresh style={{ transform: 'rotate(-90deg)' }}/>
               </div>
       </div>
-              </div>
+              
             </div>
           </div>
           
         </div>
-      </div>
-    </div>
   )
 }
 export default FiftyFiftyQuestion
