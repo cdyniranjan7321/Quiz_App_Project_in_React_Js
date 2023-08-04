@@ -37,7 +37,7 @@ const AdminSidebar = () => {
             Question
           </button>
           </Link>
-          <Link href="/teams">
+          <Link href="/teamstoplay">
           <button className='pt-4  flex flex-row'>
             <Team size={34} className='pr-2 pb-3 text-white ' />
             Teams
