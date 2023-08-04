@@ -31,7 +31,7 @@ const AdminSidebar = () => {
             Rounds
           </button>
           </Link>
-          <Link href="/question">
+          <Link href="/questionsettings">
           <button className='pt-4  flex flex-row'>
             <Quesation size={28} className='pr-1 pb-2' />
             Question
