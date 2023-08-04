@@ -29,7 +29,7 @@ const QuestionSettings = () => {
                     SN
                   </th>
                   <th className='text-white pl-5 pr-5 py-3 border border-white w-32 text-center'>
-                    <h1>50/50 Round</h1>
+                    <h1>Round Name</h1>
                   </th>
                   <th className='text-white text-center px-4 py-4 pl-[8%] pr-[8%] border border-white'>
                     Action
