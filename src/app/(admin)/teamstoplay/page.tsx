@@ -65,4 +65,5 @@ const TeamsToPlay = () => {
          </div>
       )
     }
-export default TeamsToPlay
+    
+export default TeamsToPlay;

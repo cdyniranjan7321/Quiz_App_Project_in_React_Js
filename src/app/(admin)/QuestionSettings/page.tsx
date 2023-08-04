@@ -1,9 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import Image from 'next/image'
 import AdminSidebar from '@/components/AdminSidebar'
-import { AiOutlineEdit as Edit } from 'react-icons/ai'
-import { AiOutlineUpload as Upload } from 'react-icons/ai'
+
 const QuestionSettings = () => {
     const dummyData = [
         { id: 1, roundName: 'General Round' },
@@ -12,6 +10,7 @@ const QuestionSettings = () => {
         { id: 3, roundName: 'Audio Visual' },
         // Add more data as needed
       ]
+
   return (
     <div >
       <div className='absolute'>
@@ -79,4 +78,5 @@ const QuestionSettings = () => {
      </div>
   )
 }
-export default QuestionSettings
+
+export default QuestionSettings;
