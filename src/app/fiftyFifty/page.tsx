@@ -26,4 +26,4 @@ const FiftyFifty = () => {
     </div>
   )
 }
-export default FiftyFifty
+export default FiftyFifty;
